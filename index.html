@@ -33,6 +33,7 @@ section{position:relative}
 /* ---------- header ---------- */
 header{position:fixed;inset:0 0 auto;z-index:30;color:var(--light);transition:background .3s,color .3s,border-color .3s;border-bottom:1px solid transparent}
 header:not(.solid){background:linear-gradient(180deg,rgba(11,11,10,.8),rgba(11,11,10,0))}
+header.dk{background:rgba(11,11,10,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:rgba(255,255,255,.08)}
 header.solid{background:rgba(250,250,247,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--ink);border-color:var(--rule)}
 header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;height:62px}
 .brand{display:flex;align-items:center;gap:10px;font:700 15px var(--sans);text-decoration:none;white-space:nowrap}
@@ -119,10 +120,10 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:110px 0}
 .intro h2{font:600 clamp(30px,3.4vw,46px)/1.08 var(--sans);letter-spacing:-.03em;margin:0}
 .intro p{margin:18px 0 0;color:var(--ink2);max-width:48ch}
-.portrait{margin:0;background:var(--night);padding:0;position:relative;overflow:hidden;min-height:420px}
-.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 36%;aspect-ratio:4/3;opacity:.92}
-.portrait figcaption{position:absolute;left:16px;bottom:14px;color:var(--light2)}
-.portrait::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 120px rgba(0,0,0,.55);pointer-events:none}
+.portrait{margin:0;align-self:start}
+.portrait .ph{display:block;width:100%;border:0;padding:0;background:none;cursor:zoom-in;position:relative;line-height:0}
+.portrait img{width:100%;height:auto;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
+.portrait figcaption{margin-top:12px}
 
 /* 1990 */
 .figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:64px}
@@ -134,6 +135,35 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .fg .m{display:block;margin-top:14px}
 .duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .duo .obj{padding:clamp(22px,4vw,48px)}
+.certs{margin-top:8px}
+.chead{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+.cnav{display:flex;align-items:center;gap:8px}
+.cnav .m{margin-right:8px;white-space:nowrap}
+.chead>.m{min-width:0}
+.cbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--bg);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s}
+.cbtn:hover{border-color:var(--ink)}
+.cbtn:disabled{opacity:.3;cursor:default}
+.cbtn svg{width:20px;height:20px}
+.ctrack{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:6px 2px 10px;outline:0;cursor:grab}
+.ctrack.drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
+.ctrack::-webkit-scrollbar{display:none}
+.cs{flex:0 0 min(620px,84%);scroll-snap-align:start;margin:0}
+.cimg{display:block;width:100%;border:0;background:var(--plinth);padding:clamp(18px,3.4vw,44px);cursor:zoom-in;perspective:1100px;transition:background .3s}
+.cimg:hover{background:var(--plinth2)}
+.cimg .sheetc{position:relative;display:block;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d;box-shadow:0 30px 60px -30px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.08)}
+.cimg.live .sheetc{transition:transform .08s linear}
+.cimg img{display:block;width:100%;height:auto;-webkit-user-drag:none;user-select:none}
+.cimg .shine{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.38),rgba(255,255,255,0) 45%);opacity:0;transition:opacity .4s;mix-blend-mode:soft-light}
+.cimg.live .shine{opacity:1}
+.cs figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:14px}
+.cs .ct{font:700 22px/1.2 var(--sans);letter-spacing:-.02em}
+.cs .ct small{font:500 14px var(--sans);color:var(--ink2);letter-spacing:0;margin-left:8px}
+.cs .rec{display:block;margin-top:4px}
+.cs .rec.hl{color:var(--amber-ink)}
+.cs a.pdf{font:500 12px var(--mono);color:var(--ink2);text-decoration:none;border:1px solid var(--rule);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.cs a.pdf:hover{color:var(--ink);border-color:var(--ink)}
+.cbar{height:2px;background:var(--rule);margin-top:18px;position:relative;overflow:hidden}
+.cbar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink);width:10%;transition:left .3s,width .3s}
 .boards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:40px}
 table.res{width:100%;border-collapse:collapse;font:400 14px var(--mono)}
 .res caption{text-align:left;padding:0 0 10px;font:500 12px var(--mono);color:var(--ink2)}
@@ -150,11 +180,16 @@ table.res{width:100%;border-collapse:collapse;font:400 14px var(--mono)}
 .big144 span{font-weight:300;font-size:.42em;letter-spacing:0;vertical-align:.95em;margin-right:.06em;color:var(--ink2)}
 .dx p{margin:0 0 16px;color:var(--ink2)}
 .dx .lead2{color:var(--ink);font-size:19px}
+.clar{background:var(--plinth);padding:22px 24px;margin:28px 0 8px}
+.clar>b{display:block;font:600 16px/1.3 var(--sans);margin-bottom:12px}
+.clar dl{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px 16px;margin:0}
+.clar dt{font:700 18px/1.3 var(--sans);color:var(--amber-ink)}
+.clar dd{margin:0;color:var(--ink2);font-size:15px;line-height:1.5}
 
 /* dark band (rescue) */
 .band{background:var(--night);color:var(--light);padding:120px 0 110px;margin:0 0 110px;overflow:hidden}
 .band .m{color:var(--light3)}
-.band q{display:block;font:300 clamp(34px,4.8vw,72px)/1.06 var(--sans);letter-spacing:-.04em;quotes:"«" "»";max-width:18ch;margin:20px 0 0}
+.band .bq{font:300 clamp(28px,4vw,60px)/1.1 var(--sans);letter-spacing:-.035em;max-width:24ch;margin:20px 0 0}
 .band .qs{margin-top:22px}
 .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;margin-top:80px;border-top:1px solid rgba(255,255,255,.14);padding-top:26px}
 .cols h3{font:600 24px/1.15 var(--sans);letter-spacing:-.02em;margin:10px 0 14px}
@@ -249,10 +284,53 @@ ol.sources li{break-inside:avoid;margin:0 0 9px;padding-left:4px}
 ol.sources a{text-decoration:none;border-bottom:1px solid var(--rule)}
 ol.sources a:hover{color:var(--ink);border-color:var(--ink)}
 
-footer{background:var(--night);color:var(--light3);padding:56px 0 64px}
-footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-end}
-footer .fc{font:800 clamp(40px,7vw,96px)/.85 var(--sans);letter-spacing:-.06em;color:var(--light)}
-footer .fc span{font-weight:300;color:var(--light3)}
+.tx{margin:0;padding:110px 0 120px;border-top:1px solid rgba(255,255,255,.08)}
+.txhead h2{font:600 clamp(34px,4.4vw,64px)/1.02 var(--sans);letter-spacing:-.04em;margin:14px 0 0}
+.txhead p{color:var(--light2);max-width:58ch;margin:16px 0 0}
+.txbox{margin-top:44px;border:1px solid rgba(255,255,255,.12);background:var(--night2);padding:24px}
+.txrow{display:flex;gap:12px}
+#txin{flex:1;min-width:0;height:56px;border:1px solid rgba(255,255,255,.16);background:#0e0e0d;color:var(--light);font:500 20px var(--mono);letter-spacing:.06em;padding:0 18px;text-transform:uppercase;outline:0}
+#txin:focus{border-color:var(--amber)}
+.txgo{display:flex;align-items:center;gap:12px;height:56px;padding:0 24px;border:0;background:var(--amber);color:#1a0d02;font:600 16px var(--sans);cursor:pointer;white-space:nowrap}
+.txgo .lamp{width:10px;height:10px;border-radius:50%;background:#1a0d02;opacity:.35;transition:opacity .05s}
+.txgo.on .lamp{opacity:1;box-shadow:0 0 0 3px rgba(26,13,2,.2)}
+.txopts{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button,.wpm button{height:32px;padding:0 12px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:none;color:var(--light2);font:500 12px var(--mono);cursor:pointer}
+.chips button:hover,.wpm button:hover{border-color:var(--light);color:var(--light)}
+.wpm{display:flex;align-items:center;gap:6px}
+.wpm .m{color:var(--light3);margin-right:4px}
+.wpm button[aria-pressed="true"]{background:var(--light);color:var(--night);border-color:var(--light)}
+.txscreen{display:grid;grid-template-columns:150px minmax(0,1fr);gap:24px;align-items:center;margin-top:24px;border-top:1px solid rgba(255,255,255,.1);padding-top:22px;min-height:110px}
+.txnow{display:flex;flex-direction:column;gap:6px}
+#txch{font:800 64px/1 var(--sans);letter-spacing:-.04em;color:var(--light)}
+#txcode{color:var(--amber);font-size:16px;letter-spacing:.2em}
+.txtape{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-start}
+.txtape .ch{display:inline-flex;flex-direction:column;gap:7px}
+.txtape .ch.sp{width:18px}
+.txtape .sg{display:flex;gap:5px;height:4px}
+.txtape .sg i{display:block;height:4px;border-radius:2px;background:rgba(243,239,232,.22);transition:background .06s,box-shadow .06s}
+.txtape .sg i.d{width:7px}.txtape .sg i.h{width:22px}
+.txtape .sg i.on{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.txtape .sg i.done{background:rgba(255,138,31,.55)}
+.txtape .lt{font:500 11px var(--mono);color:var(--light3)}
+.txtape .ch.cur .lt{color:var(--amber)}
+footer{background:var(--night);color:var(--light3);padding:64px 0 56px;border-top:1px solid rgba(255,255,255,.08)}
+footer .wrap{display:block}
+.fcalls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px clamp(10px,1.6vw,22px)}
+.fcalls .fw{display:inline-flex;gap:inherit;white-space:nowrap;align-items:flex-end}
+.fcalls .fl{display:inline-flex;flex-direction:column;gap:12px}
+.fcalls .fl b{font:800 clamp(40px,7vw,104px)/.85 var(--sans);letter-spacing:-.04em;color:var(--light)}
+.fcalls .fl.sl b{font-weight:300;color:var(--light3)}
+.fcalls .sg{display:flex;gap:5px;height:4px}
+.fcalls .sg i{display:block;height:4px;border-radius:2px;background:var(--amber);opacity:.85}
+.fcalls .sg i.d{width:6px}.fcalls .sg i.h{width:20px}
+.fbot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1)}
+.fbot .m{color:var(--light3)}
+.f73{letter-spacing:.25em;color:var(--amber)!important}
+@media (max-width:640px){.txrow{flex-direction:column}.txgo{justify-content:center}.txscreen{grid-template-columns:minmax(0,1fr)}#txch{font-size:48px}.fcalls{gap:10px 8px}.fcalls .fl b{font-size:44px}.fcalls .sg i.h{width:7px}.fcalls .sg i.d{width:3px}.fcalls .sg{gap:2px;height:3px}.fcalls .sg i{height:3px}.txtape{gap:12px 14px}}
+footer.__old{}
+
 footer a{color:var(--light3)}
 
 /* lightbox */
@@ -289,10 +367,10 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   .clips{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:900px){
-  .hero{display:block;min-height:0;padding-bottom:10px}
-  .hero .photos{position:relative;right:auto;width:100%;aspect-ratio:1/1;margin-top:56px;-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 45%,#000 92%,transparent 100%);mask-image:linear-gradient(0deg,transparent 0,#000 45%,#000 92%,transparent 100%)}
-  .hero .photo{opacity:.85;background-position:46% 20%}
-  .hero .in{padding-top:0;margin-top:-30vw}
+  .hero{display:flex;min-height:100svh;padding-bottom:0}
+  .hero .photos{inset:58px 0 auto 0;width:100%;height:min(96vw,640px);-webkit-mask-image:linear-gradient(0deg,transparent 0,#000 38%);mask-image:linear-gradient(0deg,transparent 0,#000 38%)}
+  .hero .photo{opacity:.9;background-position:52% 0;background-size:auto 100%}
+  .hero .in{padding-top:min(68vw,440px);padding-bottom:28px}
   .hmeta{grid-template-columns:repeat(2,minmax(0,1fr))}.hmeta div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1);margin-top:12px}
   .pcap{position:static;text-align:left;margin-top:22px}
   .morse{max-width:100%}
@@ -302,7 +380,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   .duo,.boards{grid-template-columns:minmax(0,1fr)}
   .cols{grid-template-columns:minmax(0,1fr);gap:32px}
   .cat{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}
-  .tl li{grid-template-columns:86px minmax(0,1fr);gap:4px 16px}
+  .tl li{grid-template-columns:86px minmax(0,1fr);grid-template-rows:auto 1fr;gap:4px 16px;align-items:start}
   .tl .a{grid-column:1;grid-row:2}
   .tl p{grid-column:2;grid-row:1/span 2}
   .tl .y{font-size:26px}
@@ -324,7 +402,16 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 @media (max-width:520px){
   .wrap{padding:0 18px}
   .call .now{display:block;font-size:.34em;margin:12px 0 0;vertical-align:0}
-  .hero .in{margin-top:-26vw}
+  .call{font-size:clamp(60px,19vw,96px)}
+  .hero h1{font-size:28px;margin-top:16px}
+  .champ{font-size:17px;gap:10px;margin-top:14px}
+  .champ b{height:26px;padding:0 9px;font-size:12px}
+  .hero .lead{font-size:15.5px}
+  .hmeta{margin-top:24px}
+  .hmeta p{font-size:14.5px}
+  .morse{margin-top:24px}
+  .brand{font-size:14px;gap:8px}
+  .brand em{display:none}
   .clips{grid-template-columns:minmax(0,1fr)}
   .clip .pl{aspect-ratio:4/3}
   .flags button{width:30px}
@@ -341,6 +428,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     <a href="#chron"><span class="l-ru">Хроника</span><span class="l-en">Chronicle</span><span class="l-hy">Ժամանակագրություն</span></a>
     <a href="#archive"><span class="l-ru">Архив</span><span class="l-en">Archive</span><span class="l-hy">Արխիվ</span></a>
     <a href="#people"><span class="l-ru">Люди</span><span class="l-en">People</span><span class="l-hy">Մարդիկ</span></a>
+    <a href="#tx"><span class="l-ru">Передатчик</span><span class="l-en">Transmitter</span><span class="l-hy">Հաղորդիչ</span></a>
     <a href="#sources"><span class="l-ru">Источники</span><span class="l-en">Sources</span><span class="l-hy">Աղբյուրներ</span></a>
   </nav>
   <div class="hr">
@@ -383,8 +471,8 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <p><span class="l-ru">Роберт Григорян на 160 метрах с 1982 года, одна из самых активных станций республики. На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров.</span><span class="l-en">Robert Grigoryan is on 160 meters since 1982, one of the most active stations in the republic. On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up.</span><span class="l-hy">Ռոբերտ Գրիգորյանը 160 մետրում է 1982-ից՝ հանրապետության ամենաակտիվ կայաններից մեկը։ 1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։</span></p>
     </div>
     <figure class="portrait">
-      <img src="img/hero/robert-1988.jpg" width="760" height="1714" alt="Robert Grigoryan, Yerevan, December 1988" loading="lazy" decoding="async">
-      <figcaption class="m"><span class="l-ru">Роберт Григорян · Ереван, декабрь 1988 · архив EK7DX</span><span class="l-en">Robert Grigoryan · Yerevan, December 1988 · EK7DX archive</span><span class="l-hy">Ռոբերտ Գրիգորյան · Երևան, դեկտեմբեր 1988 · EK7DX արխիվ</span></figcaption>
+      <button type="button" class="ph" data-lb="img/hero/ug7gwo-1988.jpg" data-tags="[[20,37,16]]" data-pin data-cap="UG7GWO, Ереван, декабрь 1988 · UG6GAW (Роберт), UG6GDR, DL1VJ, UG6GAT · архив EK7DX"><img src="img/hero/ug7gwo-1988.jpg" width="1656" height="1286" alt="UG7GWO, Yerevan, December 1988: UG6GAW, UG6GDR, DL1VJ, UG6GAT" loading="lazy" decoding="async"><span class="gtags" aria-hidden="true"></span></button>
+      <figcaption class="m"><span class="l-ru">Станция UG7GWO, Ереван, декабрь 1988. Слева направо: Роберт (UG6GAW), UG6GDR, DL1VJ, UG6GAT. Архив EK7DX.</span><span class="l-en">UG7GWO station, Yerevan, December 1988. Left to right: Robert (UG6GAW), UG6GDR, DL1VJ, UG6GAT. EK7DX archive.</span><span class="l-hy">UG7GWO կայան, Երևան, դեկտեմբեր 1988։ Ձախից աջ՝ Ռոբերտ (UG6GAW), UG6GDR, DL1VJ, UG6GAT։ EK7DX արխիվ։</span></figcaption>
     </figure>
   </section>
 
@@ -398,9 +486,11 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <div class="fg"><div class="v am">#1</div><p><span class="l-ru">CQ WW DX SSB 1990. 805 связей, 119 955 очков — почти вчетверо больше второго.</span><span class="l-en">CQ WW DX SSB 1990. 805 QSOs, 119,955 points, almost four times the runner-up.</span><span class="l-hy">CQ WW DX SSB 1990։ 805 կապ, 119 955 միավոր՝ գրեթե չորս անգամ ավելի, քան երկրորդը։</span></p><span class="m"><span class="l-ru">Второй: <b>VE1ZZ</b>, Канада · 31 974</span><span class="l-en">Second: <b>VE1ZZ</b>, Canada · 31,974</span><span class="l-hy">Երկրորդը՝ <b>VE1ZZ</b>, Կանադա · 31 974</span></span></div>
       <div class="fg"><div class="v">26<small><span class="l-ru">лет</span><span class="l-en">years</span><span class="l-hy">տարեկան</span></small></div><p><span class="l-ru">Столько Роберту осенью 1990 года. В январе того же года он второй в мире в CQ WW 160 CW.</span><span class="l-en">Robert's age in autumn 1990. That January he is second in the world in CQ WW 160 CW.</span><span class="l-hy">Այսքան է Ռոբերտը 1990-ի աշնանը։ Նույն տարվա հունվարին նա աշխարհում երկրորդն է CQ WW 160 CW-ում։</span></p><span class="m"><span class="l-ru">Первый: <b>VE6OU/3</b>, Канада · +7 724</span><span class="l-en">First: <b>VE6OU/3</b>, Canada · +7,724</span><span class="l-hy">Առաջինը՝ <b>VE6OU/3</b>, Կանադա · +7 724</span></span></div>
     </div>
-    <div class="duo">
-      <button type="button" class="obj" data-lb="img/awards/cqww-cw-1990-ug6gaw.jpg" data-pdf="img/awards/cqww-cw-1990-ug6gaw.pdf" data-group="c90" data-cap="CQ WW DX CW 1990 · UG6GAW · #1 World · #1 Asia · World Record · CQ Zone 21 Record"><span class="m t1">CW · 1990</span><img src="img/awards/cqww-cw-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX CW 1990 certificate, UG6GAW, #1 World" loading="lazy" decoding="async"><span class="m t2">#1 World · World Record · CQ Zone 21 Record</span></button>
-      <button type="button" class="obj" data-lb="img/awards/cqww-ssb-1990-ug6gaw.jpg" data-pdf="img/awards/cqww-ssb-1990-ug6gaw.pdf" data-group="c90" data-cap="CQ WW DX SSB 1990 · UG6GAW · #1 World · #1 Asia"><span class="m t1">SSB · 1990</span><img src="img/awards/cqww-ssb-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX SSB 1990 certificate, UG6GAW, #1 World" loading="lazy" decoding="async"><span class="m t2">#1 World · #1 Asia</span></button>
+    <div class="certs" id="certs">
+      <div class="chead"><span class="m"><span class="l-ru">Сертификаты CQ WW DX · листайте</span><span class="l-en">CQ WW DX certificates · swipe through</span><span class="l-hy">CQ WW DX վկայագրեր · թերթեք</span></span>
+        <div class="cnav"><span class="m" id="ccount">01 / 10</span><button type="button" class="cbtn" id="cprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="cnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+      <div class="ctrack" id="ctrack" tabindex="0" aria-label="Certificates"></div>
+      <div class="cbar"><i id="cfill"></i></div>
     </div>
     <div class="boards">
       <table class="res"><caption>CQ WW DX CW 1990 · SO High 160M</caption>
@@ -437,7 +527,15 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <div>
         <p class="lead2"><span class="l-ru">DXCC — главный диплом американской лиги ARRL: сто стран, подтверждённых QSL-карточками. На 160 метрах это удаётся единицам.</span><span class="l-en">DXCC is the flagship award of the American Radio Relay League: a hundred countries confirmed by QSL cards. On 160 meters only a few ever make it.</span><span class="l-hy">DXCC-ն Ամերիկյան ռադիոսիրողների լիգայի (ARRL) գլխավոր դիպլոմն է՝ QSL քարտերով հաստատված հարյուր երկիր։ 160 մետրում դրան հասնում են միայն քչերը։</span></p>
         <p><span class="l-ru">В списке обладателей 160M DXCC бывшего СССР UG6GAW — второй, сразу после легендарного UT5AB. Номер #144 он пишет от руки уже на карточках октября 1984 года, а позже печатает на лицевой стороне QSL EK6GC. В книге ARRL о диапазоне 160 м «DXing on the Edge» его позывной — в том же списке под №144.</span><span class="l-en">In the list of former-USSR 160M DXCC holders, UG6GAW is second, right after the legendary UT5AB. He handwrites #144 on his cards as early as October 1984 and later prints it on the front of his EK6GC cards. ARRL's 160-meter book «DXing on the Edge» lists his call at #144 too.</span><span class="l-hy">Նախկին ԽՍՀՄ-ի 160M DXCC դիպլոմակիրների ցուցակում UG6GAW-ն երկրորդն է՝ լեգենդար UT5AB-ից անմիջապես հետո։ Դեռ 1984 թ. հոկտեմբերին նա ձեռքով գրում է #144 իր քարտերին, իսկ հետագայում այն տպում է EK6GC քարտերի դիմային կողմին։ ARRL-ի՝ 160 մետրին նվիրված «DXing on the Edge» գրքում ևս նրա կոչանշանը նշված է #144 համարով։</span></p>
-        <p><span class="l-ru">UG6GAW и сегодня в официальном списке ARRL DXCC 160M: 101 страна. Единственный обладатель DXCC-160 из Армении.</span><span class="l-en">UG6GAW is in ARRL's official DXCC 160M standings today with 101 entities, and Armenia's only DXCC-160 holder.</span><span class="l-hy">UG6GAW-ն այսօր ARRL-ի DXCC 160M պաշտոնական աղյուսակում է՝ 101 երկրով, և Հայաստանի միակ DXCC-160 դիպլոմակիրն է։</span></p>
+        <p><span class="l-ru">UG6GAW и сегодня в официальном списке ARRL DXCC 160M: 101 страна. В обзоре QRZ.RU 2009 года он назван единственным обладателем DXCC-160 из Армении.</span><span class="l-en">UG6GAW is in ARRL's official DXCC 160M standings today with 101 entities. A 2009 QRZ.RU review names him Armenia's only DXCC-160 holder.</span><span class="l-hy">UG6GAW-ն այսօր ARRL-ի DXCC 160M պաշտոնական աղյուսակում է՝ 101 երկրով։ QRZ.RU-ի 2009 թ. ակնարկում նա նշված է որպես Հայաստանի միակ DXCC-160 դիպլոմակիր։</span></p>
+        <div class="clar">
+          <b><span class="l-ru">Не путать: три разных достижения</span><span class="l-en">Three different achievements</span><span class="l-hy">Երեք տարբեր նվաճում</span></b>
+          <dl>
+            <dt>№1</dt><dd><span class="l-ru">Место в мире в соревновании CQ WW DX 1990, категория «один оператор, 160 м». Кто за 48 часов наберёт больше очков.</span><span class="l-en">World placing in the CQ WW DX contest, 1990, single operator 160 m: who scores the most in 48 hours.</span><span class="l-hy">Տեղն աշխարհում CQ WW DX 1990 մրցումում՝ «մեկ օպերատոր, 160 մ» անվանակարգում. ով 48 ժամում ավելի շատ միավոր կհավաքի։</span></dd>
+            <dt>2-й</dt><dd><span class="l-ru">Второй в СССР, кто получил диплом DXCC на 160 метрах — 100 стран, подтверждённых карточками. Первый — UT5AB из Киева, диплом №82.</span><span class="l-en">The second in the USSR to earn DXCC on 160 meters: 100 countries confirmed by QSL cards. The first is UT5AB of Kyiv, certificate #82.</span><span class="l-hy">ԽՍՀՄ-ում երկրորդը, ով ստացել է DXCC դիպլոմ 160 մետրում՝ QSL քարտերով հաստատված 100 երկիր։ Առաջինը Կիևից UT5AB-ն է՝ դիպլոմ №82։</span></dd>
+            <dt>№144</dt><dd><span class="l-ru">Номер его диплома в мировой нумерации ARRL.</span><span class="l-en">His certificate number in ARRL's worldwide numbering.</span><span class="l-hy">Նրա դիպլոմի համարը ARRL-ի համաշխարհային համարակալմամբ։</span></dd>
+          </dl>
+        </div>
         <p class="src m"><a href="https://uarl.com.ua/ut5ab/ut5ab160.htm">160M DXCC · ex-USSR</a> · <a href="https://www.arrl.org/system/dxcc/view/DXCC-160M-20261106-A4.pdf">ARRL DXCC 160M, 06.11.2026</a> · <a href="https://m.qrz.ru/articles/article532.html">QRZ.RU, 2009</a> · <a href="https://archive.org/details/dxingonedgethril00jeff">K1ZM, «DXing on the Edge»</a></p>
       </div>
     </div>
@@ -446,8 +544,8 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 
 <section class="band" id="rescue"><div class="wrap">
   <span class="m">03 · <span class="l-ru">Чернобыль, 1986 · Спитак и Ленинакан, 1988</span><span class="l-en">Chernobyl, 1986 · Spitak and Leninakan, 1988</span><span class="l-hy">Չեռնոբիլ, 1986 · Սպիտակ և Լենինական, 1988</span></span>
-  <q class="rv"><span class="l-ru">Из Спитака работали Карен Пулузян, Роберт Григорян, Рубен Симонян</span><span class="l-en">From Spitak worked Karen Puluzyan, Robert Grigoryan, Ruben Simonyan</span><span class="l-hy">Սպիտակից աշխատում էին Կարեն Պուլուզյանը, Ռոբերտ Գրիգորյանը, Ռուբեն Սիմոնյանը</span></q>
-  <span class="m qs" style="display:block"><span class="l-ru">«Патріот Батьківщини», Киев, 8 февраля 1989 · перевод с украинского</span><span class="l-en">«Patriot Batkivshchyny», Kyiv, 8 February 1989 · translated from Ukrainian</span><span class="l-hy">«Պատրիոտ Բատկիվշչինի», Կիև, 1989 թ. փետրվարի 8 · թարգմանություն ուկրաիներենից</span></span>
+  <p class="bq rv"><span class="l-ru">Декабрь 1988. В эфире — Карен Карапетян, Карен Пулузян, Роберт Григорян, Рубен Симонян, Валерий Кириллов и другие радиолюбители Армении.</span><span class="l-en">December 1988. On the air: Karen Karapetyan, Karen Puluzyan, Robert Grigoryan, Ruben Simonyan, Valery Kirillov and other Armenian radio amateurs.</span><span class="l-hy">Դեկտեմբեր 1988։ Եթերում են Կարեն Կարապետյանը, Կարեն Պուլուզյանը, Ռոբերտ Գրիգորյանը, Ռուբեն Սիմոնյանը, Վալերի Կիրիլովը և Հայաստանի այլ ռադիոսիրողներ։</span></p>
+  <span class="m qs" style="display:block"><span class="l-ru">По газетам «Комсомолец» (Ереван, 24.12.1988) и «Патріот Батьківщини» (Киев, 8.02.1989) — сканы ниже</span><span class="l-en">From the newspapers «Komsomolets» (Yerevan, 24 Dec 1988) and «Patriot Batkivshchyny» (Kyiv, 8 Feb 1989), scans below</span><span class="l-hy">Ըստ «Կոմսոմոլեց» (Երևան, 24.12.1988) և «Պատրիոտ Բատկիվշչինի» (Կիև, 8.02.1989) թերթերի՝ սկաները ներքևում</span></span>
   <div class="cols rv">
     <div>
       <span class="m">1986 · <span class="l-ru">Чернобыль</span><span class="l-en">Chernobyl</span><span class="l-hy">Չեռնոբիլ</span></span>
@@ -620,9 +718,31 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 </div>
 </main>
 
+<section class="band tx" id="tx"><div class="wrap">
+  <div class="txhead">
+    <span class="m">11 · <span class="l-ru">Передатчик</span><span class="l-en">Transmitter</span><span class="l-hy">Հաղորդիչ</span></span>
+    <h2><span class="l-ru">Передайте ему 73</span><span class="l-en">Send him 73</span><span class="l-hy">Ուղարկեք նրան 73</span></h2>
+    <p><span class="l-ru">Напишите что угодно — и сайт передаст это морзянкой, как в эфире на 1 832 кГц. «73» на языке радиолюбителей — «наилучшие пожелания».</span><span class="l-en">Type anything and the site sends it in Morse code, as if on the air at 1,832 kHz. «73» is radio amateurs' shorthand for “best regards”.</span><span class="l-hy">Գրեք ցանկացած բան, և կայքը այն կհաղորդի Մորզեի այբուբենով, ինչպես եթերում՝ 1 832 կՀց-ում։ «73»-ը ռադիոսիրողների լեզվով նշանակում է «լավագույն մաղթանքներ»։</span></p>
+  </div>
+  <div class="txbox">
+    <div class="txrow">
+      <input id="txin" type="text" maxlength="60" value="73 UG6GAW" autocomplete="off" spellcheck="false" aria-label="Message">
+      <button type="button" class="txgo" id="txgo"><i class="lamp"></i><span id="txlbl"><span class="l-ru">Передать</span><span class="l-en">Send</span><span class="l-hy">Հաղորդել</span></span></button>
+    </div>
+    <div class="txopts">
+      <div class="chips" id="txchips"><button type="button">73 UG6GAW</button><button type="button">CQ DE EK6GC</button><button type="button">TNX FER QSO</button><button type="button">HPY BDAY OM</button></div>
+      <div class="wpm" role="group" aria-label="Speed"><span class="m">WPM</span><button type="button" data-w="12">12</button><button type="button" data-w="18" aria-pressed="true">18</button><button type="button" data-w="25">25</button></div>
+    </div>
+    <div class="txscreen">
+      <div class="txnow"><span id="txch">—</span><span class="m" id="txcode">&nbsp;</span></div>
+      <div class="txtape" id="txtape"></div>
+    </div>
+  </div>
+</div></section>
+
 <footer><div class="wrap">
-  <div><div class="fc">73<span> · UG6GAW / EK6GC</span></div></div>
-  <div class="m" style="color:var(--light3);text-align:right">ug6gaw.com · ek6gc.com<br><a href="v1.html"><span class="l-ru">Прежняя версия сайта</span><span class="l-en">Previous version of the site</span><span class="l-hy">Կայքի նախորդ տարբերակը</span></a></div>
+  <div class="fcalls" id="fcalls" aria-label="UG6GAW / EK6GC"></div>
+  <div class="fbot"><span class="m">© 2026 · UG6GAW / EK6GC</span><span class="m">ug6gaw.com · ek6gc.com</span><span class="m f73" id="f73" title="73"></span></div>
 </div></footer>
 
 <dialog class="lb" id="lb">
@@ -750,7 +870,7 @@ function TR(s){return window.HY[s]||s}
 
   /* ---------- header + menu ---------- */
   var hd=$('#hd'),hero=$('#top'),sh=$('#sheet'),mb=$('#menubtn');
-  function onScroll(){hd.classList.toggle('solid',scrollY>hero.offsetHeight-64||sh.classList.contains('open'))}
+  function onScroll(){var so=scrollY>hero.offsetHeight-64&&!sh.classList.contains('open');hd.classList.toggle('solid',so);hd.classList.toggle('dk',!so&&(scrollY>8||sh.classList.contains('open')))}
   addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
   sh.innerHTML=$$('#nav a').map(function(a,i){return '<a href="'+a.getAttribute('href')+'"><small>'+(i<9?'0':'')+(i+1)+'</small>'+a.innerHTML+'</a>'}).join('');
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
@@ -765,6 +885,41 @@ function TR(s){return window.HY[s]||s}
     $$('#morse .tr').forEach(function(t){t.innerHTML=h+h});
   })();
 
+  /* ---------- Morse: footer + transmitter ---------- */
+  var MORSE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
+    '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','.':'.-.-.-',',':'--..--','?':'..--..','/':'-..-.','=':'-...-','!':'-.-.--','-':'-....-',
+    'А':'.-','Б':'-...','В':'.--','Г':'--.','Д':'-..','Е':'.','Ё':'.','Ж':'...-','З':'--..','И':'..','Й':'.---','К':'-.-','Л':'.-..','М':'--','Н':'-.','О':'---','П':'.--.','Р':'.-.','С':'...','Т':'-','У':'..-','Ф':'..-.','Х':'....','Ц':'-.-.','Ч':'---.','Ш':'----','Щ':'--.-','Ъ':'--.--','Ы':'-.--','Ь':'-..-','Э':'..-..','Ю':'..--','Я':'.-.-'};
+  function sg(code){return '<span class="sg">'+code.split('').map(function(x){return '<i class="'+(x==='.'?'d':'h')+'"></i>'}).join('')+'</span>'}
+  $('#fcalls').innerHTML=['UG6GAW','/','EK6GC'].map(function(w){return '<span class="fw">'+w.split('').map(function(c){return '<span class="fl'+(c==='/'?' sl':'')+'"><b>'+c+'</b>'+sg(MORSE[c])+'</span>'}).join('')+'</span>'}).join('');
+  $('#f73').textContent='−−···  ···−−';
+  (function(){
+    var inp=$('#txin'),go=$('#txgo'),lbl=$('#txlbl'),tape=$('#txtape'),chEl=$('#txch'),codeEl=$('#txcode'),wpm=18,ctx=null,osc=null,gain=null,seq=[],pos=0,timer=null,state='idle';
+    function label(st){lbl.innerHTML=st==='play'?T3('Пауза','Pause','Դադար').replace(/^/,'<span>')+'</span>':st==='pause'?'<span>'+T3('Продолжить','Resume','Շարունակել')+'</span>':'<span class="l-ru">Передать</span><span class="l-en">Send</span><span class="l-hy">Հաղորդել</span>'}
+    function build(){var txt=inp.value.toUpperCase().replace(/Ё/g,'Е').slice(0,60);var h='';seq=[];var k=0;
+      txt.split('').forEach(function(c,ci){if(c===' '){h+='<span class="ch sp"></span>';seq.push({gap:7});return}var m=MORSE[c];if(!m)return;
+        h+='<span class="ch" data-c="'+ci+'">'+sg(m)+'<span class="lt">'+c+'</span></span>';
+        m.split('').forEach(function(x,xi){seq.push({on:x==='.'?1:3,ch:c,code:m,el:k,xi:xi,first:xi===0});k++;seq.push({gap:xi===m.length-1?3:1})})});
+      tape.innerHTML=h;pos=0}
+    function audio(){if(!ctx){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;ctx=new AC();gain=ctx.createGain();gain.gain.value=0;gain.connect(ctx.destination);osc=ctx.createOscillator();osc.frequency.value=650;osc.connect(gain);osc.start()}if(ctx.state==='suspended')ctx.resume()}
+    function tone(on){if(!gain)return;var t=ctx.currentTime;gain.gain.cancelScheduledValues(t);gain.gain.setTargetAtTime(on?.18:0,t,.004)}
+    function step(){if(state!=='play')return;if(pos>=seq.length){finish();return}
+      var u=1200/wpm,s=seq[pos],segs=tape.querySelectorAll('.sg i');pos++;
+      if(s.gap){tone(false);go.classList.remove('on');timer=setTimeout(step,s.gap*u);return}
+      var el=segs[s.el];if(s.first){tape.querySelectorAll('.ch.cur').forEach(function(c){c.classList.remove('cur')});if(el)el.closest('.ch').classList.add('cur');chEl.textContent=s.ch;codeEl.textContent=s.code.replace(/\./g,'·').replace(/-/g,'−')}
+      if(el)el.classList.add('on');tone(true);go.classList.add('on');
+      timer=setTimeout(function(){tone(false);go.classList.remove('on');if(el){el.classList.remove('on');el.classList.add('done')}step()},s.on*u)}
+    function finish(){state='idle';tone(false);go.classList.remove('on');label('idle');tape.querySelectorAll('.ch.cur').forEach(function(c){c.classList.remove('cur')})}
+    function start(){audio();if(state==='idle'){build();chEl.textContent='—'}state='play';label('play');step()}
+    function pause(){state='pause';clearTimeout(timer);tone(false);go.classList.remove('on');label('pause')}
+    go.addEventListener('click',function(){if(state==='play')pause();else start()});
+    inp.addEventListener('input',function(){clearTimeout(timer);tone(false);state='idle';label('idle');build();chEl.textContent='—';codeEl.innerHTML='&nbsp;'});
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();clearTimeout(timer);state='idle';start()}});
+    $$('#txchips button').forEach(function(b){b.addEventListener('click',function(){inp.value=b.textContent;clearTimeout(timer);tone(false);state='idle';start()})});
+    $$('.wpm button').forEach(function(b){b.addEventListener('click',function(){wpm=+b.dataset.w;$$('.wpm button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})})});
+    document.addEventListener('langchange',function(){label(state)});
+    build();
+  })();
+
   /* ---------- reveal ---------- */
   if('IntersectionObserver' in window&&!RM){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});$$('.rv').forEach(function(el){io.observe(el)})}
   else $$('.rv').forEach(function(el){el.classList.add('in')});
@@ -777,6 +932,35 @@ function TR(s){return window.HY[s]||s}
       else if(W-(cx+r)>=cx-r){s.className='lbtag r';s.style.left=(cx+r+g)+'px';s.style.top=cy+'px'}
       else{s.className='lbtag l';s.style.left=(cx-r-g)+'px';s.style.top=cy+'px'}
       box.appendChild(s)})}
+
+  $$('[data-pin]').forEach(function(b){var im=b.querySelector('img'),gt=b.querySelector('.gtags'),tg=JSON.parse(b.dataset.tags),f=function(){if(im.complete&&im.naturalWidth)pinTags(gt,im,tg,false)};im.addEventListener('load',f);f();addEventListener('resize',f);document.addEventListener('langchange',f)});
+
+  /* ---------- live certificate carousel ---------- */
+  (function(){
+    var tr=$('#ctrack'),cnt=$('#ccount'),fill=$('#cfill'),pv=$('#cprev'),nx=$('#cnext');
+    tr.innerHTML=A.map(function(a,i){var w=a[4]==='#1 World',rec=a[5];
+      return '<figure class="cs"><button type="button" class="cimg" data-lb="img/awards/'+a[0]+'.jpg" data-pdf="img/awards/'+a[0]+'.pdf" data-group="certs" data-cap="CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4]+' · '+rec+'"><span class="sheetc"><img src="img/awards/'+a[0]+'.jpg" width="600" height="450" alt="CQ WW DX '+a[2]+' '+a[1]+' certificate, '+a[3]+', '+a[4]+'" loading="'+(i<3?'eager':'lazy')+'" decoding="async" draggable="false"><span class="shine"></span></span></button>'+
+        '<figcaption><div><div class="ct">'+a[1]+' · '+a[2]+'<small>'+a[3]+'</small></div><span class="m rec'+(w?' hl':'')+'">'+a[4]+' · '+rec+'</span></div><a class="pdf" href="img/awards/'+a[0]+'.pdf" download>PDF ↓</a></figcaption></figure>'}).join('');
+    var items=[].slice.call(tr.children),n=items.length;
+    function idx(){var x=tr.scrollLeft,best=0,bd=1e9;items.forEach(function(it,k){var d=Math.abs(it.offsetLeft-tr.offsetLeft-x);if(d<bd){bd=d;best=k}});return best}
+    function upd(){var k=idx(),vis=Math.max(1,Math.round(tr.clientWidth/(items[0].offsetWidth+24)));cnt.textContent=('0'+(k+1)).slice(-2)+' / '+('0'+n).slice(-2);
+      fill.style.width=(100*vis/n)+'%';fill.style.left=(100*Math.min(k,n-vis)/n)+'%';pv.disabled=tr.scrollLeft<4;nx.disabled=tr.scrollLeft>tr.scrollWidth-tr.clientWidth-4}
+    function go(k){k=Math.max(0,Math.min(n-1,k));tr.scrollTo({left:items[k].offsetLeft-tr.offsetLeft,behavior:RM?'auto':'smooth'})}
+    pv.addEventListener('click',function(){go(idx()-1)});nx.addEventListener('click',function(){go(idx()+1)});
+    tr.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();go(idx()+1)}if(e.key==='ArrowLeft'){e.preventDefault();go(idx()-1)}});
+    var t;tr.addEventListener('scroll',function(){cancelAnimationFrame(t);t=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);upd();
+    // drag with the mouse; a real drag must not open the lightbox
+    var down=false,sx=0,sl=0,moved=false;
+    tr.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=tr.scrollLeft});
+    addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>4){moved=true;tr.classList.add('drag')}if(moved)tr.scrollLeft=sl-dx});
+    addEventListener('pointerup',function(){if(!down)return;down=false;if(moved){tr.classList.remove('drag');go(idx())}});
+    tr.addEventListener('click',function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+    // the sheet follows the cursor: gentle 3D tilt and a moving shine
+    if(!RM&&matchMedia('(hover:hover)').matches)items.forEach(function(it){var b=it.querySelector('.cimg');
+      b.addEventListener('pointermove',function(e){if(down)return;var r=b.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+        b.classList.add('live');b.style.setProperty('--ry',((px-.5)*10).toFixed(2)+'deg');b.style.setProperty('--rx',((.5-py)*8).toFixed(2)+'deg');b.style.setProperty('--mx',(px*100)+'%');b.style.setProperty('--my',(py*100)+'%')});
+      b.addEventListener('pointerleave',function(){b.classList.remove('live');b.style.setProperty('--rx','0deg');b.style.setProperty('--ry','0deg')})});
+  })();
 
   /* ---------- lightbox ---------- */
   var lb=$('#lb'),li=$('#lb-img'),lc=$('#lb-cap'),lp=$('#lb-pdf'),lt=$('#lb-tags'),group=[],gi=0,cur=null;
@@ -856,7 +1040,7 @@ function TR(s){return window.HY[s]||s}
       function X(y){return Lm+(W-Lm-Rm)*(y-y0)/(y1-y0)}function Y(p){return T+(H-T-Bm)*Math.log(p)/Math.log(maxP)}
       [1,2,3,5,10].forEach(function(p){el('line',{x1:Lm,x2:W-Rm+14,y1:Y(p),y2:Y(p),stroke:GRID,'stroke-width':1});el('text',{x:Lm-10,y:Y(p)+4,'text-anchor':'end','font-size':11.5,fill:AX,'font-family':'JetBrains Mono, monospace'},'#'+p)});
       var data=[1984,1985,1986,1987,1990,1995];
-      for(var y=y0;y<=y1;y++){var has=data.indexOf(y)>=0;if(sm&&!has)continue;el('text',{x:X(y),y:H-Bm+22,'text-anchor':'middle','font-size':11.5,fill:has?'#67665f':'#c9c7bf','font-family':'JetBrains Mono, monospace'},sm?"'"+String(y).slice(2):String(y))}
+      for(var y=y0;y<=y1;y++){var has=data.indexOf(y)>=0;if(sm&&[1984,1987,1990,1995].indexOf(y)<0)continue;el('text',{x:X(y),y:H-Bm+22,'text-anchor':'middle','font-size':11.5,fill:has?'#67665f':'#c9c7bf','font-family':'JetBrains Mono, monospace'},sm?"'"+String(y).slice(2):String(y))}
       el('line',{x1:X(1990),x2:X(1990),y1:T-14,y2:H-Bm,stroke:'#0d0d0c','stroke-width':1,'stroke-dasharray':'2 4',opacity:.35});
       el('text',{x:X(1990),y:T-22,'text-anchor':'middle','font-size':sm?11.5:12.5,'font-weight':600,fill:'#0d0d0c','font-family':'Onest, sans-serif'},T3('1990 — первое место в мире','1990 — first in the world','1990 — առաջին տեղ աշխարհում'));
       S.forEach(function(s){el('path',{d:s.d.map(function(p,i){return(i?'L':'M')+X(p[0])+' '+Y(p[1])}).join(' '),fill:'none',stroke:s.c,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'})});
