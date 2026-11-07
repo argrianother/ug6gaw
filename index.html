@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -19,15 +19,15 @@
     --amber:#ffb23e; --amber2:#ffd98a; --green:#3dffa2; --green2:#1fa37a; --red:#ff4a3d; --blue:#62b0ff;
     --glow-a:0 0 18px rgba(255,178,62,.55),0 0 42px rgba(255,178,62,.25);
     --glow-g:0 0 14px rgba(61,255,162,.5);
-    --display:"Unbounded","Arial Black",system-ui,sans-serif;
-    --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+    --display:"Unbounded","Noto Sans Armenian","Arial Black",system-ui,sans-serif;
+    --body:"Manrope","Noto Sans Armenian",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"JetBrains Mono","Noto Sans Armenian",ui-monospace,Menlo,monospace;
     color-scheme:dark;
   }
   *{box-sizing:border-box}
   html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:70px}
   body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:18px;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-  html.en .l-ru, html:not(.en) .l-en{display:none !important}
+  html:not([data-lang="ru"]) .l-ru, html:not([data-lang="en"]) .l-en, html:not([data-lang="hy"]) .l-hy{display:none !important}
   a{color:var(--amber2);text-decoration-color:rgba(255,178,62,.45);text-underline-offset:3px}
   a:hover{color:var(--amber)}
   :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
@@ -61,6 +61,11 @@
   .pill{display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden;background:rgba(10,15,24,.6)}
   .pill button{font:700 12px var(--mono);letter-spacing:.06em;background:transparent;color:var(--muted);border:0;padding:7px 12px;cursor:pointer}
   .pill button[aria-pressed="true"]{background:var(--amber);color:#1a1205}
+  .flags{display:flex;gap:6px;align-items:center;padding:4px 6px;border:1px solid var(--line2);border-radius:999px;background:rgba(10,15,24,.6)}
+  .flags button{width:32px;height:22px;padding:0;border:0;border-radius:5px;overflow:hidden;cursor:pointer;opacity:.4;filter:saturate(.5);transition:opacity .2s,filter .2s,transform .2s,box-shadow .2s;background:none}
+  .flags button svg{display:block;width:100%;height:100%}
+  .flags button:hover{opacity:.85;transform:translateY(-1px)}
+  .flags button[aria-pressed="true"]{opacity:1;filter:none;box-shadow:0 0 0 2px var(--amber),0 0 14px rgba(255,178,62,.5)}
   .snd{width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:rgba(10,15,24,.6);color:var(--muted);cursor:pointer;display:grid;place-items:center}
   .snd[aria-pressed="true"]{color:var(--amber);border-color:var(--amber);box-shadow:var(--glow-a)}
   .snd svg{width:16px;height:16px}
@@ -240,6 +245,11 @@
   .chart text{font-family:var(--mono);fill:var(--muted)}
   .chart .grid{stroke:var(--line);stroke-width:1}
   .chart .val{fill:var(--text);font-weight:700}
+  .chart{position:relative}
+  .ctip{position:absolute;z-index:3;pointer-events:none;transform:translate(-50%,-100%);background:rgba(8,12,20,.96);border:1px solid #2a3a52;border-radius:10px;padding:9px 12px;font:500 12.5px/1.5 var(--mono);color:#c9d3e2;white-space:nowrap;box-shadow:0 12px 30px -10px rgba(0,0,0,.8);opacity:0;transition:opacity .12s}
+  .ctip.on{opacity:1}
+  .ctip b{color:#eaf0f8} .ctip em{font-style:normal;color:#ffd98a;font-weight:700}
+  .gbar{transition:filter .2s}
   .legend{display:flex;gap:22px;flex-wrap:wrap;font:700 13px var(--mono);color:var(--muted);margin:0 0 14px;letter-spacing:.06em}
   .legend i{display:inline-block;width:12px;height:12px;border-radius:12px;margin-right:8px;vertical-align:-1px}
   .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
@@ -313,11 +323,16 @@
   .tx .code .cur{color:#fff;text-shadow:var(--glow-a)}
   .wpm{display:flex;align-items:center;gap:12px;margin-top:10px;font:700 12px var(--mono);color:var(--muted);letter-spacing:.08em}
   .wpm input[type=range]{width:160px;accent-color:var(--amber);padding:0;font-size:12px;border:0;background:none}
-  .keyart svg{display:block;width:100%;height:auto}
-  .keyart .lever{transform-origin:118px 150px;transition:transform .03s}
-  .keyart.down .lever{transform:rotate(3deg)}
-  .keyart .spark{opacity:0;transition:opacity .03s}
-  .keyart.down .spark{opacity:1}
+  .keyart{margin:0}
+  .kstage{position:relative;aspect-ratio:3/2;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 52% 56%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 52% 56%,#000 58%,transparent 100%)}
+  .kstage img{position:absolute;display:block;max-width:none}
+  .kbase{inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.82) contrast(1.08) saturate(1.05)}
+  .klever{left:25.781%;top:19.531%;width:65.573%;transform-origin:34.95% 87.33%;transition:transform .03s linear;filter:brightness(.82) contrast(1.08) saturate(1.05);will-change:transform}
+  .keyart.down .klever{transform:rotate(.9deg)}
+  .kspark{position:absolute;left:64.844%;top:64.2%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe7a8 22%,rgba(255,178,62,.6) 45%,transparent 70%);opacity:0;transition:opacity .03s;mix-blend-mode:screen}
+  .keyart.down .kspark{opacity:1}
+  .keyart figcaption{font-size:12.5px;color:var(--dim);text-align:center;margin-top:6px}
+  .keyart figcaption a{color:var(--muted)}
 
   /* ---------- log ---------- */
   .logwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
@@ -424,20 +439,21 @@
     <a class="brand" href="#top"><span class="lamp" id="lamp"></span>UG6GAW <i>/</i> EK6GC</a>
     <nav class="nav" aria-label="Sections">
       <a href="#champion">1990</a>
-      <a href="#rescue"><span class="l-ru">Помощь</span><span class="l-en">Rescue</span></a>
+      <a href="#rescue"><span class="l-ru">Помощь</span><span class="l-en">Rescue</span><span class="l-hy">Փրկություն</span></a>
       <a href="#qsl">QSL</a>
-      <a href="#awards"><span class="l-ru">Дипломы</span><span class="l-en">Awards</span></a>
-      <a href="#people"><span class="l-ru">Люди</span><span class="l-en">People</span></a>
-      <a href="#timeline"><span class="l-ru">Годы</span><span class="l-en">Years</span></a>
-      <a href="#map"><span class="l-ru">Карта</span><span class="l-en">Map</span></a>
-      <a href="#tx"><span class="l-ru">Морзе</span><span class="l-en">Morse</span></a>
-      <a href="#log"><span class="l-ru">Журнал</span><span class="l-en">Log</span></a>
+      <a href="#awards"><span class="l-ru">Дипломы</span><span class="l-en">Awards</span><span class="l-hy">Պարգևներ</span></a>
+      <a href="#people"><span class="l-ru">Люди</span><span class="l-en">People</span><span class="l-hy">Մարդիկ</span></a>
+      <a href="#timeline"><span class="l-ru">Годы</span><span class="l-en">Years</span><span class="l-hy">Տարիներ</span></a>
+      <a href="#map"><span class="l-ru">Карта</span><span class="l-en">Map</span><span class="l-hy">Քարտեզ</span></a>
+      <a href="#tx"><span class="l-ru">Морзе</span><span class="l-en">Morse</span><span class="l-hy">Մորզե</span></a>
+      <a href="#log"><span class="l-ru">Журнал</span><span class="l-en">Log</span><span class="l-hy">Մատյան</span></a>
     </nav>
     <div class="ctrl">
       <button type="button" class="snd" id="snd" aria-pressed="false" aria-label="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path id="snd-w" d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg></button>
-      <div class="pill" role="group" aria-label="Language">
-        <button type="button" data-lang="ru" aria-pressed="true">RU</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      <div class="flags" role="group" aria-label="Language">
+        <button type="button" data-lang="hy" aria-pressed="false" title="Հայերեն" aria-label="Հայերեն"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#F2A800"/><rect width="30" height="13.33" fill="#0033A0"/><rect width="30" height="6.67" fill="#D90012"/></svg></button>
+        <button type="button" data-lang="ru" aria-pressed="true" title="Русский" aria-label="Русский"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#D52B1E"/><rect width="30" height="13.33" fill="#0039A6"/><rect width="30" height="6.67" fill="#fff"/></svg></button>
+        <button type="button" data-lang="en" aria-pressed="false" title="English" aria-label="English"><svg viewBox="0 0 38 20"><rect width="38" height="20" fill="#fff"/><g fill="#B22234"><rect y="0.000" width="38" height="1.538"/><rect y="3.077" width="38" height="1.538"/><rect y="6.154" width="38" height="1.538"/><rect y="9.231" width="38" height="1.538"/><rect y="12.308" width="38" height="1.538"/><rect y="15.385" width="38" height="1.538"/><rect y="18.462" width="38" height="1.538"/></g><rect width="15.2" height="10.77" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.30" cy="1.20" r=".55"/><circle cx="3.80" cy="1.20" r=".55"/><circle cx="6.30" cy="1.20" r=".55"/><circle cx="8.80" cy="1.20" r=".55"/><circle cx="11.30" cy="1.20" r=".55"/><circle cx="13.80" cy="1.20" r=".55"/><circle cx="2.55" cy="3.30" r=".55"/><circle cx="5.05" cy="3.30" r=".55"/><circle cx="7.55" cy="3.30" r=".55"/><circle cx="10.05" cy="3.30" r=".55"/><circle cx="12.55" cy="3.30" r=".55"/><circle cx="1.30" cy="5.40" r=".55"/><circle cx="3.80" cy="5.40" r=".55"/><circle cx="6.30" cy="5.40" r=".55"/><circle cx="8.80" cy="5.40" r=".55"/><circle cx="11.30" cy="5.40" r=".55"/><circle cx="13.80" cy="5.40" r=".55"/><circle cx="2.55" cy="7.50" r=".55"/><circle cx="5.05" cy="7.50" r=".55"/><circle cx="7.55" cy="7.50" r=".55"/><circle cx="10.05" cy="7.50" r=".55"/><circle cx="12.55" cy="7.50" r=".55"/><circle cx="1.30" cy="9.60" r=".55"/><circle cx="3.80" cy="9.60" r=".55"/><circle cx="6.30" cy="9.60" r=".55"/><circle cx="8.80" cy="9.60" r=".55"/><circle cx="11.30" cy="9.60" r=".55"/><circle cx="13.80" cy="9.60" r=".55"/></g></svg></button>
       </div>
     </div>
   </div>
@@ -456,12 +472,12 @@
       <div class="call" id="call">UG6GAW</div>
       <div class="bars" id="bars" aria-hidden="true"></div>
       <div class="decoder" id="decoder" aria-hidden="true"></div>
-      <h1><span class="l-ru">Роберт Григорян — <b>чемпион мира</b> на 160 метрах. Чаренцаван, Армения.</span><span class="l-en">Robert Grigoryan, <b>world champion</b> on 160 meters. Charentsavan, Armenia.</span></h1>
+      <h1><span class="l-ru">Роберт Григорян — <b>чемпион мира</b> на 160 метрах. Чаренцаван, Армения.</span><span class="l-en">Robert Grigoryan, <b>world champion</b> on 160 meters. Charentsavan, Armenia.</span><span class="l-hy">Ռոբերտ Գրիգորյան՝ 160 մետրանոց տիրույթի <b>աշխարհի չեմպիոն</b>։ Չարենցավան, Հայաստան։</span></h1>
       <p class="lead l-ru">Позывной UG6GAW, сегодня EK6GC. Первое место в мире в CQ World Wide DX Contest 1990 — сразу телеграфом и телефоном. Диплом ARRL DXCC на 160 метрах №144, второй в Советском Союзе. Сорок лет в эфире, тысячи связей со всем миром.</p>
-      <p class="lead l-en">Callsign UG6GAW, today EK6GC. First in the world in the 1990 CQ World Wide DX Contest, in both CW and SSB. ARRL 160-meter DXCC #144, the second in the Soviet Union. Forty years on the air and thousands of contacts with the whole world.</p>
+      <p class="lead l-en">Callsign UG6GAW, today EK6GC. First in the world in the 1990 CQ World Wide DX Contest, in both CW and SSB. ARRL 160-meter DXCC #144, the second in the Soviet Union. Forty years on the air and thousands of contacts with the whole world.</p><p class="lead l-hy">Կոչանշանը՝ UG6GAW, այսօր՝ EK6GC։ Աշխարհում առաջին տեղ 1990 թ. CQ World Wide DX Contest-ում՝ և՛ CW-ում, և՛ SSB-ում։ ARRL 160 մետրի DXCC #144՝ Խորհրդային Միությունում երկրորդը։ Քառասուն տարի եթերում և հազարավոր կապեր ամբողջ աշխարհի հետ։</p>
       <div class="cta">
-        <button type="button" class="btn primary" id="play"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="l-ru">Позывной в эфир</span><span class="l-en">Key the call</span></button>
-        <a class="btn ghost" href="#champion"><span class="l-ru">Сертификаты 1990</span><span class="l-en">1990 certificates</span> ↓</a>
+        <button type="button" class="btn primary" id="play"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="l-ru">Позывной в эфир</span><span class="l-en">Key the call</span><span class="l-hy">Հաղորդեք կոչանշանը</span></button>
+        <a class="btn ghost" href="#champion"><span class="l-ru">Сертификаты 1990</span><span class="l-en">1990 certificates</span><span class="l-hy">1990-ի վկայագրերը</span> ↓</a>
       </div>
     </div>
     <div class="fan" id="fan">
@@ -488,8 +504,8 @@
   <div class="hugeone" aria-hidden="true">#1</div>
   <div class="wrap">
     <div class="kicker">01 · 1990</div>
-    <h2><span class="l-ru">Первый в мире.<br>Дважды за один год.</span><span class="l-en">First in the world.<br>Twice in one year.</span></h2>
-    <p class="lede"><span class="l-ru">CQ WW DX — крупнейшее соревнование радиолюбителей планеты: 48 часов, десятки тысяч станций, задача — провести как можно больше связей с разными странами и зонами. В категории «один оператор, 160 метров» в 1990 году UG6GAW — первый в мире и в телеграфном туре, и в телефонном. Это его официальные сертификаты CQ.</span><span class="l-en">CQ WW DX is the planet's biggest amateur radio contest: 48 hours, tens of thousands of stations, and the goal of contacting as many countries and zones as possible. In the single operator 160 m category in 1990, UG6GAW is first in the world in both the CW and the SSB weekends. These are his official CQ certificates.</span></p>
+    <h2><span class="l-ru">Первый в мире.<br>Дважды за один год.</span><span class="l-en">First in the world.<br>Twice in one year.</span><span class="l-hy">Աշխարհում առաջինը։<br>Երկու անգամ՝ մեկ տարում։</span></h2>
+    <p class="lede"><span class="l-ru">CQ WW DX — крупнейшее соревнование радиолюбителей планеты: 48 часов, десятки тысяч станций, задача — провести как можно больше связей с разными странами и зонами. В категории «один оператор, 160 метров» в 1990 году UG6GAW — первый в мире и в телеграфном туре, и в телефонном. Это его официальные сертификаты CQ.</span><span class="l-en">CQ WW DX is the planet's biggest amateur radio contest: 48 hours, tens of thousands of stations, and the goal of contacting as many countries and zones as possible. In the single operator 160 m category in 1990, UG6GAW is first in the world in both the CW and the SSB weekends. These are his official CQ certificates.</span><span class="l-hy">CQ WW DX-ը մոլորակի ամենամեծ ռադիոսիրողական մրցումն է. 48 ժամ, տասնյակ հազարավոր կայաններ, և նպատակը՝ կապ հաստատել որքան հնարավոր է շատ երկրների ու գոտիների հետ։ 1990 թ. «մեկ օպերատոր, 160 մ» անվանակարգում UG6GAW-ն աշխարհում առաջինն է և՛ CW, և՛ SSB մրցափուլերում։ Ահա նրա պաշտոնական CQ վկայագրերը։</span></p>
     <div class="certs">
       <button type="button" class="cert" style="--r:-1.5deg" data-lb="img/awards/cqww-cw-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-cw-1990-ug6gaw.pdf" data-cap="CQ WW DX CW 1990 · UG6GAW · #1 World · #1 Asia · World Record · CQ Zone 21 Record"><span class="badge">#1 WORLD · CW</span><img src="img/awards/cqww-cw-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX CW 1990 certificate for UG6GAW: #1 World, #1 Asia, World Record, CQ Zone 21 Record"><span class="stamp">WORLD RECORD</span></button>
       <button type="button" class="cert" style="--r:1.2deg" data-lb="img/awards/cqww-ssb-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-ssb-1990-ug6gaw.pdf" data-cap="CQ WW DX SSB 1990 · UG6GAW · #1 World · #1 Asia"><span class="badge">#1 WORLD · SSB</span><img src="img/awards/cqww-ssb-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX SSB 1990 certificate for UG6GAW: #1 World, #1 Asia"></button>
@@ -512,7 +528,7 @@
     </div>
     <div class="note-box">
       <b class="big">WORLD RECORD</b>
-      <p><span class="l-ru">Так напечатано красным на телеграфном сертификате 1990 года, рядом — «CQ Zone 21 Record». Второе место в тот год — бельгиец ON4UN, автор книги «Low-Band DXing», настольной для всех низкочастотников. В телефонном туре отрыв от второго места почти четырёхкратный.</span><span class="l-en">That is printed in red on the 1990 CW certificate, next to «CQ Zone 21 Record». Second that year is ON4UN of Belgium, author of «Low-Band DXing», the handbook every low-band operator keeps. In SSB the margin over second place is almost fourfold.</span></p>
+      <p><span class="l-ru">Так напечатано красным на телеграфном сертификате 1990 года, рядом — «CQ Zone 21 Record». Второе место в тот год — бельгиец ON4UN, автор книги «Low-Band DXing», настольной для всех низкочастотников. В телефонном туре отрыв от второго места почти четырёхкратный.</span><span class="l-en">That is printed in red on the 1990 CW certificate, next to «CQ Zone 21 Record». Second that year is ON4UN of Belgium, author of «Low-Band DXing», the handbook every low-band operator keeps. In SSB the margin over second place is almost fourfold.</span><span class="l-hy">Սա կարմիրով տպված է 1990 թ. CW վկայագրի վրա՝ «CQ Zone 21 Record»-ի կողքին։ Այդ տարի երկրորդը բելգիացի ON4UN-ն է՝ «Low-Band DXing» գրքի հեղինակը, որը ցածր տիրույթների յուրաքանչյուր օպերատորի սեղանի գիրքն է։ SSB-ում առավելությունը երկրորդ տեղի նկատմամբ գրեթե քառապատիկ է։</span></p>
     </div>
     <p class="cap"><a href="https://www.cqww.com/scorescw.htm?yr=1990&amp;cat=SH+160M">cqww.com · CW 1990</a> · <a href="https://www.cqww.com/scoresph.htm?yr=1990&amp;cat=SH+160M">cqww.com · SSB 1990</a> · <a href="https://www.arrl.org/news/low-band-titan-john-devoldere-on4un-sk">ARRL · ON4UN</a></p>
   </div>
@@ -533,10 +549,10 @@
       <div class="lbl"><span>UG6GAW</span><span>1 832 kHz</span><span>S9+40</span></div>
     </div>
     <div class="stats">
-      <div class="stat"><b data-count="2" data-pre="" data-suf=" × #1">2 × #1</b><span class="l-ru">в мире, CQ WW DX 1990 — CW и SSB</span><span class="l-en">in the world, CQ WW DX 1990, CW and SSB</span></div>
-      <div class="stat"><b data-count="144" data-pre="№ ">№ 144</b><span class="l-ru">диплом ARRL DXCC-160 — второй в СССР</span><span class="l-en">ARRL 160 m DXCC, the second in the USSR</span></div>
-      <div class="stat"><b data-count="101">101</b><span class="l-ru">страна на 160 м в списке ARRL сегодня</span><span class="l-en">entities on 160 m in ARRL standings today</span></div>
-      <div class="stat"><b data-count="10">10</b><span class="l-ru">официальных сертификатов CQ WW, на девяти — рекорды</span><span class="l-en">official CQ WW certificates, nine with record lines</span></div>
+      <div class="stat"><b data-count="2" data-pre="" data-suf=" × #1">2 × #1</b><span class="l-ru">в мире, CQ WW DX 1990 — CW и SSB</span><span class="l-en">in the world, CQ WW DX 1990, CW and SSB</span><span class="l-hy">աշխարհում, CQ WW DX 1990, CW և SSB</span></div>
+      <div class="stat"><b data-count="144" data-pre="№ ">№ 144</b><span class="l-ru">диплом ARRL DXCC-160 — второй в СССР</span><span class="l-en">ARRL 160 m DXCC, the second in the USSR</span><span class="l-hy">ARRL 160 մ DXCC՝ ԽՍՀՄ-ում երկրորդը</span></div>
+      <div class="stat"><b data-count="101">101</b><span class="l-ru">страна на 160 м в списке ARRL сегодня</span><span class="l-en">entities on 160 m in ARRL standings today</span><span class="l-hy">երկիր 160 մ-ում ARRL-ի աղյուսակում այսօր</span></div>
+      <div class="stat"><b data-count="10">10</b><span class="l-ru">официальных сертификатов CQ WW, на девяти — рекорды</span><span class="l-en">official CQ WW certificates, nine with record lines</span><span class="l-hy">CQ WW պաշտոնական վկայագիր, ինը՝ ռեկորդային տողերով</span></div>
     </div>
   </div>
 </section>
@@ -544,37 +560,37 @@
 <!-- ================= RESCUE ================= -->
 <section id="rescue" class="rescue reveal">
   <div class="wrap">
-    <div class="kicker" style="color:var(--red)">02 · <span class="l-ru">Когда эфир спасает жизни</span><span class="l-en">When radio saves lives</span></div>
+    <div class="kicker" style="color:var(--red)">02 · <span class="l-ru">Когда эфир спасает жизни</span><span class="l-en">When radio saves lives</span><span class="l-hy">Երբ ռադիոն կյանքեր է փրկում</span></div>
     <div class="sos" id="sos" aria-hidden="true"><span>·</span><span>·</span><span>·</span> <span>−</span><span>−</span><span>−</span> <span>·</span><span>·</span><span>·</span></div>
-    <h2><span class="l-ru">Не только рекорды</span><span class="l-en">Not only records</span></h2>
-    <p class="lede" id="rescue-lede"><span class="l-ru">Радиолюбитель — это ещё и человек, который едет туда, где беда, и выходит на связь, когда всё остальное молчит. Роберт Григорян — в Чернобыле в 1986-м и в Спитаке и Ленинакане в 1988-м.</span><span class="l-en">A radio amateur is also someone who goes where disaster strikes and gets on the air when everything else is silent. Robert Grigoryan is in Chernobyl in 1986 and in Spitak and Leninakan in 1988.</span></p>
+    <h2><span class="l-ru">Не только рекорды</span><span class="l-en">Not only records</span><span class="l-hy">Ոչ միայն ռեկորդներ</span></h2>
+    <p class="lede" id="rescue-lede"><span class="l-ru">Радиолюбитель — это ещё и человек, который едет туда, где беда, и выходит на связь, когда всё остальное молчит. Роберт Григорян — в Чернобыле в 1986-м и в Спитаке и Ленинакане в 1988-м.</span><span class="l-en">A radio amateur is also someone who goes where disaster strikes and gets on the air when everything else is silent. Robert Grigoryan is in Chernobyl in 1986 and in Spitak and Leninakan in 1988.</span><span class="l-hy">Ռադիոսիրողը նաև նա է, ով գնում է այնտեղ, ուր աղետ է եկել, և դուրս է գալիս եթեր, երբ մնացած ամեն ինչ լռում է։ Ռոբերտ Գրիգորյանը 1986-ին Չեռնոբիլում է, 1988-ին՝ Սպիտակում և Լենինականում։</span></p>
     <div class="events" id="events">
       <article class="event">
         <svg class="bg" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="10" fill="#ff4a3d"/><path d="M50 50 L30 15 A40 40 0 0 1 70 15 Z M50 50 L90 50 A40 40 0 0 1 70 85 Z M50 50 L30 85 A40 40 0 0 1 10 50 Z" fill="#ff4a3d"/></svg>
-        <div class="date">1986 · <span class="l-ru">ЧЕРНОБЫЛЬ</span><span class="l-en">CHERNOBYL</span></div>
-        <h3><span class="l-ru">Чернобыльская АЭС</span><span class="l-en">Chernobyl nuclear plant</span></h3>
+        <div class="date">1986 · <span class="l-ru">ЧЕРНОБЫЛЬ</span><span class="l-en">CHERNOBYL</span><span class="l-hy">ՉԵՌՆՈԲԻԼ</span></div>
+        <h3><span class="l-ru">Чернобыльская АЭС</span><span class="l-en">Chernobyl nuclear plant</span><span class="l-hy">Չեռնոբիլի ատոմակայան</span></h3>
         <p class="l-ru" data-slot="chernobyl-ru">26 апреля 1986 года — авария на Чернобыльской АЭС, крупнейшая в истории атомной энергетики. Роберт Григорян — в Чернобыле, среди тех, кто ликвидирует её последствия.</p>
-        <p class="l-en" data-slot="chernobyl-en">26 April 1986: the Chernobyl nuclear accident, the worst in the history of nuclear power. Robert Grigoryan is in Chernobyl, among those who deal with its aftermath.</p>
-        <p class="l-ru">Среди первых, кто приходит на помощь на ЧАЭС, — радиолюбители: они чинят телевизионную и радиоуправляемую технику, которая работает у разрушенного блока.</p><p class="l-en">Among the first to come and help at the plant are radio amateurs: they repair the TV and remote-controlled equipment working next to the ruined unit.</p>
+        <p class="l-en" data-slot="chernobyl-en">26 April 1986: the Chernobyl nuclear accident, the worst in the history of nuclear power. Robert Grigoryan is in Chernobyl, among those who deal with its aftermath.</p><p class="l-hy" data-slot="chernobyl-en">1986 թ. ապրիլի 26. Չեռնոբիլի ատոմակայանի վթարը՝ ատոմային էներգետիկայի պատմության ամենածանրը։ Ռոբերտ Գրիգորյանը Չեռնոբիլում է՝ նրանց թվում, ովքեր վերացնում են վթարի հետևանքները։</p>
+        <p class="l-ru">Среди первых, кто приходит на помощь на ЧАЭС, — радиолюбители: они чинят телевизионную и радиоуправляемую технику, которая работает у разрушенного блока.</p><p class="l-en">Among the first to come and help at the plant are radio amateurs: they repair the TV and remote-controlled equipment working next to the ruined unit.</p><p class="l-hy">Ատոմակայան օգնության հասնողների առաջին շարքերում ռադիոսիրողներն են. նրանք նորոգում են ավերված էներգաբլոկի մոտ աշխատող հեռուստատեսային և հեռակառավարվող սարքավորումները։</p>
         <p class="src"><a href="https://en.wikipedia.org/wiki/Chernobyl_disaster">Wikipedia</a> · <a href="https://archive.org/details/1988-09">«Радио» №4, 1988 — «Помним Чернобыль-86…»</a></p>
       </article>
       <article class="event">
         <svg class="bg" viewBox="0 0 100 100" aria-hidden="true"><path d="M0 50 L20 50 L28 20 L38 80 L48 10 L58 90 L68 30 L76 60 L84 50 L100 50" fill="none" stroke="#ff4a3d" stroke-width="5"/></svg>
-        <div class="date">7.12.1988 · <span class="l-ru">СПИТАК · ЛЕНИНАКАН</span><span class="l-en">SPITAK · LENINAKAN</span></div>
-        <h3><span class="l-ru">Спитак и Ленинакан</span><span class="l-en">Spitak and Leninakan</span></h3>
+        <div class="date">7.12.1988 · <span class="l-ru">СПИТАК · ЛЕНИНАКАН</span><span class="l-en">SPITAK · LENINAKAN</span><span class="l-hy">ՍՊԻՏԱԿ · ԼԵՆԻՆԱԿԱՆ</span></div>
+        <h3><span class="l-ru">Спитак и Ленинакан</span><span class="l-en">Spitak and Leninakan</span><span class="l-hy">Սպիտակ և Լենինական</span></h3>
         <p class="l-ru" data-slot="spitak-ru">7 декабря 1988 года землетрясение разрушает Спитак и Ленинакан, десятки тысяч погибших. Роберт Григорян — там, в Спитаке и в Ленинакане, среди тех, кто помогает людям.</p>
-        <p class="l-en" data-slot="spitak-en">On 7 December 1988 an earthquake destroys Spitak and Leninakan, killing tens of thousands. Robert Grigoryan is there, in Spitak and in Leninakan, among those who help the people.</p>
-        <p class="l-ru">Связи с разрушенными городами нет. Эфир становится единственной ниточкой: за 8–10 дней ереванские радиостанции принимают больше 5 000 радиограмм — люди ищут родных.</p><p class="l-en">The stricken towns are cut off. Radio becomes the only link: in 8–10 days Yerevan stations take more than 5,000 messages from people searching for their families.</p>
+        <p class="l-en" data-slot="spitak-en">On 7 December 1988 an earthquake destroys Spitak and Leninakan, killing tens of thousands. Robert Grigoryan is there, in Spitak and in Leninakan, among those who help the people.</p><p class="l-hy" data-slot="spitak-en">1988 թ. դեկտեմբերի 7-ին երկրաշարժն ավերում է Սպիտակն ու Լենինականը՝ խլելով տասնյակ հազարավոր կյանքեր։ Ռոբերտ Գրիգորյանն այնտեղ է՝ Սպիտակում և Լենինականում, նրանց թվում, ովքեր օգնում են մարդկանց։</p>
+        <p class="l-ru">Связи с разрушенными городами нет. Эфир становится единственной ниточкой: за 8–10 дней ереванские радиостанции принимают больше 5 000 радиограмм — люди ищут родных.</p><p class="l-en">The stricken towns are cut off. Radio becomes the only link: in 8–10 days Yerevan stations take more than 5,000 messages from people searching for their families.</p><p class="l-hy">Աղետից տուժած քաղաքները կապից կտրված են։ Ռադիոն դառնում է կապի միակ միջոցը. 8–10 օրում երևանյան կայաններն ընդունում են ավելի քան 5000 հաղորդագրություն այն մարդկանցից, ովքեր փնտրում են իրենց հարազատներին։</p>
         <p class="src"><a href="https://en.wikipedia.org/wiki/1988_Armenian_earthquake">Wikipedia</a> · <a href="https://iatp.am/hayknet/december/poisk/ivc.htm">«Комсомолец», 19.01.1989</a></p>
       </article>
       <article class="event" style="grid-column:1/-1">
         <svg class="bg" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 90 L50 30 M30 90 L50 30 L70 90 M38 66 L62 66" stroke="#ff4a3d" stroke-width="5" fill="none"/><path d="M30 22 A28 28 0 0 1 70 22 M20 12 A42 42 0 0 1 80 12" stroke="#ff4a3d" stroke-width="4" fill="none"/></svg>
-        <div class="date">UG7GWO · <span class="l-ru">ЕРЕВАН</span><span class="l-en">YEREVAN</span></div>
-        <h3><span class="l-ru">Его станция держит связь</span><span class="l-en">His station keeps the link</span></h3>
+        <div class="date">UG7GWO · <span class="l-ru">ЕРЕВАН</span><span class="l-en">YEREVAN</span><span class="l-hy">ԵՐԵՎԱՆ</span></div>
+        <h3><span class="l-ru">Его станция держит связь</span><span class="l-en">His station keeps the link</span><span class="l-hy">Նրա կայանը պահում է կապը</span></h3>
         <p class="l-ru">UG7GWO — коллективная станция Еревана, в команде которой Роберт выступает в 1987–1988 годах. В дни землетрясения она первой сообщает, что связи с пострадавшими городами нет, и работает круглосуточно: операторы сутками не уходят со станции, держат связь с Москвой и зоной бедствия. За первую неделю через армянские станции проходит шесть тысяч сообщений. Начальник UG7GWO Карен Карапетян (UG6GAT) получает за это международную премию «Золотая антенна» 1989 года.</p>
-        <p class="l-en">UG7GWO is the Yerevan club station whose team Robert operates with in 1987–1988. When the earthquake strikes, it is the first to report that the stricken towns are cut off, and it runs around the clock: operators stay at the station for days, keeping the link with Moscow and the disaster zone. Six thousand messages pass in the first week. UG7GWO's chief, Karen Karapetyan (UG6GAT), receives the international Golden Antenna award for 1989 for this work.</p>
+        <p class="l-en">UG7GWO is the Yerevan club station whose team Robert operates with in 1987–1988. When the earthquake strikes, it is the first to report that the stricken towns are cut off, and it runs around the clock: operators stay at the station for days, keeping the link with Moscow and the disaster zone. Six thousand messages pass in the first week. UG7GWO's chief, Karen Karapetyan (UG6GAT), receives the international Golden Antenna award for 1989 for this work.</p><p class="l-hy">UG7GWO-ն երևանյան ակումբային կայան է, որի թիմում Ռոբերտն աշխատում է 1987–1988 թվականներին։ Երբ երկրաշարժը տեղի է ունենում, այն առաջինն է հաղորդում, որ տուժած քաղաքները կապից կտրված են, և աշխատում է շուրջօրյա. օպերատորներն օրերով չեն լքում կայանը՝ կապ պահելով Մոսկվայի և աղետի գոտու հետ։ Առաջին շաբաթում փոխանցվում է վեց հազար հաղորդագրություն։ Այս աշխատանքի համար UG7GWO-ի ղեկավար Կարեն Կարապետյանը (UG6GAT) արժանանում է 1989 թ. միջազգային «Ոսկե ալեհավաք» (Goldene Antenne) մրցանակին։</p>
         <p class="l-ru">1991 год: французский радиолюбитель-спасатель из гуманитарной миссии в Армении приходит на UG7GWO и пишет: «Я встречаю там Карена, UG6GAT, Сержа, UG6GCV, и Роберта, UG6GAW». На 160 метров — дельта, натянутая над улицей.</p>
-        <p class="l-en">1991: a French relief-mission radio amateur visits UG7GWO and writes: «I meet Karen, UG6GAT, Serge, UG6GCV, and Robert, UG6GAW.» For 160 meters there is a delta loop strung over the street.</p>
+        <p class="l-en">1991: a French relief-mission radio amateur visits UG7GWO and writes: «I meet Karen, UG6GAT, Serge, UG6GCV, and Robert, UG6GAW.» For 160 meters there is a delta loop strung over the street.</p><p class="l-hy">1991 թվական։ Ֆրանսիական օգնության առաքելության ռադիոսիրողներից մեկն այցելում է UG7GWO և գրում. «Հանդիպում եմ Կարենին՝ UG6GAT, Սերժին՝ UG6GCV, և Ռոբերտին՝ UG6GAW»։ 160 մետրի համար փողոցի վրայով ձգված է «դելտա» օղակաձև ալեհավաք։</p>
         <p class="src"><a href="https://archive.org/details/qst-1989_11">QST, Nov 1989</a> · <a href="https://archive.org/details/RadCom_Magazine_1990-03">RadCom, Mar 1990</a> · <a href="https://archive.org/details/1989-10">«Радио» №3, №6, 1989</a> · <a href="https://archive.org/details/MegahertzMagazineNo119Jan1993">Megahertz №119 — Golden Antenna</a> · <a href="https://archive.org/details/MegahertzMagazineNo102Aou1991">Megahertz №102, 1991</a></p>
       </article>
     </div>
@@ -584,20 +600,20 @@
 <!-- ================= RANKS ================= -->
 <section id="ranks" class="reveal">
   <div class="wrap">
-    <div class="kicker">03 · <span class="l-ru">Места в мире</span><span class="l-en">World placings</span></div>
-    <h2><span class="l-ru">Двенадцать лет в мировой десятке</span><span class="l-en">Twelve years in the world top ten</span></h2>
-    <p class="lede"><span class="l-ru">Место в мире в категории «один оператор, 160 м» по официальным сертификатам CQ WW DX.</span><span class="l-en">World placing in the single operator 160 m category, from the official CQ WW DX certificates.</span></p>
-    <div class="legend"><span><i style="background:var(--amber)"></i>CW</span><span><i style="background:var(--green)"></i>SSB</span></div>
+    <div class="kicker">03 · <span class="l-ru">Места в мире</span><span class="l-en">World placings</span><span class="l-hy">Տեղերն աշխարհում</span></div>
+    <h2><span class="l-ru">Двенадцать лет в мировой десятке</span><span class="l-en">Twelve years in the world top ten</span><span class="l-hy">Տասներկու տարի աշխարհի լավագույն տասնյակում</span></h2>
+    <p class="lede"><span class="l-ru">Место в мире в категории «один оператор, 160 м» по официальным сертификатам CQ WW DX.</span><span class="l-en">World placing in the single operator 160 m category, from the official CQ WW DX certificates.</span><span class="l-hy">Տեղն աշխարհում «մեկ օպերատոր, 160 մ» անվանակարգում՝ ըստ CQ WW DX պաշտոնական վկայագրերի։</span></p>
+    <div class="legend"><span><i style="background:#c4821e"></i>CW</span><span><i style="background:#4a8fe0"></i>SSB</span></div>
     <div class="chart draw"><svg id="rankchart" viewBox="0 0 900 340" role="img" aria-label="World placings in CQ WW DX, 160 m, 1984 to 1995"></svg></div>
     <div class="grid2" style="margin-top:40px">
       <div>
-        <h3><span class="l-ru">CQ WW 160 CW: рост результата</span><span class="l-en">CQ WW 160 CW: score growth</span></h3>
-        <p class="cap" style="margin:0 0 16px"><span class="l-ru">Очки, один оператор. За двенадцать лет — в восемь раз больше. 1990 — второе место в мире, в 7 724 очках от первого.</span><span class="l-en">Points, single operator. Eightfold in twelve years. 1990: second in the world, 7,724 points behind first.</span></p>
+        <h3><span class="l-ru">CQ WW 160 CW: рост результата</span><span class="l-en">CQ WW 160 CW: score growth</span><span class="l-hy">CQ WW 160 CW՝ միավորների աճը</span></h3>
+        <p class="cap" style="margin:0 0 16px"><span class="l-ru">Очки, один оператор. За двенадцать лет — в восемь раз больше. 1990 — второе место в мире, в 7 724 очках от первого.</span><span class="l-en">Points, single operator. Eightfold in twelve years. 1990: second in the world, 7,724 points behind first.</span><span class="l-hy">Միավորներ, մեկ օպերատոր։ Տասներկու տարում՝ ութապատիկ աճ։ 1990-ին՝ աշխարհում երկրորդ տեղ, առաջինից 7724 միավոր պակաս։</span></p>
         <div class="chart"><svg id="growth" viewBox="0 0 640 300" role="img" aria-label="CQ WW 160 CW scores" style="min-width:440px"></svg></div>
       </div>
       <div>
-        <h3><span class="l-ru">Азия, Армения, зона 21</span><span class="l-en">Asia, Armenia, zone 21</span></h3>
-        <p class="cap" style="margin:0 0 16px"><span class="l-ru">По сертификатам CQ WW DX: места в Азии и отметки о рекордах.</span><span class="l-en">From the CQ WW DX certificates: placings in Asia and record lines.</span></p>
+        <h3><span class="l-ru">Азия, Армения, зона 21</span><span class="l-en">Asia, Armenia, zone 21</span><span class="l-hy">Ասիա, Հայաստան, 21-րդ գոտի</span></h3>
+        <p class="cap" style="margin:0 0 16px"><span class="l-ru">По сертификатам CQ WW DX: места в Азии и отметки о рекордах.</span><span class="l-en">From the CQ WW DX certificates: placings in Asia and record lines.</span><span class="l-hy">CQ WW DX վկայագրերից. տեղերն Ասիայում և ռեկորդային տողերը։</span></p>
         <div class="board"><table>
           <tr class="me"><td>1990</td><td>CW · SSB</td><td class="n">#1 Asia · World Record</td></tr>
           <tr><td>1985</td><td>SSB</td><td class="n">#1 Asia · Armenia Record</td></tr>
@@ -615,39 +631,39 @@
 <section id="qsl" class="desk grain reveal">
   <div class="wrap">
     <div class="kicker">04 · QSL</div>
-    <h2><span class="l-ru">Его карточки — по всему миру</span><span class="l-en">His cards, all over the world</span></h2>
-    <p class="lede"><span class="l-ru">QSL — карточка-подтверждение радиосвязи. Его карточки хранят коллекционеры в Италии, Швейцарии, США, Японии, Австралии, Украине и России. Здесь всё, что удалось найти: от советских бланков 1984 года до EK6GC с номером диплома #144 прямо на лицевой стороне.</span><span class="l-en">A QSL is the card that confirms a radio contact. His cards are kept by collectors in Italy, Switzerland, the USA, Japan, Australia, Ukraine and Russia. Here is everything we found, from Soviet cards of 1984 to EK6GC cards with DXCC #144 printed on the front.</span></p>
+    <h2><span class="l-ru">Его карточки — по всему миру</span><span class="l-en">His cards, all over the world</span><span class="l-hy">Նրա քարտերն՝ ամբողջ աշխարհում</span></h2>
+    <p class="lede"><span class="l-ru">QSL — карточка-подтверждение радиосвязи. Его карточки хранят коллекционеры в Италии, Швейцарии, США, Японии, Австралии, Украине и России. Здесь всё, что удалось найти: от советских бланков 1984 года до EK6GC с номером диплома #144 прямо на лицевой стороне.</span><span class="l-en">A QSL is the card that confirms a radio contact. His cards are kept by collectors in Italy, Switzerland, the USA, Japan, Australia, Ukraine and Russia. Here is everything we found, from Soviet cards of 1984 to EK6GC cards with DXCC #144 printed on the front.</span><span class="l-hy">QSL-ը ռադիոկապը հաստատող քարտն է։ Նրա քարտերը պահվում են Իտալիայի, Շվեյցարիայի, ԱՄՆ-ի, Ճապոնիայի, Ավստրալիայի, Ուկրաինայի և Ռուսաստանի հավաքորդների մոտ։ Այստեղ այն ամենն է, ինչ մենք գտել ենք՝ 1984 թ. խորհրդային քարտերից մինչև EK6GC-ի քարտերը, որոնց դիմային կողմին տպված է DXCC #144։</span></p>
     <div class="filters" role="group" aria-label="Filter cards">
-      <button type="button" data-qf="all" aria-pressed="true"><span class="l-ru">Все</span><span class="l-en">All</span></button>
+      <button type="button" data-qf="all" aria-pressed="true"><span class="l-ru">Все</span><span class="l-en">All</span><span class="l-hy">Բոլորը</span></button>
       <button type="button" data-qf="UG6GAW" aria-pressed="false">UG6GAW</button>
       <button type="button" data-qf="EK6GC" aria-pressed="false">EK6GC</button>
     </div>
     <div class="cards" id="cards"></div>
     <div class="readcard">
-      <div><small><span class="l-ru">Антенна</span><span class="l-en">Antenna</span></small><span>DELTA · UP 35 M</span></div>
-      <div><small><span class="l-ru">Диплом</span><span class="l-en">Award</span></small><span>160M DXCC #144</span></div>
-      <div><small><span class="l-ru">Зона / область</span><span class="l-en">Zone / oblast</span></small><span>CQ 21 · OBL 004</span></div>
-      <div><small><span class="l-ru">QSL-менеджер</span><span class="l-en">QSL manager</span></small><span>W3HNK · JOE</span></div>
+      <div><small><span class="l-ru">Антенна</span><span class="l-en">Antenna</span><span class="l-hy">Ալեհավաք</span></small><span>DELTA · UP 35 M</span></div>
+      <div><small><span class="l-ru">Диплом</span><span class="l-en">Award</span><span class="l-hy">Պարգև</span></small><span>160M DXCC #144</span></div>
+      <div><small><span class="l-ru">Зона / область</span><span class="l-en">Zone / oblast</span><span class="l-hy">Գոտի / մարզ</span></small><span>CQ 21 · OBL 004</span></div>
+      <div><small><span class="l-ru">QSL-менеджер</span><span class="l-en">QSL manager</span><span class="l-hy">QSL մենեջեր</span></small><span>W3HNK · JOE</span></div>
     </div>
-    <p class="cap"><span class="l-ru">Сканы принадлежат коллекционерам, их имена указаны под карточками. На карточках 1990-х скрыты почтовый адрес и e-mail.</span><span class="l-en">Scans belong to the collectors credited under each card. Postal address and e-mail are hidden on the 1990s cards.</span></p>
+    <p class="cap"><span class="l-ru">Сканы принадлежат коллекционерам, их имена указаны под карточками. На карточках 1990-х скрыты почтовый адрес и e-mail.</span><span class="l-en">Scans belong to the collectors credited under each card. Postal address and e-mail are hidden on the 1990s cards.</span><span class="l-hy">Սկանները պատկանում են հավաքորդներին, որոնց անունները նշված են յուրաքանչյուր քարտի տակ։ 1990-ականների քարտերին փոստային հասցեն և էլ. փոստը թաքցված են։</span></p>
   </div>
 </section>
 
 <!-- ================= AWARDS ================= -->
 <section id="awards" class="reveal">
   <div class="wrap">
-    <div class="kicker">05 · <span class="l-ru">Дипломы</span><span class="l-en">Awards</span></div>
-    <h2><span class="l-ru">Стена сертификатов</span><span class="l-en">The certificate wall</span></h2>
-    <p class="lede"><span class="l-ru">Десять официальных сертификатов CQ WW DX из архива cqww.com. На девяти красным напечатаны рекорды — Армении, 21-й зоны CQ и мира. Каждый можно открыть и скачать в PDF для печати в рамку.</span><span class="l-en">Ten official CQ WW DX certificates from the cqww.com archive. Nine carry red record lines: Armenia, CQ zone 21, and the world. Each one opens and downloads as a print-quality PDF for framing.</span></p>
+    <div class="kicker">05 · <span class="l-ru">Дипломы</span><span class="l-en">Awards</span><span class="l-hy">Պարգևներ</span></div>
+    <h2><span class="l-ru">Стена сертификатов</span><span class="l-en">The certificate wall</span><span class="l-hy">Վկայագրերի պատը</span></h2>
+    <p class="lede"><span class="l-ru">Десять официальных сертификатов CQ WW DX из архива cqww.com. На девяти красным напечатаны рекорды — Армении, 21-й зоны CQ и мира. Каждый можно открыть и скачать в PDF для печати в рамку.</span><span class="l-en">Ten official CQ WW DX certificates from the cqww.com archive. Nine carry red record lines: Armenia, CQ zone 21, and the world. Each one opens and downloads as a print-quality PDF for framing.</span><span class="l-hy">CQ WW DX-ի տասը պաշտոնական վկայագիր cqww.com արխիվից։ Ինը կրում են կարմիր ռեկորդային տողեր՝ Հայաստանի, CQ 21-րդ գոտու և աշխարհի։ Յուրաքանչյուրը բացվում և ներբեռնվում է տպագրական որակի PDF-ով՝ շրջանակի մեջ դնելու համար։</span></p>
     <div class="wall" id="wall"></div>
     <div class="dxcc">
       <div class="num"><small>ARRL DXCC · 160 M</small>№ 144</div>
       <div>
-        <h3><span class="l-ru">Сто стран на самом трудном диапазоне</span><span class="l-en">A hundred countries on the hardest band</span></h3>
+        <h3><span class="l-ru">Сто стран на самом трудном диапазоне</span><span class="l-en">A hundred countries on the hardest band</span><span class="l-hy">Հարյուր երկիր ամենադժվար տիրույթում</span></h3>
         <p class="l-ru">DXCC — главный диплом американской лиги ARRL: сто стран, подтверждённых QSL-карточками. На 160 метрах это удаётся единицам. В списке обладателей 160M DXCC бывшего СССР UG6GAW — второй, сразу после легендарного UT5AB. Номер #144 он пишет от руки уже на карточках октября 1984 года, а позже печатает на лицевой стороне QSL EK6GC. В книге ARRL о диапазоне 160 м «DXing on the Edge» его позывной — в том же списке под №144.</p>
-        <p class="l-en">DXCC is the flagship award of the American Radio Relay League: a hundred countries confirmed by QSL cards. On 160 meters only a few ever make it. In the list of former-USSR 160M DXCC holders, UG6GAW is second, right after the legendary UT5AB. He handwrites #144 on his cards as early as October 1984 and later prints it on the front of his EK6GC cards. ARRL's 160-meter book «DXing on the Edge» lists his call at #144 too.</p>
+        <p class="l-en">DXCC is the flagship award of the American Radio Relay League: a hundred countries confirmed by QSL cards. On 160 meters only a few ever make it. In the list of former-USSR 160M DXCC holders, UG6GAW is second, right after the legendary UT5AB. He handwrites #144 on his cards as early as October 1984 and later prints it on the front of his EK6GC cards. ARRL's 160-meter book «DXing on the Edge» lists his call at #144 too.</p><p class="l-hy">DXCC-ն Ամերիկյան ռադիոսիրողների լիգայի (ARRL) գլխավոր դիպլոմն է՝ QSL քարտերով հաստատված հարյուր երկիր։ 160 մետրում դրան հասնում են միայն քչերը։ Նախկին ԽՍՀՄ-ի 160M DXCC դիպլոմակիրների ցուցակում UG6GAW-ն երկրորդն է՝ լեգենդար UT5AB-ից անմիջապես հետո։ Դեռ 1984 թ. հոկտեմբերին նա ձեռքով գրում է #144 իր քարտերին, իսկ հետագայում այն տպում է EK6GC քարտերի դիմային կողմին։ ARRL-ի՝ 160 մետրին նվիրված «DXing on the Edge» գրքում ևս նրա կոչանշանը նշված է #144 համարով։</p>
         <p class="l-ru">UG6GAW и сегодня в официальном списке ARRL DXCC 160M: 101 страна. Единственный обладатель DXCC-160 из Армении.</p>
-        <p class="l-en">UG6GAW is in ARRL's official DXCC 160M standings today with 101 entities, and Armenia's only DXCC-160 holder.</p>
+        <p class="l-en">UG6GAW is in ARRL's official DXCC 160M standings today with 101 entities, and Armenia's only DXCC-160 holder.</p><p class="l-hy">UG6GAW-ն այսօր ARRL-ի DXCC 160M պաշտոնական աղյուսակում է՝ 101 երկրով, և Հայաստանի միակ DXCC-160 դիպլոմակիրն է։</p>
         <p class="cap"><a href="https://uarl.com.ua/ut5ab/ut5ab160.htm">160M DXCC в бывшем СССР</a> · <a href="https://www.arrl.org/system/dxcc/view/DXCC-160M-20261106-A4.pdf">ARRL DXCC 160M, 06.11.2026</a> · <a href="https://m.qrz.ru/articles/article532.html">QRZ.RU, 2009</a></p>
       </div>
     </div>
@@ -657,25 +673,25 @@
 <!-- ================= PRESS ================= -->
 <section id="press" class="reveal">
   <div class="wrap">
-    <div class="kicker">06 · <span class="l-ru">Журнал «Радио»</span><span class="l-en">«Radio» magazine</span></div>
-    <h2><span class="l-ru">В десятке сильнейших страны</span><span class="l-en">In the national top ten</span></h2>
-    <p class="lede"><span class="l-ru">Журнал «Радио» ведёт таблицу «Достижения на 160 м» — сколько стран подтверждено и сработано. UG6GAW появляется в ней в ноябре 1984-го и за год поднимается на второе место в СССР.</span><span class="l-en">«Radio» magazine runs a «160 m achievements» table: countries confirmed and worked. UG6GAW enters it in November 1984 and within a year climbs to second in the USSR.</span></p>
+    <div class="kicker">06 · <span class="l-ru">Журнал «Радио»</span><span class="l-en">«Radio» magazine</span><span class="l-hy">«Ռադիո» ամսագիր</span></div>
+    <h2><span class="l-ru">В десятке сильнейших страны</span><span class="l-en">In the national top ten</span><span class="l-hy">Երկրի լավագույն տասնյակում</span></h2>
+    <p class="lede"><span class="l-ru">Журнал «Радио» ведёт таблицу «Достижения на 160 м» — сколько стран подтверждено и сработано. UG6GAW появляется в ней в ноябре 1984-го и за год поднимается на второе место в СССР.</span><span class="l-en">«Radio» magazine runs a «160 m achievements» table: countries confirmed and worked. UG6GAW enters it in November 1984 and within a year climbs to second in the USSR.</span><span class="l-hy">«Ռադիո» ամսագիրը վարում է «Նվաճումներ 160 մ-ում» աղյուսակը՝ հաստատված և կապ ունեցած երկրներ։ UG6GAW-ն այնտեղ հայտնվում է 1984 թ. նոյեմբերին և մեկ տարում բարձրանում ԽՍՀՄ-ում երկրորդ տեղը։</span></p>
     <div class="press" id="press-grid"></div>
     <div class="cfm" id="cfm">
       <div><small>«РАДИО» №11 · 1984</small><div class="bar"><i data-w="44"></i></div><b>47 / 85</b></div>
       <div><small>«РАДИО» №6 · 1985 · 3</small><div class="bar"><i data-w="79"></i></div><b>85 / 113</b></div>
       <div><small>«РАДИО» №12 · 1985 · 2</small><div class="bar"><i data-w="100"></i></div><b>107 / 139</b></div>
     </div>
-    <p class="cap"><span class="l-ru">Подтверждено / сработано стран на 160 м (Р-150-С). Сканы: Internet Archive.</span><span class="l-en">Countries confirmed / worked on 160 m (R-150-S). Scans: Internet Archive.</span> <a href="https://archive.org/details/1985-03">archive.org</a></p>
+    <p class="cap"><span class="l-ru">Подтверждено / сработано стран на 160 м (Р-150-С). Сканы: Internet Archive.</span><span class="l-en">Countries confirmed / worked on 160 m (R-150-S). Scans: Internet Archive.</span><span class="l-hy">Հաստատված / կապ ունեցած երկրներ 160 մ-ում (R-150-S)։ Սկաններ՝ Internet Archive։</span> <a href="https://archive.org/details/1985-03">archive.org</a></p>
   </div>
 </section>
 
 <!-- ================= PEOPLE ================= -->
 <section id="people" class="reveal">
   <div class="wrap">
-    <div class="kicker">07 · <span class="l-ru">Люди рядом</span><span class="l-en">The people</span></div>
-    <h2><span class="l-ru">Друзья, команда, соперники</span><span class="l-en">Friends, teammates, rivals</span></h2>
-    <p class="lede"><span class="l-ru">Эфир — это всегда люди на другом конце. Те, кто рядом с ним за пультом, в команде и по ту сторону океана.</span><span class="l-en">The air is always about the people at the other end: those beside him at the rig, on his team, and across the ocean.</span></p>
+    <div class="kicker">07 · <span class="l-ru">Люди рядом</span><span class="l-en">The people</span><span class="l-hy">Մարդիկ</span></div>
+    <h2><span class="l-ru">Друзья, команда, соперники</span><span class="l-en">Friends, teammates, rivals</span><span class="l-hy">Ընկերներ, թիմակիցներ, մրցակիցներ</span></h2>
+    <p class="lede"><span class="l-ru">Эфир — это всегда люди на другом конце. Те, кто рядом с ним за пультом, в команде и по ту сторону океана.</span><span class="l-en">The air is always about the people at the other end: those beside him at the rig, on his team, and across the ocean.</span><span class="l-hy">Եթերը միշտ այն մարդկանց մասին է, ովքեր կապի մյուս ծայրում են. նրանք, ովքեր նրա կողքին են սարքի մոտ, նրա թիմում և օվկիանոսից այն կողմ։</span></p>
     <div class="people" id="peoplegrid"></div>
   </div>
 </section>
@@ -683,9 +699,9 @@
 <!-- ================= STATION ================= -->
 <section id="station" class="reveal">
   <div class="wrap">
-    <div class="kicker">08 · <span class="l-ru">Станция</span><span class="l-en">Station</span></div>
-    <h2><span class="l-ru">Почему 160 метров — это трудно</span><span class="l-en">Why 160 meters is hard</span></h2>
-    <p class="lede"><span class="l-ru">160 метров (1,8–2,0 МГц) — самый низкочастотный любительский КВ-диапазон. Днём сигнал гасит ионосфера, антенны нужны огромные, а атмосферный треск часто громче корреспондента. Поэтому сто стран здесь стоят больше, чем где-либо.</span><span class="l-en">160 meters (1.8–2.0 MHz) is the lowest amateur shortwave band. By day the ionosphere swallows the signal, antennas must be huge, and static is often louder than the other station. A hundred countries here count for more than anywhere else.</span></p>
+    <div class="kicker">08 · <span class="l-ru">Станция</span><span class="l-en">Station</span><span class="l-hy">Կայան</span></div>
+    <h2><span class="l-ru">Почему 160 метров — это трудно</span><span class="l-en">Why 160 meters is hard</span><span class="l-hy">Ինչու է 160 մետրը դժվար</span></h2>
+    <p class="lede"><span class="l-ru">160 метров (1,8–2,0 МГц) — самый низкочастотный любительский КВ-диапазон. Днём сигнал гасит ионосфера, антенны нужны огромные, а атмосферный треск часто громче корреспондента. Поэтому сто стран здесь стоят больше, чем где-либо.</span><span class="l-en">160 meters (1.8–2.0 MHz) is the lowest amateur shortwave band. By day the ionosphere swallows the signal, antennas must be huge, and static is often louder than the other station. A hundred countries here count for more than anywhere else.</span><span class="l-hy">160 մետրը (1,8–2,0 ՄՀց) ամենացածր սիրողական կարճալիքային տիրույթն է։ Ցերեկը իոնոլորտը կլանում է ազդանշանը, ալեհավաքները պետք է հսկայական լինեն, իսկ խանգարումները հաճախ ավելի ուժեղ են, քան դիմացի կայանը։ Այստեղ հարյուր երկիրն ավելին արժե, քան որևէ այլ տիրույթում։</span></p>
     <div class="grid2">
       <div>
         <div class="diagram">
@@ -702,39 +718,39 @@
             <g stroke="#8e9bb1" stroke-width="1.2"><line x1="492" y1="62" x2="492" y2="388"/><line x1="484" y1="62" x2="500" y2="62"/><line x1="484" y1="388" x2="500" y2="388"/></g>
             <text x="480" y="228" text-anchor="end" class="t-a">35 m</text>
             <text x="150" y="200" text-anchor="end" class="t-a">≈ 48 m</text>
-            <text x="260" y="414" text-anchor="middle" class="t-a l-ru">основание ≈ 69 м</text><text x="260" y="414" text-anchor="middle" class="t-a l-en">base ≈ 69 m</text>
-            <text x="280" y="352" class="t-g l-ru">питание</text><text x="280" y="352" class="t-g l-en">feed</text>
+            <text x="260" y="414" text-anchor="middle" class="t-a l-ru">основание ≈ 69 м</text><text x="260" y="414" text-anchor="middle" class="t-a l-en">base ≈ 69 m</text><text x="260" y="414" text-anchor="middle" class="t-a l-hy">հիմքը ≈ 69 մ</text>
+            <text x="280" y="352" class="t-g l-ru">питание</text><text x="280" y="352" class="t-g l-en">feed</text><text x="280" y="352" class="t-g l-hy">սնուցում</text>
             <text x="20" y="30" class="t-a">DELTA · UP 35 M</text>
-            <text x="20" y="50" class="l-ru">периметр ≈ λ ≈ 164 м на 1,83 МГц</text><text x="20" y="50" class="l-en">perimeter ≈ λ ≈ 164 m at 1.83 MHz</text>
+            <text x="20" y="50" class="l-ru">периметр ≈ λ ≈ 164 м на 1,83 МГц</text><text x="20" y="50" class="l-en">perimeter ≈ λ ≈ 164 m at 1.83 MHz</text><text x="20" y="50" class="l-hy">պարագիծը ≈ λ ≈ 164 մ 1,83 ՄՀց-ում</text>
           </svg>
         </div>
-        <p class="cap"><span class="l-ru">На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров. Размеры на схеме — расчёт полноволновой «дельты» на 1,83 МГц, а не чертёж его антенны.</span><span class="l-en">On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up. The dimensions are a calculation for a full-wave delta at 1.83 MHz, not a drawing of his antenna.</span></p>
+        <p class="cap"><span class="l-ru">На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров. Размеры на схеме — расчёт полноволновой «дельты» на 1,83 МГц, а не чертёж его антенны.</span><span class="l-en">On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up. The dimensions are a calculation for a full-wave delta at 1.83 MHz, not a drawing of his antenna.</span><span class="l-hy">1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։ Չափերը 1,83 ՄՀց-ի համար լրիվ ալիքային «դելտայի» հաշվարկ են, ոչ թե նրա ալեհավաքի գծագիր։</span></p>
       </div>
       <div>
         <div class="diagram">
           <svg viewBox="0 0 520 430" role="img" aria-label="160 m propagation by day and by night">
             <defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#ff4a3d" stroke-width="2" opacity=".5"/></pattern></defs>
-            <text x="20" y="28" class="t-a l-ru">☀ ДЕНЬ</text><text x="20" y="28" class="t-a l-en">☀ DAY</text>
+            <text x="20" y="28" class="t-a l-ru">☀ ДЕНЬ</text><text x="20" y="28" class="t-a l-en">☀ DAY</text><text x="20" y="28" class="t-a l-hy">☀ ՑԵՐԵԿ</text>
             <path d="M10 120 Q260 96 510 120" fill="none" stroke="#3dffa2" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>
             <text x="500" y="112" text-anchor="end" class="t-g">F</text>
             <path d="M10 178 Q260 158 510 178 L510 204 Q260 184 10 204 Z" fill="url(#hatch)"/>
             <text x="500" y="172" text-anchor="end" class="t-r">D</text>
             <path d="M60 250 Q120 200 168 196" fill="none" stroke="#ffb23e" stroke-width="2.5" class="wave"/>
             <path d="M162 186 l14 14 M176 186 l-14 14" stroke="#ff4a3d" stroke-width="3"/>
-            <text x="196" y="238" class="l-ru">слой D поглощает сигнал</text><text x="196" y="238" class="l-en">the D layer absorbs the signal</text>
+            <text x="196" y="238" class="l-ru">слой D поглощает сигнал</text><text x="196" y="238" class="l-en">the D layer absorbs the signal</text><text x="196" y="238" class="l-hy">D շերտը կլանում է ազդանշանը</text>
             <path d="M10 266 Q260 242 510 266" fill="none" stroke="#5d6a80" stroke-width="2"/>
             <circle cx="60" cy="258" r="5" fill="#ffb23e"/>
-            <text x="20" y="306" class="t-a l-ru">☾ НОЧЬ</text><text x="20" y="306" class="t-a l-en">☾ NIGHT</text>
+            <text x="20" y="306" class="t-a l-ru">☾ НОЧЬ</text><text x="20" y="306" class="t-a l-en">☾ NIGHT</text><text x="20" y="306" class="t-a l-hy">☾ ԳԻՇԵՐ</text>
             <path d="M10 334 Q260 310 510 334" fill="none" stroke="#3dffa2" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>
             <text x="500" y="326" text-anchor="end" class="t-g">E/F</text>
             <path d="M60 408 L150 327 L240 404 L330 322 L420 402" fill="none" stroke="#ffb23e" stroke-width="2.8" stroke-linejoin="round" class="hop" style="filter:drop-shadow(0 0 5px rgba(255,178,62,.8))"/>
             <path d="M10 414 Q260 390 510 414" fill="none" stroke="#5d6a80" stroke-width="2"/>
             <circle cx="60" cy="406" r="5" fill="#ffb23e"/>
             <circle cx="420" cy="402" r="5" fill="#3dffa2"/><circle cx="420" cy="402" r="8" fill="none" stroke="#3dffa2" class="pulse"/>
-            <text x="246" y="372" class="l-ru">отражение и «прыжки»</text><text x="246" y="372" class="l-en">reflection and hops</text>
+            <text x="246" y="372" class="l-ru">отражение и «прыжки»</text><text x="246" y="372" class="l-en">reflection and hops</text><text x="246" y="372" class="l-hy">անդրադարձ և թռիչքներ</text>
           </svg>
         </div>
-        <p class="cap"><span class="l-ru">Днём нижний слой ионосферы (D) поглощает волны 160 м. Ночью он исчезает, и сигнал уходит за тысячи километров, отражаясь от верхних слоёв. Поэтому 160-метровики работают ночью — особенно на «серой линии», границе дня и ночи.</span><span class="l-en">By day the lowest ionospheric layer (D) absorbs 160 m signals. At night it fades, and signals travel thousands of kilometers by bouncing off higher layers. That is why Top Band operators work at night, especially along the grey line between day and night.</span></p>
+        <p class="cap"><span class="l-ru">Днём нижний слой ионосферы (D) поглощает волны 160 м. Ночью он исчезает, и сигнал уходит за тысячи километров, отражаясь от верхних слоёв. Поэтому 160-метровики работают ночью — особенно на «серой линии», границе дня и ночи.</span><span class="l-en">By day the lowest ionospheric layer (D) absorbs 160 m signals. At night it fades, and signals travel thousands of kilometers by bouncing off higher layers. That is why Top Band operators work at night, especially along the grey line between day and night.</span><span class="l-hy">Ցերեկը իոնոլորտի ամենացածր՝ D շերտը կլանում է 160 մետրի ազդանշանները։ Գիշերը այն թուլանում է, և ազդանշանները, անդրադառնալով ավելի բարձր շերտերից, անցնում են հազարավոր կիլոմետրեր։ Ահա թե ինչու Top Band-ի օպերատորներն աշխատում են գիշերը, հատկապես ցերեկվա և գիշերվա սահմանին՝ «մոխրագույն գծի» երկայնքով։</span></p>
       </div>
     </div>
   </div>
@@ -743,15 +759,15 @@
 <!-- ================= MAP ================= -->
 <section id="map" class="reveal">
   <div class="wrap">
-    <div class="kicker">09 · <span class="l-ru">Мир из Чаренцавана</span><span class="l-en">The world from Charentsavan</span></div>
-    <h2><span class="l-ru">Карта радиолюбителя</span><span class="l-en">A radio amateur's map</span></h2>
+    <div class="kicker">09 · <span class="l-ru">Мир из Чаренцавана</span><span class="l-en">The world from Charentsavan</span><span class="l-hy">Աշխարհը՝ Չարենցավանից</span></div>
+    <h2><span class="l-ru">Карта радиолюбителя</span><span class="l-en">A radio amateur's map</span><span class="l-hy">Ռադիոսիրողի քարտեզը</span></h2>
     <div class="mapbox">
       <div class="radar"><svg id="worldmap" viewBox="0 0 600 600" role="img" aria-label="Azimuthal equidistant map centred on Charentsavan with live night shading"></svg><div class="sweep"></div></div>
       <div>
         <p class="l-ru">Азимутальная карта с центром в Чаренцаване: прямая из центра — направление, куда поворачивают антенну, кольца — каждые 5&nbsp;000 км. Край круга — противоположная точка Земли, в Тихом океане.</p>
-        <p class="l-en">An azimuthal map centred on Charentsavan: a straight line from the centre is the direction to point the antenna, and each ring is another 5,000&nbsp;km. The edge of the circle is the opposite point of the Earth, in the Pacific.</p>
+        <p class="l-en">An azimuthal map centred on Charentsavan: a straight line from the centre is the direction to point the antenna, and each ring is another 5,000&nbsp;km. The edge of the circle is the opposite point of the Earth, in the Pacific.</p><p class="l-hy">Ազիմուտային քարտեզ՝ Չարենցավանը կենտրոնում. կենտրոնից տարված ուղիղ գիծը ցույց է տալիս, թե ուր ուղղել ալեհավաքը, իսկ յուրաքանչյուր օղակ ևս 5000&nbsp;կմ է։ Շրջանի եզրը Երկրի հակադիր կետն է՝ Խաղաղ օվկիանոսում։</p>
         <p class="l-ru">Тень — ночь прямо сейчас. Где ночь, там 160 метров открыты.</p>
-        <p class="l-en">The shading shows where it is night right now. Where it is night, 160 meters is open.</p>
+        <p class="l-en">The shading shows where it is night right now. Where it is night, 160 meters is open.</p><p class="l-hy">Ստվերը ցույց է տալիս, թե որտեղ է հիմա գիշեր։ Որտեղ գիշեր է, 160 մետրը բաց է։</p>
         <ul class="places" id="places"></ul>
         <p class="clock" id="clock"></p>
       </div>
@@ -762,9 +778,9 @@
 <!-- ================= TIMELINE ================= -->
 <section id="timeline" class="reveal">
   <div class="wrap">
-    <div class="kicker">10 · <span class="l-ru">Годы</span><span class="l-en">Years</span></div>
-    <h2><span class="l-ru">Покрутите ручку настройки</span><span class="l-en">Turn the tuning knob</span></h2>
-    <p class="lede"><span class="l-ru">Каждый год — своя станция на шкале. Тяните шкалу или жмите стрелки.</span><span class="l-en">Every year is a station on the dial. Drag the scale or use the arrows.</span></p>
+    <div class="kicker">10 · <span class="l-ru">Годы</span><span class="l-en">Years</span><span class="l-hy">Տարիներ</span></div>
+    <h2><span class="l-ru">Покрутите ручку настройки</span><span class="l-en">Turn the tuning knob</span><span class="l-hy">Պտտեք կարգավորման կոճակը</span></h2>
+    <p class="lede"><span class="l-ru">Каждый год — своя станция на шкале. Тяните шкалу или жмите стрелки.</span><span class="l-en">Every year is a station on the dial. Drag the scale or use the arrows.</span><span class="l-hy">Յուրաքանչյուր տարի մի կայան է սանդղակի վրա։ Քաշեք սանդղակը կամ օգտագործեք սլաքները։</span></p>
     <div class="tuner-wrap"><div class="tuner" id="tuner"></div><div class="needle"></div></div>
     <div class="tnav"><button type="button" id="tprev" aria-label="Previous year">◀</button><button type="button" id="tnext" aria-label="Next year">▶</button></div>
     <div class="tdisplay" id="tdisplay" aria-live="polite"></div>
@@ -774,9 +790,9 @@
 <!-- ================= TRANSMITTER ================= -->
 <section id="tx" class="reveal">
   <div class="wrap">
-    <div class="kicker">11 · <span class="l-ru">Передатчик</span><span class="l-en">Transmitter</span></div>
-    <h2><span class="l-ru">Передайте ему 73</span><span class="l-en">Send him 73</span></h2>
-    <p class="lede"><span class="l-ru">Напишите что угодно — и ключ отстучит это морзянкой. «73» на языке радиолюбителей — «наилучшие пожелания».</span><span class="l-en">Type anything and the key will send it in Morse. In ham language, «73» means «best regards».</span></p>
+    <div class="kicker">11 · <span class="l-ru">Передатчик</span><span class="l-en">Transmitter</span><span class="l-hy">Հաղորդիչ</span></div>
+    <h2><span class="l-ru">Передайте ему 73</span><span class="l-en">Send him 73</span><span class="l-hy">Ուղարկեք նրան 73</span></h2>
+    <p class="lede"><span class="l-ru">Напишите что угодно — и ключ отстучит это морзянкой. Или нажмите на сам ключ и попробуйте передать вручную. «73» на языке радиолюбителей — «наилучшие пожелания».</span><span class="l-en">Type anything and the key will send it in Morse, or press the key itself and try sending by hand. In ham language, «73» means «best regards».</span><span class="l-hy">Գրեք ցանկացած բան, և բանալին այն կհաղորդի Մորզեի այբուբենով։ Ռադիոսիրողների լեզվով «73» նշանակում է «ջերմ բարևներ»։ Կամ սեղմեք բանալին և փորձեք փոխանցել ձեռքով։</span></p>
     <div class="tx">
       <div>
         <input id="txin" maxlength="40" value="73 UG6GAW" aria-label="Text to send" autocomplete="off" spellcheck="false">
@@ -788,24 +804,16 @@
         </div>
         <div class="wpm"><span>WPM</span><input type="range" id="wpm" min="12" max="30" value="18" aria-label="Words per minute"><b id="wpmv">18</b></div>
         <div class="code" id="txcode" aria-live="off"></div>
-        <div class="cta" style="margin-top:18px"><button type="button" class="btn primary" id="txgo"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="l-ru">Передать</span><span class="l-en">Transmit</span></button></div>
+        <div class="cta" style="margin-top:18px"><button type="button" class="btn primary" id="txgo"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="l-ru">Передать</span><span class="l-en">Transmit</span><span class="l-hy">Հաղորդել</span></button></div>
       </div>
-      <div class="keyart" id="keyart" aria-hidden="true">
-        <svg viewBox="0 0 360 230">
-          <defs><linearGradient id="brass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ffd98a"/><stop offset="1" stop-color="#a8701d"/></linearGradient><linearGradient id="wood" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3a2414"/><stop offset="1" stop-color="#1c110a"/></linearGradient></defs>
-          <rect x="20" y="170" width="320" height="40" rx="8" fill="url(#wood)" stroke="#5a3a20"/>
-          <rect x="96" y="150" width="44" height="22" rx="4" fill="url(#brass)"/>
-          <rect x="230" y="156" width="30" height="16" rx="3" fill="url(#brass)"/>
-          <circle cx="245" cy="156" r="5" fill="#fff3d6" class="spark" style="filter:drop-shadow(0 0 8px #ffb23e)"/>
-          <g class="lever">
-            <rect x="60" y="138" width="230" height="12" rx="5" fill="url(#brass)"/>
-            <rect x="268" y="110" width="12" height="30" fill="#2a2a2a"/>
-            <ellipse cx="274" cy="104" rx="34" ry="12" fill="#151515" stroke="#333"/>
-            <ellipse cx="274" cy="100" rx="30" ry="9" fill="#262626"/>
-          </g>
-          <circle cx="118" cy="150" r="7" fill="#7a5216"/>
-          <text x="40" y="200" font-family="JetBrains Mono" font-size="11" fill="#b8873a" letter-spacing="2">UG6GAW · STRAIGHT KEY</text>
-        </svg>
+      <figure class="keyart" id="keyart">
+        <div class="kstage">
+          <img class="kbase" src="img/photo/key-base.jpg" alt="Brass and steel straight telegraph key on an oak base, about 1900" width="1440" height="960" loading="lazy">
+          <img class="klever" src="img/photo/key-lever.png" alt="" aria-hidden="true" loading="lazy">
+          <span class="kspark" aria-hidden="true"></span>
+        </div>
+        <figcaption><span class="l-ru">Телеграфный ключ, около 1900 года.</span><span class="l-en">Straight telegraph key, about 1900.</span><span class="l-hy">Հեռագրական բանալի, մոտ 1900 թ.</span> © Hp.Baumeler, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Morsetaste.jpg">Wikimedia Commons</a></figcaption>
+      </figure>
       </div>
     </div>
   </div>
@@ -814,25 +822,25 @@
 <!-- ================= LOG ================= -->
 <section id="log" class="reveal">
   <div class="wrap">
-    <div class="kicker">12 · <span class="l-ru">Аппаратный журнал</span><span class="l-en">Station log</span></div>
-    <h2><span class="l-ru">Все найденные результаты</span><span class="l-en">Every result found</span></h2>
-    <p class="lede"><span class="l-ru">Из официальных баз CQ WW, CQ 160 и CQ WPX. Место в мире — по сертификатам CQ и таблицам категорий.</span><span class="l-en">From the official CQ WW, CQ 160 and CQ WPX databases. World placing from the CQ certificates and category tables.</span></p>
+    <div class="kicker">12 · <span class="l-ru">Аппаратный журнал</span><span class="l-en">Station log</span><span class="l-hy">Կայանի մատյան</span></div>
+    <h2><span class="l-ru">Все найденные результаты</span><span class="l-en">Every result found</span><span class="l-hy">Բոլոր գտնված արդյունքները</span></h2>
+    <p class="lede"><span class="l-ru">Из официальных баз CQ WW, CQ 160 и CQ WPX. Место в мире — по сертификатам CQ и таблицам категорий.</span><span class="l-en">From the official CQ WW, CQ 160 and CQ WPX databases. World placing from the CQ certificates and category tables.</span><span class="l-hy">CQ WW, CQ 160 և CQ WPX պաշտոնական տվյալների բազաներից։ Տեղն աշխարհում՝ CQ վկայագրերից և անվանակարգերի աղյուսակներից։</span></p>
     <div class="filters" role="group" aria-label="Filter results">
-      <button type="button" data-f="all" aria-pressed="true"><span class="l-ru">Все</span><span class="l-en">All</span></button>
+      <button type="button" data-f="all" aria-pressed="true"><span class="l-ru">Все</span><span class="l-en">All</span><span class="l-hy">Բոլորը</span></button>
       <button type="button" data-f="ww" aria-pressed="false">CQ WW DX</button>
       <button type="button" data-f="160" aria-pressed="false">CQ WW 160</button>
       <button type="button" data-f="wpx" aria-pressed="false">CQ WPX</button>
-      <button type="button" data-f="team" aria-pressed="false"><span class="l-ru">Команда</span><span class="l-en">Team</span></button>
+      <button type="button" data-f="team" aria-pressed="false"><span class="l-ru">Команда</span><span class="l-en">Team</span><span class="l-hy">Թիմ</span></button>
     </div>
     <div class="logwrap"><table class="log">
       <thead><tr>
-        <th><span class="l-ru">Год</span><span class="l-en">Year</span></th>
-        <th><span class="l-ru">Соревнование</span><span class="l-en">Contest</span></th>
-        <th><span class="l-ru">Позывной</span><span class="l-en">Call</span></th>
-        <th><span class="l-ru">Категория</span><span class="l-en">Category</span></th>
+        <th><span class="l-ru">Год</span><span class="l-en">Year</span><span class="l-hy">Տարի</span></th>
+        <th><span class="l-ru">Соревнование</span><span class="l-en">Contest</span><span class="l-hy">Մրցում</span></th>
+        <th><span class="l-ru">Позывной</span><span class="l-en">Call</span><span class="l-hy">Կոչանշան</span></th>
+        <th><span class="l-ru">Категория</span><span class="l-en">Category</span><span class="l-hy">Անվանակարգ</span></th>
         <th class="n">QSO</th>
-        <th class="n"><span class="l-ru">Очки</span><span class="l-en">Points</span></th>
-        <th><span class="l-ru">Мир</span><span class="l-en">World</span></th>
+        <th class="n"><span class="l-ru">Очки</span><span class="l-en">Points</span><span class="l-hy">Միավորներ</span></th>
+        <th><span class="l-ru">Мир</span><span class="l-en">World</span><span class="l-hy">Աշխարհ</span></th>
       </tr></thead>
       <tbody id="logbody"></tbody>
     </table></div>
@@ -843,13 +851,13 @@
 <section id="qth" class="reveal">
   <div class="wrap">
     <div class="kicker">13 · QTH</div>
-    <h2><span class="l-ru">Чаренцаван</span><span class="l-en">Charentsavan</span></h2>
-    <p class="lede"><span class="l-ru">Город в Котайкской области Армении, у подножия гор. Основан в 1947 году как Лусаван, с 1967-го носит имя поэта Егише Чаренца. Отсюда его сигнал уходит на весь мир.</span><span class="l-en">A town in Armenia's Kotayk province, at the foot of the mountains. Founded in 1947 as Lusavan and named after the poet Yeghishe Charents since 1967. From here his signal goes out to the whole world.</span></p>
+    <h2><span class="l-ru">Чаренцаван</span><span class="l-en">Charentsavan</span><span class="l-hy">Չարենցավան</span></h2>
+    <p class="lede"><span class="l-ru">Город в Котайкской области Армении, у подножия гор. Основан в 1947 году как Лусаван, с 1967-го носит имя поэта Егише Чаренца. Отсюда его сигнал уходит на весь мир.</span><span class="l-en">A town in Armenia's Kotayk province, at the foot of the mountains. Founded in 1947 as Lusavan and named after the poet Yeghishe Charents since 1967. From here his signal goes out to the whole world.</span><span class="l-hy">Քաղաք Հայաստանի Կոտայքի մարզում, լեռների ստորոտին։ Հիմնադրվել է 1947 թվականին՝ Լուսավան անունով, իսկ 1967-ից կրում է բանաստեղծ Եղիշե Չարենցի անունը։ Այստեղից նրա ազդանշանը հասնում է ողջ աշխարհին։</span></p>
     <div class="qth">
-      <figure><img src="img/photo/charentsavan-aragats.jpg" alt="Charentsavan in winter with Mount Aragats behind" loading="lazy"><figcaption><span class="l-ru">Чаренцаван и гора Арагац.</span><span class="l-en">Charentsavan and Mount Aragats.</span> © Serouj Ourishian, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:%D5%89%D5%A1%D6%80%D5%A5%D5%B6%D6%81%D5%A1%D5%BE%D5%A1%D5%B6.JPG">Wikimedia Commons</a></figcaption></figure>
+      <figure><img src="img/photo/charentsavan-aragats.jpg" alt="Charentsavan in winter with Mount Aragats behind" loading="lazy"><figcaption><span class="l-ru">Чаренцаван и гора Арагац.</span><span class="l-en">Charentsavan and Mount Aragats.</span><span class="l-hy">Չարենցավանը և Արագած լեռը։</span> © Serouj Ourishian, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:%D5%89%D5%A1%D6%80%D5%A5%D5%B6%D6%81%D5%A1%D5%BE%D5%A1%D5%B6.JPG">Wikimedia Commons</a></figcaption></figure>
       <div class="side">
         <figure><img src="img/photo/charentsavan-town.jpg" alt="Charentsavan in summer" loading="lazy"><figcaption>© Armtoursites, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Charentsavan_town1.jpg">Wikimedia Commons</a></figcaption></figure>
-        <figure><img src="img/photo/charents-monument.jpg" alt="Monument to Yeghishe Charents in Charentsavan" loading="lazy"><figcaption><span class="l-ru">Памятник Чаренцу.</span><span class="l-en">Charents monument.</span> © AndyHM, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Monumento_a_Yeghishe_Charents.jpg">Wikimedia Commons</a></figcaption></figure>
+        <figure><img src="img/photo/charents-monument.jpg" alt="Monument to Yeghishe Charents in Charentsavan" loading="lazy"><figcaption><span class="l-ru">Памятник Чаренцу.</span><span class="l-en">Charents monument.</span><span class="l-hy">Չարենցի հուշարձանը։</span> © AndyHM, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Monumento_a_Yeghishe_Charents.jpg">Wikimedia Commons</a></figcaption></figure>
       </div>
     </div>
     <div class="qinfo">
@@ -864,13 +872,13 @@
 <!-- ================= SOON ================= -->
 <section id="soon" class="reveal">
   <div class="wrap">
-    <div class="kicker">14 · <span class="l-ru">Скоро</span><span class="l-en">Coming soon</span></div>
-    <h2><span class="l-ru">Эфир продолжается</span><span class="l-en">Still on the air</span></h2>
-    <p class="lede"><span class="l-ru">Сайт растёт: скоро здесь будет место, где друзья по эфиру со всего мира смогут оставить слово и держать связь.</span><span class="l-en">The site keeps growing: soon there will be a place where friends from the air all over the world can leave a word and stay in touch.</span></p>
+    <div class="kicker">14 · <span class="l-ru">Скоро</span><span class="l-en">Coming soon</span><span class="l-hy">Շուտով</span></div>
+    <h2><span class="l-ru">Эфир продолжается</span><span class="l-en">Still on the air</span><span class="l-hy">Մինչ օրս եթերում</span></h2>
+    <p class="lede"><span class="l-ru">Сайт растёт: скоро здесь будет место, где друзья по эфиру со всего мира смогут оставить слово и держать связь.</span><span class="l-en">The site keeps growing: soon there will be a place where friends from the air all over the world can leave a word and stay in touch.</span><span class="l-hy">Կայքը շարունակում է աճել. շուտով այստեղ կլինի մի անկյուն, որտեղ եթերային ընկերներն ամբողջ աշխարհից կկարողանան թողնել իրենց խոսքը և կապ պահել։</span></p>
     <div class="soon">
-      <div><b><span class="l-ru">Форум</span><span class="l-en">Forum</span></b><p class="l-ru">160 метров, соревнования, встречи, воспоминания.</p><p class="l-en">160 meters, contests, meetings, memories.</p></div>
-      <div><b><span class="l-ru">Гостевая книга</span><span class="l-en">Guestbook</span></b><p class="l-ru">Слово от тех, кто проводил с ним связи.</p><p class="l-en">A word from those who worked him.</p></div>
-      <div><b>@ug6gaw.com</b><p class="l-ru">Почта для писем и QSL.</p><p class="l-en">Mail for letters and QSLs.</p></div>
+      <div><b><span class="l-ru">Форум</span><span class="l-en">Forum</span><span class="l-hy">Ֆորում</span></b><p class="l-ru">160 метров, соревнования, встречи, воспоминания.</p><p class="l-en">160 meters, contests, meetings, memories.</p><p class="l-hy">160 մետր, մրցումներ, հանդիպումներ, հուշեր։</p></div>
+      <div><b><span class="l-ru">Гостевая книга</span><span class="l-en">Guestbook</span><span class="l-hy">Հյուրերի գիրք</span></b><p class="l-ru">Слово от тех, кто проводил с ним связи.</p><p class="l-en">A word from those who worked him.</p><p class="l-hy">Խոսք նրանցից, ովքեր եթերում կապ են ունեցել նրա հետ։</p></div>
+      <div><b>@ug6gaw.com</b><p class="l-ru">Почта для писем и QSL.</p><p class="l-en">Mail for letters and QSLs.</p><p class="l-hy">Փոստ՝ նամակների և QSL-ների համար։</p></div>
     </div>
   </div>
 </section>
@@ -878,8 +886,8 @@
 <!-- ================= SOURCES ================= -->
 <section id="sources" class="reveal">
   <div class="wrap">
-    <div class="kicker">15 · <span class="l-ru">Источники</span><span class="l-en">Sources</span></div>
-    <h2><span class="l-ru">Каждый факт можно проверить</span><span class="l-en">Every fact can be checked</span></h2>
+    <div class="kicker">15 · <span class="l-ru">Источники</span><span class="l-en">Sources</span><span class="l-hy">Աղբյուրներ</span></div>
+    <h2><span class="l-ru">Каждый факт можно проверить</span><span class="l-en">Every fact can be checked</span><span class="l-hy">Յուրաքանչյուր փաստ կարելի է ստուգել</span></h2>
     <ol class="sources" id="srclist">
       <li><a href="https://www.cqww.com/scorescw.htm?yr=1990&amp;cat=SH+160M">CQ WW DX CW 1990 — SO High 160M</a></li>
       <li><a href="https://www.cqww.com/scoresph.htm?yr=1990&amp;cat=SH+160M">CQ WW DX SSB 1990 — SO High 160M</a></li>
@@ -940,7 +948,7 @@
   <div class="wrap">
     <div>
       <div class="big">73!</div>
-      <p><span class="l-ru">UG6GAW · EK6GC · Чаренцаван, Армения</span><span class="l-en">UG6GAW · EK6GC · Charentsavan, Armenia</span></p>
+      <p><span class="l-ru">UG6GAW · EK6GC · Чаренцаван, Армения</span><span class="l-en">UG6GAW · EK6GC · Charentsavan, Armenia</span><span class="l-hy">UG6GAW · EK6GC · Չարենցավան, Հայաստան</span></p>
     </div>
     <p class="mono" style="font-size:13px;letter-spacing:.1em">−−−·· ···−− · ug6gaw.com</p>
   </div>
@@ -954,23 +962,25 @@
 </dialog>
 
 <script>
+window.HY={"1.8 MHz, CW, 02:48 GMT. «Delta up 35 m», «160m DXCC #144». Card for 60 years of Soviet amateur radio.": "1,8 ՄՀց, CW, 02:48 GMT։ «Delta up 35 m», «160m DXCC #144»։ Քարտ՝ խորհրդային ռադիոսիրողության 60-ամյակի առթիվ։", "1.8 MHz, CW, 18:42 GMT, 599. «Ant. Delta», «160m DXCC». Soviet card with a dove of peace.": "1,8 ՄՀց, CW, 18:42 GMT, 599։ «Ant. Delta», «160m DXCC»։ Խորհրդային քարտ՝ խաղաղության աղավնիով։", "1.8 MHz, CW, 20:10 UTC, 599. His own design: «Armenia, Charentcavan», with a fortress drawing.": "1,8 ՄՀց, CW, 20:10 UTC, 599։ Իր իսկ ձևավորմամբ՝ «Armenia, Charentcavan», ամրոցի պատկերով։", "1.8 MHz, CW, 599. QSL manager W3HNK. A new 160 m country for the Japanese operator.": "1,8 ՄՀց, CW, 599։ QSL մենեջերը՝ W3HNK։ Ճապոնացի օպերատորի համար՝ նոր երկիր 160 մետրում։", "1.8 MHz, CW, 599. The same anniversary card, «ex. UG6GAW».": "1,8 ՄՀց, CW, 599։ Նույն հոբելյանական քարտը՝ «ex. UG6GAW»։", "1.8 MHz, CW. Card for 1700 years of Christianity in Armenia, «ex. UG6GAW», with his own signature.": "1,8 ՄՀց, CW։ Քարտ՝ Հայաստանում քրիստոնեության 1700-ամյակի առթիվ, «ex. UG6GAW», իր ստորագրությամբ։", "12th in the world in CQ WW 160 CW. QRP category in CQ WPX CW. With Karapetian and Peluzian on the UG7GWO team, 880 QSOs in CQ WW 160 SSB. 7 December, the earthquake: Robert Grigoryan is in Spitak and Leninakan.": "12-րդ տեղ աշխարհում CQ WW 160 CW-ում։ QRP անվանակարգ CQ WPX CW-ում։ Կարապետյանի և Պելուզյանի հետ UG7GWO թիմում՝ 880 QSO CQ WW 160 SSB-ում։ Դեկտեմբերի 7-ին՝ երկրաշարժ. Ռոբերտ Գրիգորյանը Սպիտակում և Լենինականում է։", "160 meters (1.8–2.0 MHz) is the lowest amateur shortwave band. By day the ionosphere swallows the signal, antennas must be huge, and static is often louder than the other station. A hundred countries here count for more than anywhere else.": "160 մետրը (1,8–2,0 ՄՀց) ամենացածր սիրողական կարճալիքային տիրույթն է։ Ցերեկը իոնոլորտը կլանում է ազդանշանը, ալեհավաքները պետք է հսկայական լինեն, իսկ խանգարումները հաճախ ավելի ուժեղ են, քան դիմացի կայանը։ Այստեղ հարյուր երկիրն ավելին արժե, քան որևէ այլ տիրույթում։", "160 meters, contests, meetings, memories.": "160 մետր, մրցումներ, հանդիպումներ, հուշեր։", "1990 certificates": "1990-ի վկայագրերը", "1991: a French relief-mission radio amateur visits UG7GWO and writes: «I meet Karen, UG6GAT, Serge, UG6GCV, and Robert, UG6GAW.» For 160 meters there is a delta loop strung over the street.": "1991 թվական։ Ֆրանսիական օգնության առաքելության ռադիոսիրողներից մեկն այցելում է UG7GWO և գրում. «Հանդիպում եմ Կարենին՝ UG6GAT, Սերժին՝ UG6GCV, և Ռոբերտին՝ UG6GAW»։ 160 մետրի համար փողոցի վրայով ձգված է «դելտա» օղակաձև ալեհավաք։", "1st in Asia": "Ասիայում 1-ին", "24, 18 and 10 MHz on one day, with Australia. Printed on the card: «#144 DXCC 160M».": "24, 18 և 10 ՄՀց՝ նույն օրը, Ավստրալիայի հետ։ Քարտին տպված է՝ «#144 DXCC 160M»։", "26 April 1986: the Chernobyl nuclear accident, the worst in the history of nuclear power. Robert Grigoryan is in Chernobyl, among those who deal with its aftermath.": "1986 թ. ապրիլի 26. Չեռնոբիլի ատոմակայանի վթարը՝ ատոմային էներգետիկայի պատմության ամենածանրը։ Ռոբերտ Գրիգորյանը Չեռնոբիլում է՝ նրանց թվում, ովքեր վերացնում են վթարի հետևանքները։", "28 MHz, SSB, 59. «Tnx QSL — Joe W3HNK».": "28 ՄՀց, SSB, 59։ «Tnx QSL — Joe W3HNK»։", "2nd in the USSR · 107 / 139": "ԽՍՀՄ-ում 2-րդ · 107 / 139", "2nd in the world": "Աշխարհում 2-րդ", "2nd in the world and in Asia in CQ WW DX CW on 160 m. The USSR on-site radio championship in Klaipėda for the «Radio» magazine cup. With the UG7GWO team in CQ WPX.": "2-րդ տեղ աշխարհում և Ասիայում CQ WW DX CW-ում, 160 մ։ ԽՍՀՄ ռադիոսպորտի առկա առաջնություն Կլայպեդայում՝ «Ռադիո» ամսագրի գավաթի համար։ UG7GWO թիմի կազմում՝ CQ WPX-ում։", "3.5, 3.7 and 14 MHz, CW and SSB. Stamped «Verified by W3HNK».": "3,5; 3,7 և 14 ՄՀց, CW և SSB։ Կնիք՝ «Verified by W3HNK»։", "3.7 MHz, SSB, 59. «Robert Grigoryan, ex UG6GAW», «#144 DXCC 160M».": "3,7 ՄՀց, SSB, 59։ «Robert Grigoryan, ex UG6GAW», «#144 DXCC 160M»։", "3rd in the USSR · 85 / 113": "ԽՍՀՄ-ում 3-րդ · 85 / 113", "4th · 107 / 139": "4-րդ · 107 / 139", "6th in the world in CQ WW DX SSB. A final-year physics student at Yerevan University, featured in the American magazine Radiosporting. No. 144 in the anniversary list of 160M DXCC holders. At the 160 m meeting in Kyiv the news is that UG6GAW has overtaken UT5AB in 160 m countries. Robert Grigoryan is in Chernobyl, working on the aftermath of the accident. A card from this year is kept in the I4EAT collection in Italy.": "6-րդ տեղ աշխարհում CQ WW DX SSB-ում։ Երևանի համալսարանի ֆիզիկայի ավարտական կուրսի ուսանող է, և նրա մասին գրում է ամերիկյան Radiosporting ամսագիրը։ 160M DXCC դիպլոմակիրների հոբելյանական ցուցակում՝ №144։ Կիևում՝ 160 մետրի հանդիպմանը, լուր է տարածվում, որ UG6GAW-ն 160 մետրում երկրների թվով անցել է UT5AB-ին։ Ռոբերտ Գրիգորյանը Չեռնոբիլում է՝ վթարի հետևանքների վերացման աշխատանքներում։ Այս տարվա նրա քարտերից մեկը պահվում է Իտալիայում՝ I4EAT-ի հավաքածուում։", "6th · 107 / 139": "6-րդ · 107 / 139", "9th in the world in CQ WW DX in both CW and SSB, and first in Asia in SSB. «Radio» magazine: 3rd, then 2nd in the USSR by the end of the year, with 107 of 139 countries confirmed. A «Radio» magazine diploma for the best result in Armenia in the All-Union 160 m contest.": "9-րդ տեղ աշխարհում CQ WW DX-ում՝ և՛ CW-ում, և՛ SSB-ում, և 1-ին տեղ Ասիայում SSB-ում։ «Ռադիո» ամսագիր. ԽՍՀՄ-ում 3-րդ, իսկ տարեվերջին՝ 2-րդ, 139 երկրից 107-ը հաստատված։ «Ռադիո» ամսագրի դիպլոմ՝ 160 մետրի համամիութենական մրցումներում Հայաստանի լավագույն արդյունքի համար։", "A French relief mission meets him at UG7GWO: «Karen, UG6GAT, Serge, UG6GCV, and Robert, UG6GAW.» The station is built from whatever is at hand: a receiver from a tank, an amplifier from a ship, a delta loop over the street.": "Ֆրանսիական օգնության առաքելությունը նրան հանդիպում է UG7GWO-ում. «Կարեն՝ UG6GAT, Սերժ՝ UG6GCV, և Ռոբերտ՝ UG6GAW»։ Կայանը հավաքված է ձեռքի տակ եղած ամեն ինչից. ընդունիչը՝ տանկից, ուժեղարարը՝ նավից, «դելտա» ալեհավաքը՝ փողոցի վրայով ձգված։", "A QSL is the card that confirms a radio contact. His cards are kept by collectors in Italy, Switzerland, the USA, Japan, Australia, Ukraine and Russia. Here is everything we found, from Soviet cards of 1984 to EK6GC cards with DXCC #144 printed on the front.": "QSL-ը ռադիոկապը հաստատող քարտն է։ Նրա քարտերը պահվում են Իտալիայի, Շվեյցարիայի, ԱՄՆ-ի, Ճապոնիայի, Ավստրալիայի, Ուկրաինայի և Ռուսաստանի հավաքորդների մոտ։ Այստեղ այն ամենն է, ինչ մենք գտել ենք՝ 1984 թ. խորհրդային քարտերից մինչև EK6GC-ի քարտերը, որոնց դիմային կողմին տպված է DXCC #144։", "A hundred countries on the hardest band": "Հարյուր երկիր ամենադժվար տիրույթում", "A new callsign: EK6GC. 5th in the world in CQ WW DX CW, with Armenia and zone 21 records.": "Նոր կոչանշան՝ EK6GC։ 5-րդ տեղ աշխարհում CQ WW DX CW-ում՝ Հայաստանի և 21-րդ գոտու ռեկորդներով։", "A radio amateur is also someone who goes where disaster strikes and gets on the air when everything else is silent. Robert Grigoryan is in Chernobyl in 1986 and in Spitak and Leninakan in 1988.": "Ռադիոսիրողը նաև նա է, ով գնում է այնտեղ, ուր աղետ է եկել, և դուրս է գալիս եթեր, երբ մնացած ամեն ինչ լռում է։ Ռոբերտ Գրիգորյանը 1986-ին Չեռնոբիլում է, 1988-ին՝ Սպիտակում և Լենինականում։", "A radio amateur's map": "Ռադիոսիրողի քարտեզը", "A review of the CIS's most decorated stations names UG6GAW Armenia's only DXCC-160 holder.": "ԱՊՀ ամենատիտղոսակիր կայանների ակնարկում UG6GAW-ն նշված է որպես Հայաստանի միակ DXCC-160 դիպլոմակիրը։", "A town in Armenia's Kotayk province, at the foot of the mountains. Founded in 1947 as Lusavan and named after the poet Yeghishe Charents since 1967. From here his signal goes out to the whole world.": "Քաղաք Հայաստանի Կոտայքի մարզում, լեռների ստորոտին։ Հիմնադրվել է 1947 թվականին՝ Լուսավան անունով, իսկ 1967-ից կրում է բանաստեղծ Եղիշե Չարենցի անունը։ Այստեղից նրա ազդանշանը հասնում է ողջ աշխարհին։", "A word from those who worked him.": "Խոսք նրանցից, ովքեր եթերում կապ են ունեցել նրա հետ։", "ARRL 160 m DXCC, the second in the USSR": "ARRL 160 մ DXCC՝ ԽՍՀՄ-ում երկրորդը", "Alex Tkatch": "Alex Tkatch", "Alfred Barkov": "Ալֆրեդ Բարկով", "All": "Բոլորը", "Among the first to come and help at the plant are radio amateurs: they repair the TV and remote-controlled equipment working next to the ruined unit.": "Ատոմակայան օգնության հասնողների առաջին շարքերում ռադիոսիրողներն են. նրանք նորոգում են ավերված էներգաբլոկի մոտ աշխատող հեռուստատեսային և հեռակառավարվող սարքավորումները։", "An azimuthal map centred on Charentsavan: a straight line from the centre is the direction to point the antenna, and each ring is another 5,000&nbsp;km. The edge of the circle is the opposite point of the Earth, in the Pacific.": "Ազիմուտային քարտեզ՝ Չարենցավանը կենտրոնում. կենտրոնից տարված ուղիղ գիծը ցույց է տալիս, թե ուր ուղղել ալեհավաքը, իսկ յուրաքանչյուր օղակ ևս 5000&nbsp;կմ է։ Շրջանի եզրը Երկրի հակադիր կետն է՝ Խաղաղ օվկիանոսում։", "Antenna": "Ալեհավաք", "Asia, Armenia, zone 21": "Ասիա, Հայաստան, 21-րդ գոտի", "Asian record": "Ասիայի ռեկորդ", "Asian record in CQ WW 160 SSB, 944 QSOs. 494,073 points in CQ WW 160 CW. The ARRL and Ohio/Penn bulletins report him. QSL manager in the USA: W3HNK. A shared card with his brother Vahagn, EK6OCM.": "Ասիայի ռեկորդ CQ WW 160 SSB-ում՝ 944 QSO։ 494 073 միավոր CQ WW 160 CW-ում։ Նրա մասին հաղորդում են ARRL-ի և Ohio/Penn-ի տեղեկագրերը։ QSL մենեջերը ԱՄՆ-ում՝ W3HNK։ Ընդհանուր քարտ եղբոր՝ Վահագնի (EK6OCM) հետ։", "Award": "Պարգև", "Awards": "Պարգևներ", "By day the lowest ionospheric layer (D) absorbs 160 m signals. At night it fades, and signals travel thousands of kilometers by bouncing off higher layers. That is why Top Band operators work at night, especially along the grey line between day and night.": "Ցերեկը իոնոլորտի ամենացածր՝ D շերտը կլանում է 160 մետրի ազդանշանները։ Գիշերը այն թուլանում է, և ազդանշանները, անդրադառնալով ավելի բարձր շերտերից, անցնում են հազարավոր կիլոմետրեր։ Ահա թե ինչու Top Band-ի օպերատորներն աշխատում են գիշերը, հատկապես ցերեկվա և գիշերվա սահմանին՝ «մոխրագույն գծի» երկայնքով։", "CHERNOBYL": "ՉԵՌՆՈԲԻԼ", "CQ WW 160 CW: score growth": "CQ WW 160 CW՝ միավորների աճը", "CQ WW DX is the planet's biggest amateur radio contest: 48 hours, tens of thousands of stations, and the goal of contacting as many countries and zones as possible. In the single operator 160 m category in 1990, UG6GAW is first in the world in both the CW and the SSB weekends. These are his official CQ certificates.": "CQ WW DX-ը մոլորակի ամենամեծ ռադիոսիրողական մրցումն է. 48 ժամ, տասնյակ հազարավոր կայաններ, և նպատակը՝ կապ հաստատել որքան հնարավոր է շատ երկրների ու գոտիների հետ։ 1990 թ. «մեկ օպերատոր, 160 մ» անվանակարգում UG6GAW-ն աշխարհում առաջինն է և՛ CW, և՛ SSB մրցափուլերում։ Ահա նրա պաշտոնական CQ վկայագրերը։", "Call": "Կոչանշան", "Callsign UG6GAW, today EK6GC. First in the world in the 1990 CQ World Wide DX Contest, in both CW and SSB. ARRL 160-meter DXCC #144, the second in the Soviet Union. Forty years on the air and thousands of contacts with the whole world.": "Կոչանշանը՝ UG6GAW, այսօր՝ EK6GC։ Աշխարհում առաջին տեղ 1990 թ. CQ World Wide DX Contest-ում՝ և՛ CW-ում, և՛ SSB-ում։ ARRL 160 մետրի DXCC #144՝ Խորհրդային Միությունում երկրորդը։ Քառասուն տարի եթերում և հազարավոր կապեր ամբողջ աշխարհի հետ։", "Category": "Անվանակարգ", "Charents monument.": "Չարենցի հուշարձանը։", "Charentsavan": "Չարենցավան", "Charentsavan and Mount Aragats.": "Չարենցավանը և Արագած լեռը։", "Chernobyl nuclear plant": "Չեռնոբիլի ատոմակայան", "Chief of UG7GWO and his teammate. During the 1988 earthquake he keeps Yerevan linked with the disaster zone; Golden Antenna award 1989.": "UG7GWO-ի ղեկավարը և նրա թիմակիցը։ 1988 թ. երկրաշարժի ժամանակ նա պահում է Երևանի կապն աղետի գոտու հետ. «Ոսկե ալեհավաք» մրցանակ, 1989։", "Coming soon": "Շուտով", "Contest": "Մրցում", "Countries confirmed / worked on 160 m (R-150-S). Scans: Internet Archive.": "Հաստատված / կապ ունեցած երկրներ 160 մ-ում (R-150-S)։ Սկաններ՝ Internet Archive։", "DXCC is the flagship award of the American Radio Relay League: a hundred countries confirmed by QSL cards. On 160 meters only a few ever make it. In the list of former-USSR 160M DXCC holders, UG6GAW is second, right after the legendary UT5AB. He handwrites #144 on his cards as early as October 1984 and later prints it on the front of his EK6GC cards. ARRL's 160-meter book «DXing on the Edge» lists his call at #144 too.": "DXCC-ն Ամերիկյան ռադիոսիրողների լիգայի (ARRL) գլխավոր դիպլոմն է՝ QSL քարտերով հաստատված հարյուր երկիր։ 160 մետրում դրան հասնում են միայն քչերը։ Նախկին ԽՍՀՄ-ի 160M DXCC դիպլոմակիրների ցուցակում UG6GAW-ն երկրորդն է՝ լեգենդար UT5AB-ից անմիջապես հետո։ Դեռ 1984 թ. հոկտեմբերին նա ձեռքով գրում է #144 իր քարտերին, իսկ հետագայում այն տպում է EK6GC քարտերի դիմային կողմին։ ARRL-ի՝ 160 մետրին նվիրված «DXing on the Edge» գրքում ևս նրա կոչանշանը նշված է #144 համարով։", "EK6GC is not only on 160 m: his cards from these years show 80, 30, 20, 17, 12 and 10 meters. His QSL reads «#144 DXCC 160M».": "EK6GC-ն աշխատում է ոչ միայն 160 մ-ում. այս տարիների նրա քարտերին կան 80, 30, 20, 17, 12 և 10 մետրերը։ Նրա QSL-ին գրված է՝ «#144 DXCC 160M»։", "EK6GC is on the air from Charentsavan: in September Alex Tkatch (KU1CW) operates it, and in October EK6GC joins the RT4D team in CQ WW SSB.": "EK6GC-ն եթերում է Չարենցավանից. սեպտեմբերին կայանից աշխատում է Alex Tkatch-ը (KU1CW), իսկ հոկտեմբերին EK6GC-ն միանում է RT4D թիմին CQ WW SSB-ում։", "EK6GC's QSL manager in the USA, confirming contacts worldwide with his «Verified by W3HNK» stamp.": "EK6GC-ի QSL մենեջերը ԱՄՆ-ում. իր «Verified by W3HNK» կնիքով նա հաստատում է կապերն ամբողջ աշխարհից։", "Every fact can be checked": "Յուրաքանչյուր փաստ կարելի է ստուգել", "Every result found": "Բոլոր գտնված արդյունքները", "Every year is a station on the dial. Drag the scale or use the arrows.": "Յուրաքանչյուր տարի մի կայան է սանդղակի վրա։ Քաշեք սանդղակը կամ օգտագործեք սլաքները։", "First CQ WW DX results on 160 m: 11th in the world in CW. In October he writes «160m DXCC #144» and «Delta up 35 m» on a QSL card to Italy. In November «Radio» magazine lists UG6GAW in its «160 m achievements» table for the first time.": "Առաջին արդյունքները CQ WW DX-ում 160 մ-ում. 11-րդ տեղ աշխարհում CW-ում։ Հոկտեմբերին Իտալիա ուղարկվող QSL քարտին նա գրում է «160m DXCC #144» և «Delta up 35 m»։ Նոյեմբերին «Ռադիո» ամսագիրն առաջին անգամ UG6GAW-ին ներառում է «Նվաճումներ 160 մ-ում» աղյուսակում։", "First in the table: 47 / 85": "Առաջին անգամ աղյուսակում՝ 47 / 85", "First in the world.<br>Twice in one year.": "Աշխարհում առաջինը։<br>Երկու անգամ՝ մեկ տարում։", "Forum": "Ֆորում", "Friends, teammates, rivals": "Ընկերներ, թիմակիցներ, մրցակիցներ", "From the CQ WW DX certificates: placings in Asia and record lines.": "CQ WW DX վկայագրերից. տեղերն Ասիայում և ռեկորդային տողերը։", "From the official CQ WW, CQ 160 and CQ WPX databases. World placing from the CQ certificates and category tables.": "CQ WW, CQ 160 և CQ WPX պաշտոնական տվյալների բազաներից։ Տեղն աշխարհում՝ CQ վկայագրերից և անվանակարգերի աղյուսակներից։", "Guestbook": "Հյուրերի գիրք", "Gyumri (Leninakan), formerly UG6LQ. EK0B teammate in CQ WW SSB 2007 with EK6TA, SP6AXW and SP9LJD, 10th in the world.": "Գյումրի (Լենինական), նախկինում՝ UG6LQ։ EK0B թիմակից CQ WW SSB 2007-ում՝ EK6TA-ի, SP6AXW-ի և SP9LJD-ի հետ, 10-րդ տեղ աշխարհում։", "His brother. A shared «Brothers Grigorian» QSL: two Charentsavan callsigns on one card.": "Եղբայրը։ Ընդհանուր «Brothers Grigorian» QSL. չարենցավանյան երկու կոչանշան մեկ քարտի վրա։", "His cards, all over the world": "Նրա քարտերն՝ ամբողջ աշխարհում", "His station keeps the link": "Նրա կայանը պահում է կապը", "IK6BAK, Italy — QSL 1984": "IK6BAK, Իտալիա — QSL 1984", "In 2019 he goes on the air as EK6GC from Charentsavan.": "2019-ին նա Չարենցավանից եթեր է դուրս գալիս EK6GC կոչանշանով։", "In Charentsavan it is <b>{T}</b> — daytime; 160 meters waits for dark.": "Չարենցավանում ժամը <b>{T}</b> է՝ ցերեկ է. 160 մետրը մթության է սպասում։", "In Charentsavan it is <b>{T}</b> — night, 160 meters is open.": "Չարենցավանում ժամը <b>{T}</b> է՝ գիշեր է, 160 մետրը բաց է։", "In the national top ten": "Երկրի լավագույն տասնյակում", "JI3KDH, Japan — QSL 1997": "JI3KDH, Ճապոնիա — QSL 1997", "Joe Arcure": "Joe Arcure", "John Devoldere": "John Devoldere", "Karen Karapetyan": "Կարեն Կարապետյան", "Key the call": "Հաղորդեք կոչանշանը", "Kyiv, the USSR's top 160 m DXer and its first 160M DXCC holder. In 1986 UG6GAW overtakes him in 160 m countries.": "Կիև. ԽՍՀՄ-ի լավագույն DX-իստը 160 մ-ում և 160M DXCC-ի առաջին դիպլոմակիրը։ 1986-ին UG6GAW-ն 160 մ-ում երկրների թվով առաջ է անցնում նրանից։", "Log": "Մատյան", "Mail for letters and QSLs.": "Փոստ՝ նամակների և QSL-ների համար։", "Mamikon Miranyan": "Մամիկոն Միրանյան", "Map": "Քարտեզ", "Morse": "Մորզե", "Moscow — «QSL via Box 88»": "Մոսկվա — «QSL via Box 88»", "Multi-Single team": "Multi-Single թիմ", "Multi-Two team": "Multi-Two թիմ", "Not only records": "Ոչ միայն ռեկորդներ", "ON4UN, Belgium — 2nd in 1990": "ON4UN, Բելգիա — 2-րդ՝ 1990-ին", "On 160 meters since 1982, one of the most active stations in the republic. His first callsign is EZ6GAW.": "160 մետրում է 1982-ից, հանրապետության ամենաակտիվ կայաններից մեկը։ Նրա առաջին կոչանշանն է EZ6GAW։", "On 7 December 1988 an earthquake destroys Spitak and Leninakan, killing tens of thousands. Robert Grigoryan is there, in Spitak and in Leninakan, among those who help the people.": "1988 թ. դեկտեմբերի 7-ին երկրաշարժն ավերում է Սպիտակն ու Լենինականը՝ խլելով տասնյակ հազարավոր կյանքեր։ Ռոբերտ Գրիգորյանն այնտեղ է՝ Սպիտակում և Լենինականում, նրանց թվում, ովքեր օգնում են մարդկանց։", "On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up. The dimensions are a calculation for a full-wave delta at 1.83 MHz, not a drawing of his antenna.": "1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։ Չափերը 1,83 ՄՀց-ի համար լրիվ ալիքային «դելտայի» հաշվարկ են, ոչ թե նրա ալեհավաքի գծագիր։", "Operator on the EK0B team in CQ WW SSB with EK6CC, EK6TA, SP6AXW and SP9LJD: 6,879 QSOs, 10th in the world.": "Օպերատոր EK0B թիմում CQ WW SSB-ում՝ EK6CC-ի, EK6TA-ի, SP6AXW-ի և SP9LJD-ի հետ. 6879 QSO, 10-րդ տեղ աշխարհում։", "People": "Մարդիկ", "Points": "Միավորներ", "Points, single operator. Eightfold in twelve years. 1990: second in the world, 7,724 points behind first.": "Միավորներ, մեկ օպերատոր։ Տասներկու տարում՝ ութապատիկ աճ։ 1990-ին՝ աշխարհում երկրորդ տեղ, առաջինից 7724 միավոր պակաս։", "QRP 160M": "QRP 160M", "QSL manager": "QSL մենեջեր", "Rescue": "Փրկություն", "Robert Grigoryan, <b>world champion</b> on 160 meters. Charentsavan, Armenia.": "Ռոբերտ Գրիգորյան՝ 160 մետրանոց տիրույթի <b>աշխարհի չեմպիոն</b>։ Չարենցավան, Հայաստան։", "SO High 160M": "SO High 160M", "SPITAK · LENINAKAN": "ՍՊԻՏԱԿ · ԼԵՆԻՆԱԿԱՆ", "Saratov": "Սարատով", "Scans belong to the collectors credited under each card. Postal address and e-mail are hidden on the 1990s cards.": "Սկանները պատկանում են հավաքորդներին, որոնց անունները նշված են յուրաքանչյուր քարտի տակ։ 1990-ականների քարտերին փոստային հասցեն և էլ. փոստը թաքցված են։", "Send him 73": "Ուղարկեք նրան 73", "Serge": "Սերժ", "Single-Op High": "Single-Op High", "Sources": "Աղբյուրներ", "Spitak and Leninakan": "Սպիտակ և Լենինական", "Station": "Կայան", "Station log": "Կայանի մատյան", "Still on the air": "Մինչ օրս եթերում", "Team": "Թիմ", "Team: UG6GAW, Karapetian, Peluzian": "Թիմ՝ UG6GAW, Կարապետյան, Պելուզյան", "Ten official CQ WW DX certificates from the cqww.com archive. Nine carry red record lines: Armenia, CQ zone 21, and the world. Each one opens and downloads as a print-quality PDF for framing.": "CQ WW DX-ի տասը պաշտոնական վկայագիր cqww.com արխիվից։ Ինը կրում են կարմիր ռեկորդային տողեր՝ Հայաստանի, CQ 21-րդ գոտու և աշխարհի։ Յուրաքանչյուրը բացվում և ներբեռնվում է տպագրական որակի PDF-ով՝ շրջանակի մեջ դնելու համար։", "That is printed in red on the 1990 CW certificate, next to «CQ Zone 21 Record». Second that year is ON4UN of Belgium, author of «Low-Band DXing», the handbook every low-band operator keeps. In SSB the margin over second place is almost fourfold.": "Սա կարմիրով տպված է 1990 թ. CW վկայագրի վրա՝ «CQ Zone 21 Record»-ի կողքին։ Այդ տարի երկրորդը բելգիացի ON4UN-ն է՝ «Low-Band DXing» գրքի հեղինակը, որը ցածր տիրույթների յուրաքանչյուր օպերատորի սեղանի գիրքն է։ SSB-ում առավելությունը երկրորդ տեղի նկատմամբ գրեթե քառապատիկ է։", "The 1990 rival: second in CQ WW CW on 160 m behind UG6GAW. Author of «Low-Band DXing».": "1990-ի մրցակիցը՝ CQ WW CW-ում 160 մ-ում երկրորդը UG6GAW-ից հետո։ «Low-Band DXing»-ի հեղինակը։", "The CQ WW SSB 2019 team, with EK6GC among the operators.": "CQ WW SSB 2019-ի թիմը, որի օպերատորների թվում է EK6GC-ն։", "The air is always about the people at the other end: those beside him at the rig, on his team, and across the ocean.": "Եթերը միշտ այն մարդկանց մասին է, ովքեր կապի մյուս ծայրում են. նրանք, ովքեր նրա կողքին են սարքի մոտ, նրա թիմում և օվկիանոսից այն կողմ։", "The certificate wall": "Վկայագրերի պատը", "The club station and team: 880 QSOs in CQ WW 160 SSB 1988, CQ WPX 1987–1988.": "Ակումբային կայանը և թիմը. 880 QSO CQ WW 160 SSB 1988-ում, CQ WPX 1987–1988։", "The people": "Մարդիկ", "The shading shows where it is night right now. Where it is night, 160 meters is open.": "Ստվերը ցույց է տալիս, թե որտեղ է հիմա գիշեր։ Որտեղ գիշեր է, 160 մետրը բաց է։", "The site keeps growing: soon there will be a place where friends from the air all over the world can leave a word and stay in touch.": "Կայքը շարունակում է աճել. շուտով այստեղ կլինի մի անկյուն, որտեղ եթերային ընկերներն ամբողջ աշխարհից կկարողանան թողնել իրենց խոսքը և կապ պահել։", "The stricken towns are cut off. Radio becomes the only link: in 8–10 days Yerevan stations take more than 5,000 messages from people searching for their families.": "Աղետից տուժած քաղաքները կապից կտրված են։ Ռադիոն դառնում է կապի միակ միջոցը. 8–10 օրում երևանյան կայաններն ընդունում են ավելի քան 5000 հաղորդագրություն այն մարդկանցից, ովքեր փնտրում են իրենց հարազատներին։", "The world from Charentsavan": "Աշխարհը՝ Չարենցավանից", "Transmit": "Հաղորդել", "Transmitter": "Հաղորդիչ", "Turn the tuning knob": "Պտտեք կարգավորման կոճակը", "Twelve years in the world top ten": "Տասներկու տարի աշխարհի լավագույն տասնյակում", "Type anything and the key will send it in Morse. In ham language, «73» means «best regards».": "Գրեք ցանկացած բան, և բանալին այն կհաղորդի Մորզեի այբուբենով։ Ռադիոսիրողների լեզվով «73» նշանակում է «ջերմ բարևներ»։", "UG6GAW is in ARRL's official DXCC 160M standings today with 101 entities, and Armenia's only DXCC-160 holder.": "UG6GAW-ն այսօր ARRL-ի DXCC 160M պաշտոնական աղյուսակում է՝ 101 երկրով, և Հայաստանի միակ DXCC-160 դիպլոմակիրն է։", "UG6GAW is still in ARRL's DXCC 160M standings with 101 entities. ug6gaw.com goes live.": "UG6GAW-ն մինչ օրս ARRL-ի DXCC 160M աղյուսակում է՝ 101 երկրով։ Գործարկվում է ug6gaw.com կայքը։", "UG6GAW · EK6GC · Charentsavan, Armenia": "UG6GAW · EK6GC · Չարենցավան, Հայաստան", "UG7GWO is the Yerevan club station whose team Robert operates with in 1987–1988. When the earthquake strikes, it is the first to report that the stricken towns are cut off, and it runs around the clock: operators stay at the station for days, keeping the link with Moscow and the disaster zone. Six thousand messages pass in the first week. UG7GWO's chief, Karen Karapetyan (UG6GAT), receives the international Golden Antenna award for 1989 for this work.": "UG7GWO-ն երևանյան ակումբային կայան է, որի թիմում Ռոբերտն աշխատում է 1987–1988 թվականներին։ Երբ երկրաշարժը տեղի է ունենում, այն առաջինն է հաղորդում, որ տուժած քաղաքները կապից կտրված են, և աշխատում է շուրջօրյա. օպերատորներն օրերով չեն լքում կայանը՝ կապ պահելով Մոսկվայի և աղետի գոտու հետ։ Առաջին շաբաթում փոխանցվում է վեց հազար հաղորդագրություն։ Այս աշխատանքի համար UG7GWO-ի ղեկավար Կարեն Կարապետյանը (UG6GAT) արժանանում է 1989 թ. միջազգային «Ոսկե ալեհավաք» (Goldene Antenne) մրցանակին։", "UT5AB, Kyiv — the 1986 rival": "UT5AB, Կիև — 1986-ի մրցակիցը", "VK3AJJ, Australia — QSL 1998": "VK3AJJ, Ավստրալիա — QSL 1998", "Vahagn Grigorian": "Վահագն Գրիգորյան", "W3HNK, USA — QSL manager": "W3HNK, ԱՄՆ — QSL մենեջեր", "When radio saves lives": "Երբ ռադիոն կյանքեր է փրկում", "Why 160 meters is hard": "Ինչու է 160 մետրը դժվար", "With Robert and Karen at UG7GWO in 1991 when the French relief mission visits.": "Ռոբերտի և Կարենի հետ UG7GWO-ում, 1991-ին, երբ այցելում է ֆրանսիական օգնության առաքելությունը։", "World": "Աշխարհ", "World champion": "Աշխարհի չեմպիոն", "World champion · World Record": "Աշխարհի չեմպիոն · World Record", "World champion: first in CQ WW DX on 160 m in both CW and SSB. The certificate reads World Record and CQ Zone 21 Record. Second in the world in CQ WW 160 CW.": "Աշխարհի չեմպիոն. 1-ին տեղ CQ WW DX-ում 160 մ-ում՝ և՛ CW-ում, և՛ SSB-ում։ Վկայագրի վրա գրված է World Record և CQ Zone 21 Record։ Աշխարհում 2-րդ՝ CQ WW 160 CW-ում։", "World placing in the single operator 160 m category, from the official CQ WW DX certificates.": "Տեղն աշխարհում «մեկ օպերատոր, 160 մ» անվանակարգում՝ ըստ CQ WW DX պաշտոնական վկայագրերի։", "World placings": "Տեղերն աշխարհում", "YEREVAN": "ԵՐԵՎԱՆ", "Year": "Տարի", "Years": "Տարիներ", "Yerevan · Peluzian": "Երևան · Պելուզյան", "Zone / oblast": "Գոտի / մարզ", "base ≈ 69 m": "հիմքը ≈ 69 մ", "entities on 160 m in ARRL standings today": "երկիր 160 մ-ում ARRL-ի աղյուսակում այսօր", "feed": "սնուցում", "in the world, CQ WW DX 1990, CW and SSB": "աշխարհում, CQ WW DX 1990, CW և SSB", "official CQ WW certificates, nine with record lines": "CQ WW պաշտոնական վկայագիր, ինը՝ ռեկորդային տողերով", "perimeter ≈ λ ≈ 164 m at 1.83 MHz": "պարագիծը ≈ λ ≈ 164 մ 1,83 ՄՀց-ում", "reflection and hops": "անդրադարձ և թռիչքներ", "the D layer absorbs the signal": "D շերտը կլանում է ազդանշանը", "«30 years of the Radio Sport Federation of the USSR» card, stamped «USSR, Armenia, Z-21, Obl-004».": "«ԽՍՀՄ ռադիոսպորտի ֆեդերացիայի 30 տարին» քարտ՝ «USSR, Armenia, Z-21, Obl-004» կնիքով։", "«Brothers Grigorian»: a shared card with his brother Vahagn, EK6OCM. 10 MHz CW and SSB. Printed by UX5UO.": "«Brothers Grigorian»՝ ընդհանուր քարտ եղբոր՝ Վահագնի (EK6OCM) հետ։ 10 ՄՀց, CW և SSB։ Տպագրել է UX5UO-ն։", "«Radio» #11 · 1984": "«Ռադիո» №11 · 1984", "«Radio» #12 · 1985": "«Ռադիո» №12 · 1985", "«Radio» #12 · 1986": "«Ռադիո» №12 · 1986", "«Radio» #5 · 1986": "«Ռադիո» №5 · 1986", "«Radio» #6 · 1985": "«Ռադիո» №6 · 1985", "«Radio» magazine": "«Ռադիո» ամսագիր", "«Radio» magazine runs a «160 m achievements» table: countries confirmed and worked. UG6GAW enters it in November 1984 and within a year climbs to second in the USSR.": "«Ռադիո» ամսագիրը վարում է «Նվաճումներ 160 մ-ում» աղյուսակը՝ հաստատված և կապ ունեցած երկրներ։ UG6GAW-ն այնտեղ հայտնվում է 1984 թ. նոյեմբերին և մեկ տարում բարձրանում ԽՍՀՄ-ում երկրորդ տեղը։", "☀ DAY": "☀ ՑԵՐԵԿ", "☾ NIGHT": "☾ ԳԻՇԵՐ", "back": "դարձերես"};
+function TR(s){return window.HY[s]||s}
 (function(){
   var root=document.documentElement, RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function en(){return root.classList.contains('en')}
   function $(s){return document.querySelector(s)}
   function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
 
   /* ---------- language ---------- */
   function setLang(l){
-    root.classList.toggle('en',l==='en'); root.lang=l;
-    $$('.pill button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});
+    root.dataset.lang=l; root.lang=l;
+    $$('.flags button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});
     try{localStorage.setItem('ug6gaw-lang',l)}catch(e){}
     document.dispatchEvent(new Event('langchange'));
   }
-  var start='ru'; try{start=localStorage.getItem('ug6gaw-lang')||start}catch(e){}
-  if(location.hash==='#en')start='en'; if(location.hash==='#ru')start='ru';
+  var nl=(navigator.language||'ru').slice(0,2), start=nl==='hy'?'hy':(nl==='ru'||nl==='uk'||nl==='be'||nl==='kk')?'ru':'en';
+  try{start=localStorage.getItem('ug6gaw-lang')||start}catch(e){}
+  if(/^#(ru|en|hy)$/.test(location.hash))start=location.hash.slice(1);
   setLang(start);
-  $$('.pill button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang)})});
+  $$('.flags button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang)})});
 
   /* ---------- top bar ---------- */
   var tb=$('#topbar'); function onScroll(){tb.classList.toggle('solid',scrollY>40)} addEventListener('scroll',onScroll,{passive:true}); onScroll();
@@ -1208,8 +1218,8 @@
       var d=document.createElement('div'); d.className='qcard'+(q.tall?' tall':'');
       var cap=q.t+' · '+q.cr;
       d.innerHTML='<button type="button" class="ph" style="--r:'+rots[i%rots.length]+'deg" data-lb="'+q.f+'" data-group="qsl" data-cap="'+cap+'"><img loading="lazy" src="'+q.f+'" alt="'+q.t+'"></button>'+
-        (q.b?'<button type="button" class="flipbtn" data-front="'+q.f+'" data-back="'+q.b+'">↻ <span class="l-ru">оборот</span><span class="l-en">back</span></button>':'')+
-        '<div class="meta"><b>'+q.t+'</b><span class="l-ru">'+q.ru+'</span><span class="l-en">'+q.en+'</span><a href="'+q.u+'" target="_blank" rel="noopener">'+q.cr+' ↗</a></div>';
+        (q.b?'<button type="button" class="flipbtn" data-front="'+q.f+'" data-back="'+q.b+'">↻ <span class="l-ru">оборот</span><span class="l-en">back</span><span class="l-hy">դարձերես</span></button>':'')+
+        '<div class="meta"><b>'+q.t+'</b><span class="l-ru">'+q.ru+'</span><span class="l-en">'+q.en+'</span><span class="l-hy">'+TR(q.en)+'</span><a href="'+q.u+'" target="_blank" rel="noopener">'+q.cr+' ↗</a></div>';
       cardsEl.appendChild(d);
     });
   }
@@ -1250,7 +1260,7 @@
   P.forEach(function(p){
     var b=document.createElement('button'); b.type='button'; b.className='mag';
     b.dataset.lb='img/press/radio-'+p[0]+'.jpg'; b.dataset.group='press'; b.dataset.cap=p[1]+' — «Достижения на 160 м» · '+p[3]+' · Internet Archive';
-    b.innerHTML='<img loading="lazy" src="img/press/radio-'+p[0]+'.jpg" alt="'+p[1]+'"><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span></b><span class="l-ru">'+p[3]+'</span><span class="l-en">'+p[4]+'</span>';
+    b.innerHTML='<img loading="lazy" src="img/press/radio-'+p[0]+'.jpg" alt="'+p[1]+'"><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span><span class="l-hy">'+TR(p[2])+'</span></b><span class="l-ru">'+p[3]+'</span><span class="l-en">'+p[4]+'</span><span class="l-hy">'+TR(p[4])+'</span>';
     pg.appendChild(b);
   });
 
@@ -1268,7 +1278,7 @@
     ['RT4D','Саратов','Saratov','Команда CQ WW SSB 2019: EK6GC среди операторов.','The CQ WW SSB 2019 team, with EK6GC among the operators.']
   ];
   var pgr=$('#peoplegrid');
-  PE.forEach(function(p){var d=document.createElement('div');d.className='person';d.innerHTML='<div class="cs">'+p[0]+'</div><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span></b><p class="l-ru">'+p[3]+'</p><p class="l-en">'+p[4]+'</p>';pgr.appendChild(d)});
+  PE.forEach(function(p){var d=document.createElement('div');d.className='person';d.innerHTML='<div class="cs">'+p[0]+'</div><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span><span class="l-hy">'+TR(p[2])+'</span></b><p class="l-ru">'+p[3]+'</p><p class="l-en">'+p[4]+'</p><p class="l-hy">'+TR(p[4])+'</p>';pgr.appendChild(d)});
 
   /* ---------- results ---------- */
   var R=[
@@ -1299,7 +1309,7 @@
     lbody.innerHTML='';
     R.filter(function(r){return f==='all'||r[1]===f}).forEach(function(r){
       var tr=document.createElement('tr'); if(r[8])tr.className='hi';
-      tr.innerHTML='<td class="c">'+r[0]+'</td><td>'+r[2]+(r[8]?'<span class="note"><span class="l-ru">'+r[8]+'</span><span class="l-en">'+r[9]+'</span></span>':'')+'</td><td class="c">'+r[3]+'</td><td class="cat"><span class="l-ru">'+r[4]+'</span><span class="l-en">'+r[5]+'</span></td><td class="n">'+num(r[6])+'</td><td class="n">'+num(r[7])+'</td><td class="pl'+(r[10]==='#1'?' w1':'')+'">'+(r[10]||'—')+'</td>';
+      tr.innerHTML='<td class="c">'+r[0]+'</td><td>'+r[2]+(r[8]?'<span class="note"><span class="l-ru">'+r[8]+'</span><span class="l-en">'+r[9]+'</span><span class="l-hy">'+TR(r[9])+'</span></span>':'')+'</td><td class="c">'+r[3]+'</td><td class="cat"><span class="l-ru">'+r[4]+'</span><span class="l-en">'+r[5]+'</span><span class="l-hy">'+TR(r[5])+'</span></td><td class="n">'+num(r[6])+'</td><td class="n">'+num(r[7])+'</td><td class="pl'+(r[10]==='#1'?' w1':'')+'">'+(r[10]||'—')+'</td>';
       lbody.appendChild(tr);
     });
   }
@@ -1309,26 +1319,60 @@
   /* ---------- charts ---------- */
   var NS='http://www.w3.org/2000/svg';
   function mk(svg){return function(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;svg.appendChild(e);return e}}
+  function T3(ru,en,hy){var l=root.dataset.lang;return l==='en'?en:l==='hy'?hy:ru}
+  function tipFor(box){var d=box.querySelector('.ctip');if(!d){d=document.createElement('div');d.className='ctip';box.appendChild(d)}return d}
+  function showTip(box,svg,x,y,html){var tip=tipFor(box),r=svg.getBoundingClientRect(),br=box.getBoundingClientRect(),vb=svg.viewBox.baseVal,k=r.width/vb.width;tip.innerHTML=html;tip.style.left=(r.left-br.left+x*k+box.scrollLeft)+'px';tip.style.top=(r.top-br.top+y*k)+'px';tip.style.transform=(y*k<90)?'translate(-50%,26px)':'translate(-50%,-100%)';tip.classList.add('on')}
+  function hideTip(box){var t=box.querySelector('.ctip');if(t)t.classList.remove('on')}
+  var C_CW='#c4821e', C_SSB='#4a8fe0';
+  /* world placings: bump chart, log rank scale */
   (function(){
-    var svg=$('#rankchart'), el=mk(svg), W=900,H=340,L=60,Rm=30,T=36,Bm=44,y0=1984,y1=1995,maxP=12;
+    var svg=$('#rankchart'), box=svg.parentNode, el=mk(svg), W=900,H=360,L=64,Rm=70,T=40,Bm=48,y0=1984,y1=1995,maxP=12;
     function X(y){return L+(W-L-Rm)*(y-y0)/(y1-y0)} function Y(p){return T+(H-T-Bm)*Math.log(p)/Math.log(maxP)}
-    [1,2,3,5,10].forEach(function(p){el('line',{x1:L,x2:W-Rm,y1:Y(p),y2:Y(p),'class':'grid'});el('text',{x:L-12,y:Y(p)+4,'text-anchor':'end','font-size':13},'#'+p)});
-    for(var y=y0;y<=y1;y++)el('text',{x:X(y),y:H-Bm+28,'text-anchor':'middle','font-size':13},String(y));
-    var CW=[[1984,11],[1985,9],[1987,2],[1990,1],[1995,5]], SSB=[[1985,9],[1986,6],[1990,1]];
-    function line(d,c){el('path',{d:d.map(function(p,i){return(i?'L':'M')+X(p[0])+' '+Y(p[1])}).join(' '),fill:'none',stroke:c,'stroke-width':3,'class':'ln',style:'filter:drop-shadow(0 0 6px '+c+')'})}
-    line(CW,'#ffb23e'); line(SSB,'#3dffa2');
-    function dots(d,c,dy){d.forEach(function(p){el('circle',{cx:X(p[0]),cy:Y(p[1]),r:p[1]===1?10:6.5,fill:c,stroke:'#0e1521','stroke-width':3});el('text',{x:X(p[0]),y:Y(p[1])+dy,'text-anchor':'middle','font-size':14,'class':'val'},'#'+p[1])})}
-    dots(SSB,'#3dffa2',24); dots(CW,'#ffb23e',-16);
+    var defs=el('defs',{}); defs.innerHTML='<linearGradient id="band90" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#c4821e" stop-opacity=".22"/><stop offset="1" stop-color="#c4821e" stop-opacity="0"/></linearGradient>';
+    el('rect',{x:X(1990)-26,y:T-26,width:52,height:H-T-Bm+26,fill:'url(#band90)',rx:6});
+    [1,2,3,5,10].forEach(function(p){el('line',{x1:L,x2:W-Rm,y1:Y(p),y2:Y(p),stroke:'#1c283a','stroke-width':1});el('text',{x:L-14,y:Y(p)+4,'text-anchor':'end','font-size':12,fill:'#5d6a80'},'#'+p)});
+    el('text',{x:L-14,y:T-22,'text-anchor':'end','font-size':11,fill:'#5d6a80','letter-spacing':'.08em'},'WORLD');
+    for(var y=y0;y<=y1;y++)el('text',{x:X(y),y:H-Bm+30,'text-anchor':'middle','font-size':12,fill:y===1990?'#ffd98a':'#5d6a80','font-weight':y===1990?700:400},String(y));
+    var S=[
+      {k:'CW',c:C_CW,d:[[1984,11,268,35475,'UG6GAW'],[1985,9,327,55440,'UG6GAW'],[1987,2,498,103016,'UG6GAW'],[1990,1,851,164430,'UG6GAW'],[1995,5,680,173604,'EK6GC']]},
+      {k:'SSB',c:C_SSB,d:[[1985,9,140,17202,'UG6GAW'],[1986,6,182,23712,'UG6GAW'],[1990,1,805,119955,'UG6GAW']]}
+    ];
+    S.forEach(function(s){
+      el('path',{d:s.d.map(function(p,i){return(i?'L':'M')+X(p[0])+' '+Y(p[1])}).join(' '),fill:'none',stroke:s.c,'stroke-width':2.5,'stroke-linejoin':'round','stroke-linecap':'round','class':'ln'});
+    });
+    S.forEach(function(s,si){
+      s.d.forEach(function(p){
+        var off=(p[0]===1990)?(si?7:-7):0, cx=X(p[0])+off, cy=Y(p[1]);
+        el('circle',{cx:cx,cy:cy,r:p[1]===1?7:5,fill:s.c,stroke:'#0e1521','stroke-width':2.5});
+        var hit=el('circle',{cx:cx,cy:cy,r:18,fill:'transparent',style:'cursor:pointer'});
+        function on(){showTip(box,svg,cx,cy-12,'<b>'+p[0]+' · CQ WW DX '+s.k+'</b><br>'+T3('Место в мире: ','World place: ','Տեղ աշխարհում՝ ')+'<em>#'+p[1]+'</em><br>'+p[4]+' · '+p[2]+' QSO · '+num(p[3]))}
+        hit.addEventListener('pointerenter',on); hit.addEventListener('pointerleave',function(){hideTip(box)}); hit.addEventListener('click',on);
+      });
+    });
+    /* direct labels */
+    el('text',{x:X(1995)+12,y:Y(5)+4,'font-size':13,'font-weight':700,fill:'#eaf0f8'},'CW');
+    el('text',{x:X(1986)+10,y:Y(6)+16,'font-size':13,'font-weight':700,fill:'#eaf0f8'},'SSB');
+    /* 1990 annotation */
+    var a=el('text',{x:X(1990),y:T-12,'text-anchor':'middle','font-size':12,'font-weight':700,fill:'#ffd98a','letter-spacing':'.06em'},'');
+    function ann(){a.textContent=T3('ЧЕМПИОН МИРА · CW + SSB','WORLD CHAMPION · CW + SSB','ԱՇԽԱՐՀԻ ՉԵՄՊԻՈՆ · CW + SSB')}
+    ann(); document.addEventListener('langchange',ann);
   })();
+  /* CQ WW 160 CW score growth: bars */
   (function(){
-    var C=[[1985,60060],[1986,171216],[1987,189803],[1988,250932],[1990,264574],[1997,494073]];
-    var svg=$('#growth'), el=mk(svg), W=640,H=300,L=52,Rm=12,T=30,Bm=40,max=500000;
-    [0,100000,200000,300000,400000,500000].forEach(function(v){var y=T+(H-T-Bm)*(1-v/max);el('line',{x1:L,x2:W-Rm,y1:y,y2:y,'class':'grid'});el('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':12},v===0?'0':(v/1000)+'k')});
-    var slot=(W-L-Rm)/C.length, bw=Math.min(54,slot*.56);
-    C.forEach(function(d,i){var x=L+slot*i+(slot-bw)/2,h=(H-T-Bm)*(d[1]/max),y=H-Bm-h,hi=d[0]===1990||d[0]===1997;
-      el('rect',{x:x,y:y,width:bw,height:h,rx:3,fill:hi?'#ffb23e':'#2a3a52',style:hi?'filter:drop-shadow(0 0 8px rgba(255,178,62,.6))':''});
-      el('text',{x:x+bw/2,y:y-8,'text-anchor':'middle','font-size':13,'class':'val'},Math.round(d[1]/1000)+'k');
-      el('text',{x:x+bw/2,y:H-Bm+22,'text-anchor':'middle','font-size':13},String(d[0]))});
+    var C=[[1985,60060,169,80],[1986,171216,315,24],[1987,189803,342,25],[1988,250932,411,12],[1990,264574,428,2],[1997,494073,657,16]];
+    var svg=$('#growth'), box=svg.parentNode, el=mk(svg), W=640,H=300,L=52,Rm=12,T=30,Bm=44,max=500000;
+    [0,100000,200000,300000,400000,500000].forEach(function(v){var y=T+(H-T-Bm)*(1-v/max);el('line',{x1:L,x2:W-Rm,y1:y,y2:y,stroke:v?'#1c283a':'#2a3a52','stroke-width':1});el('text',{x:L-10,y:y+4,'text-anchor':'end','font-size':11,fill:'#5d6a80'},v===0?'0':(v/1000)+'k')});
+    var slot=(W-L-Rm)/C.length, bw=Math.min(46,slot*.5), r=4;
+    C.forEach(function(d,i){
+      var x=L+slot*i+(slot-bw)/2,h=(H-T-Bm)*(d[1]/max),y=H-Bm-h,hi=d[0]===1990||d[0]===1997;
+      el('path',{d:'M'+x+' '+(H-Bm)+'V'+(y+r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'H'+(x+bw-r)+'Q'+(x+bw)+' '+y+' '+(x+bw)+' '+(y+r)+'V'+(H-Bm)+'Z',fill:hi?C_CW:'#2a3a52','class':'gbar'});
+      if(hi)el('text',{x:x+bw/2,y:y-10,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#eaf0f8'},Math.round(d[1]/1000)+'k');
+      el('text',{x:x+bw/2,y:H-Bm+20,'text-anchor':'middle','font-size':12,fill:hi?'#ffd98a':'#5d6a80','font-weight':hi?700:400},String(d[0]));
+      if(d[0]===1997)el('text',{x:x+bw/2,y:H-Bm+36,'text-anchor':'middle','font-size':10,fill:'#5d6a80'},'EK6GC');
+      var hit=el('rect',{x:x-8,y:T,width:bw+16,height:H-T-Bm,fill:'transparent',style:'cursor:pointer'});
+      function on(){showTip(box,svg,x+bw/2,y-14,'<b>CQ WW 160 CW · '+d[0]+'</b><br>'+num(d[1])+T3(' очков',' points',' միավոր')+'<br>'+d[2]+' QSO · '+T3('место в мире ','world place ','տեղ աշխարհում ')+'<em>#'+d[3]+'</em>')}
+      hit.addEventListener('pointerenter',on); hit.addEventListener('pointerleave',function(){hideTip(box)}); hit.addEventListener('click',on);
+    });
   })();
 
   /* ---------- timeline tuner ---------- */
@@ -1354,7 +1398,7 @@
     TL.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t[0];if(t[1])b.className='key';b.addEventListener('click',function(){go(i)});tu.appendChild(b);btns.push(b)});
     function render(i){
       if(i===act)return; act=i; btns.forEach(function(b,k){b.classList.toggle('act',k===i)});
-      var t=TL[i]; disp.innerHTML='<div class="y fade">'+t[0]+'</div><div class="fade"><p class="l-ru">'+t[2]+'</p><p class="l-en">'+t[3]+'</p></div>';
+      var t=TL[i]; disp.innerHTML='<div class="y fade">'+t[0]+'</div><div class="fade"><p class="l-ru">'+t[2]+'</p><p class="l-en">'+t[3]+'</p><p class="l-hy">'+TR(t[3])+'</p></div>';
       if(soundOn&&ctx){var c=ctx,o=c.createOscillator(),g=c.createGain();o.frequency.value=900+i*40;g.gain.value=.05;o.connect(g);g.connect(master);o.start();g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.08);o.stop(c.currentTime+.09)}
     }
     function center(){var r=tu.getBoundingClientRect(),cx=r.left+r.width/2,best=0,bd=1e9;btns.forEach(function(b,k){var br=b.getBoundingClientRect(),d=Math.abs(br.left+br.width/2-cx);if(d<bd){bd=d;best=k}});render(best)}
@@ -1379,6 +1423,15 @@
       code.innerHTML=h;
     }
     inp.addEventListener('input',function(){draw(-1)}); draw(-1);
+    /* manual keying: press and hold the real key */
+    var ko=null,kg=null,stage=keyart.querySelector('.kstage');
+    stage.style.cursor='pointer'; stage.setAttribute('role','button'); stage.setAttribute('tabindex','0'); stage.setAttribute('aria-label','Telegraph key: press and hold');
+    function kdown(e){if(busy)return;if(e)e.preventDefault();var c=ac();keyart.classList.add('down');lamps.forEach(function(l){l.classList.add('on')});
+      if(c&&!ko){ko=c.createOscillator();kg=c.createGain();ko.frequency.value=640;kg.gain.value=0;ko.connect(kg);kg.connect(master);ko.start();kg.gain.linearRampToValueAtTime(.24,c.currentTime+.006)}}
+    function kup(){keyart.classList.remove('down');lamps.forEach(function(l){l.classList.remove('on')});
+      if(ko){var c=ctx,o=ko;kg.gain.cancelScheduledValues(c.currentTime);kg.gain.setValueAtTime(kg.gain.value,c.currentTime);kg.gain.linearRampToValueAtTime(0,c.currentTime+.006);o.stop(c.currentTime+.02);ko=null;kg=null}}
+    stage.addEventListener('pointerdown',kdown); addEventListener('pointerup',kup); stage.addEventListener('pointerleave',function(e){if(e.buttons)kup()});
+    stage.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){if(!e.repeat)kdown(e)}}); stage.addEventListener('keyup',function(e){if(e.key===' '||e.key==='Enter')kup()});
     wpm.addEventListener('input',function(){wv.textContent=wpm.value});
     $$('.chip').forEach(function(c){c.addEventListener('click',function(){inp.value=c.dataset.t;draw(-1)})});
     $('#txgo').addEventListener('click',function(){
@@ -1424,13 +1477,13 @@ window.addEventListener('DOMContentLoaded',function(){
   function drawNight(){
     var s=sun(), anti=[s[0]>0?s[0]-180:s[0]+180,-s[1]]; night.setAttribute('d',path(d3.geoCircle().center(anti).radius(90)()));
     var isN=d3.geoDistance(HOME,anti)<Math.PI/2, t=new Date(Date.now()+4*3600e3), hh=String(t.getUTCHours()).padStart(2,'0'), mm=String(t.getUTCMinutes()).padStart(2,'0');
-    document.getElementById('clock').innerHTML='<span class="l-ru">В Чаренцаване сейчас <b>'+hh+':'+mm+'</b> — '+(isN?'ночь, 160 метров открыты.':'день, 160 метров ждут вечера.')+'</span><span class="l-en">In Charentsavan it is <b>'+hh+':'+mm+'</b> — '+(isN?'night, 160 meters is open.':'daytime; 160 meters waits for dark.')+'</span>';
+    document.getElementById('clock').innerHTML='<span class="l-ru">В Чаренцаване сейчас <b>'+hh+':'+mm+'</b> — '+(isN?'ночь, 160 метров открыты.':'день, 160 метров ждут вечера.')+'</span><span class="l-en">In Charentsavan it is <b>'+hh+':'+mm+'</b> — '+(isN?'night, 160 meters is open.':'daytime; 160 meters waits for dark.')+'</span><span class="l-hy">'+window.HY[isN?'In Charentsavan it is <b>{T}</b> — night, 160 meters is open.':'In Charentsavan it is <b>{T}</b> — daytime; 160 meters waits for dark.'].replace('{T}',hh+':'+mm)+'</span>';
   }
   drawNight(); setInterval(drawNight,60000);
   P.forEach(function(p){add('path',{d:path({type:'LineString',coordinates:[HOME,p.c]}),'class':'path'},null,gO);var xy=proj(p.c);add('circle',{cx:xy[0],cy:xy[1],r:4,'class':'dot'},null,gO)});
   var h=proj(HOME); add('circle',{cx:h[0],cy:h[1],r:6,'class':'home'},null,gO); add('text',{x:h[0]+9,y:h[1]+16},'EK6GC',gO);
   function brg(a,b){var r=Math.PI/180,f1=a[1]*r,f2=b[1]*r,dl=(b[0]-a[0])*r;return(Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))/r+360)%360}
-  function list(){var ul=document.getElementById('places'),e=document.documentElement.classList.contains('en');ul.innerHTML='';P.forEach(function(p){var km=Math.round(d3.geoDistance(HOME,p.c)*6371/10)*10,li=document.createElement('li');li.innerHTML='<span>'+(e?p.en:p.ru)+'</span><span class="n">'+km.toLocaleString('en-US').replace(/,/g,' ')+' km</span><span class="n">'+Math.round(brg(HOME,p.c))+'°</span>';ul.appendChild(li)})}
+  function list(){var ul=document.getElementById('places'),lg=document.documentElement.dataset.lang;ul.innerHTML='';P.forEach(function(p){var km=Math.round(d3.geoDistance(HOME,p.c)*6371/10)*10,li=document.createElement('li');li.innerHTML='<span>'+(lg==='en'?p.en:lg==='hy'?(window.HY[p.en]||p.en):p.ru)+'</span><span class="n">'+km.toLocaleString('en-US').replace(/,/g,' ')+' km</span><span class="n">'+Math.round(brg(HOME,p.c))+'°</span>';ul.appendChild(li)})}
   list(); document.addEventListener('langchange',list);
 });
 </script>
