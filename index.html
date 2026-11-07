@@ -39,6 +39,14 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .brand{display:flex;align-items:center;gap:10px;font:700 15px var(--sans);text-decoration:none;white-space:nowrap}
 .brand i{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:bl 1.6s infinite}
 .brand em{font-style:normal;font-weight:400;opacity:.55}
+.bant{display:inline-block;width:22px;height:26px;margin-left:2px;color:currentColor;opacity:.75}
+.bant svg{display:block;width:100%;height:100%;overflow:visible}
+.bant .bl,.bant .bm{stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.bant .bf{fill:var(--amber)}
+.bant .bw circle{stroke:var(--amber);stroke-width:1.1;transform-origin:13px 5px;animation:bwave 2.4s ease-out infinite;opacity:0}
+.bant .bw circle:nth-child(2){animation-delay:1.2s}
+@keyframes bwave{0%{transform:scale(.5);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+
 .nav{display:flex;justify-content:center;gap:26px;font-size:14px}
 .nav a{text-decoration:none;opacity:.78;transition:opacity .2s}
 .nav a:hover{opacity:1}
@@ -449,7 +457,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 </head>
 <body>
 <header id="hd"><div class="wrap">
-  <a class="brand" href="#top"><i></i>UG6GAW <em>/ EK6GC</em></a>
+  <a class="brand" href="#top"><i></i>UG6GAW <em>/ EK6GC</em><span class="bant" aria-hidden="true"><svg viewBox="0 0 26 30" fill="none"><g class="bw"><circle cx="13" cy="5" r="3"/><circle cx="13" cy="5" r="3"/></g><path class="bl" d="M13 5 L3 23 L23 23 Z"/><path class="bm" d="M13 5 V28 M6 28 H20"/><circle class="bf" cx="13" cy="23" r="1.6"/></svg></span></a>
   <nav class="nav" id="nav">
     <a href="#y1990">1990</a>
     <a href="#dxcc">№144</a>
@@ -476,17 +484,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   <div class="grain" aria-hidden="true"></div>
   <div class="wrap in">
     <div class="freq"><i></i><span class="l-ru">1 832 кГц · CW · 160 м</span><span class="l-en">1,832 kHz · CW · 160 m</span><span class="l-hy">1 832 կՀց · CW · 160 մ</span></div>
-    <div class="call">UG6GAW<span class="now">/EK6GC<span class="ant" aria-hidden="true"><svg viewBox="0 0 320 360" fill="none">
-        <g class="waves"><circle cx="160" cy="46" r="18"/><circle cx="160" cy="46" r="18"/><circle cx="160" cy="46" r="18"/></g>
-        <path class="loop" d="M160 46 L34 300 L286 300 Z"/>
-        <path class="rail" d="M156 46 V328 M164 46 V328 M156 58 L164 70 L156 82 M156 82 L164 94 L156 106 M156 106 L164 118 L156 130 M156 130 L164 142 L156 154 M156 154 L164 166 L156 178 M156 178 L164 190 L156 202 M156 202 L164 214 L156 226 M156 226 L164 238 L156 250 M156 250 L164 262 L156 274 M156 274 L164 286 L156 298 M156 298 L164 310 L156 322"/>
-        <path class="guy" d="M160 120 L70 328 M160 120 L250 328"/>
-        <circle class="ins" cx="160" cy="46" r="3.5"/><circle class="ins" cx="34" cy="300" r="3"/><circle class="ins" cx="286" cy="300" r="3"/>
-        <path class="feed" d="M160 300 V328"/><circle class="fp" cx="160" cy="300" r="3"/>
-        <path class="gnd" d="M14 330 H306"/>
-        <path class="dim" d="M302 46 V328 M298 46 H306 M298 328 H306"/>
-        <text x="296" y="190" class="dt" transform="rotate(-90 296 190)">35 m</text>
-      </svg></span></span></div>
+    <div class="call">UG6GAW<span class="now">/EK6GC</span></div>
     <h1><span class="l-ru">Роберт <b>Григорян</b></span><span class="l-en">Robert <b>Grigoryan</b></span><span class="l-hy">Ռոբերտ <b>Գրիգորյան</b></span></h1>
     <p class="lead"><span class="l-ru">1990 год, CQ World Wide DX Contest, 160 метров: первое место в мире сразу телеграфом и телефоном. Армения.</span><span class="l-en">1990, CQ World Wide DX Contest, 160 meters: first in the world in both CW and SSB. Armenia.</span><span class="l-hy">1990 թ., CQ World Wide DX Contest, 160 մետր՝ առաջին տեղ աշխարհում և՛ CW-ում, և՛ SSB-ում։ Հայաստան։</span></p>
     <div class="hmeta">
