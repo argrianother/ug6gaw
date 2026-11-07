@@ -99,7 +99,7 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .hmeta p{margin:0;font-weight:500;font-size:15.5px;line-height:1.35}
 .pcap{position:absolute;right:32px;bottom:40px;font:400 11px/1.6 var(--mono);letter-spacing:.06em;color:var(--light3);text-align:right}
 /* Morse ticker */
-.mrow{display:flex;align-items:center;gap:14px;margin-top:30px;max-width:min(810px,62vw)}
+.mrow{display:flex;align-items:center;gap:14px;margin-top:30px;max-width:min(810px,calc(100% - 340px))}
 .snd{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:var(--light2);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,color .2s,background .2s,box-shadow .2s}
 .snd svg{width:19px;height:19px}
 .snd:hover{border-color:var(--light);color:var(--light)}
@@ -494,7 +494,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <div><span class="m"><span class="l-ru">Диплом</span><span class="l-en">Award</span><span class="l-hy">Դիպլոմ</span></span><p><span class="l-ru">DXCC 160 м · №144</span><span class="l-en">DXCC 160 m · #144</span><span class="l-hy">DXCC 160 մ · №144</span></p></div>
     </div>
     <div class="mrow"><button type="button" class="snd" id="snd" aria-pressed="false" title="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4.5" height="7" rx="2"/><rect x="16.5" y="13" width="4.5" height="7" rx="2"/><path class="x" d="M9.5 10.5l5 5M14.5 10.5l-5 5"/></svg><span class="sr">Sound</span></button><div class="morse" id="morse" aria-hidden="true"><div class="lay cold"><div class="tr"></div></div><div class="lay hot"><div class="tr"></div></div><div class="win"></div></div></div>
-    <div class="pcap"><span class="l-ru">1988 · Роберт Григорян (слева) с К. Суваряном, К. Пулузяном и К. Карапетяном</span><span class="l-en">1988 · Robert Grigoryan (left) with K. Suvaryan, K. Puluzyan and K. Karapetyan</span><span class="l-hy">1988 · Ռոբերտ Գրիգորյանը (ձախից) Կ. Սուվարյանի, Կ. Պուլուզյանի և Կ. Կարապետյանի հետ</span><br>«Հայաստանի ֆիզկուլտուրնիկ» · ek7dx.com</div>
+    <div class="pcap"><span class="l-ru">1988 · Роберт Григорян за аппаратурой</span><span class="l-en">1988 · Robert Grigoryan at the station</span><span class="l-hy">1988 · Ռոբերտ Գրիգորյանը կայանում</span><br>«Հայաստանի ֆիզկուլտուրնիկ» · ek7dx.com</div>
   </div>
 </section>
 
