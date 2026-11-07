@@ -11,6 +11,9 @@
 <meta name="theme-color" content="#06090f">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306090f'/%3E%3Ccircle cx='32' cy='32' r='20' fill='none' stroke='%23ffb23e' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23ff4a3d'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/Unbounded-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Manrope-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/JetBrainsMono-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link href="fonts/fonts.css" rel="stylesheet">
 <style>
   :root{
@@ -69,6 +72,33 @@
   .snd{width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:rgba(10,15,24,.6);color:var(--muted);cursor:pointer;display:grid;place-items:center}
   .snd[aria-pressed="true"]{color:var(--amber);border-color:var(--amber);box-shadow:var(--glow-a)}
   .snd svg{width:16px;height:16px}
+
+
+  /* ---------- mobile menu ---------- */
+  .menubtn{display:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line2);background:rgba(10,15,24,.6);cursor:pointer;padding:0;flex-direction:column;justify-content:center;align-items:center;gap:5px}
+  .menubtn span{display:block;width:18px;height:2px;border-radius:2px;background:var(--text);transition:transform .25s,opacity .2s}
+  .menubtn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .menubtn[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .menubtn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .sheet{position:fixed;inset:0;z-index:45;background:rgba(5,8,13,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .sheet.open{opacity:1;visibility:visible}
+  .sheet-in{min-height:100%;display:flex;flex-direction:column;padding:calc(84px + env(safe-area-inset-top)) 22px calc(28px + env(safe-area-inset-bottom))}
+  .sheet-nav{display:flex;flex-direction:column}
+  .sheet-nav a{display:flex;align-items:baseline;gap:16px;padding:13px 2px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text);font:800 24px/1.15 var(--display);transform:translateY(10px);opacity:0;transition:transform .35s,opacity .35s}
+  .sheet.open .sheet-nav a{transform:none;opacity:1}
+  .sheet-nav a b{font:700 12px var(--mono);color:var(--amber);letter-spacing:.1em;min-width:22px}
+  .sheet-nav a:active{color:var(--amber)}
+  .sheet-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-top:26px}
+  .flags.big{padding:5px;gap:4px;width:100%}
+  .flags.big button{flex:1 1 0;justify-content:center;min-width:0}
+  .flags.big button{width:auto;height:40px;padding:0 12px 0 6px;display:flex;align-items:center;gap:8px;border-radius:999px;opacity:.55;filter:none;color:var(--text);font:700 13px var(--body)}
+  .flags.big button svg{width:30px;height:20px;border-radius:4px;flex:none}
+  .flags.big button[aria-pressed="true"]{opacity:1;background:rgba(255,178,62,.14);box-shadow:0 0 0 1.5px var(--amber)}
+  .sheet-snd{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line2);background:transparent;color:var(--muted);font:700 13px var(--body);cursor:pointer}
+  .sheet-snd svg{width:18px;height:18px}
+  .sheet-snd[aria-pressed="true"]{color:var(--amber);border-color:var(--amber)}
+  .sheet-foot{margin:auto 0 0;padding-top:28px;font:700 11px var(--mono);letter-spacing:.14em;color:var(--dim)}
+  body.locked{overflow:hidden}
 
   /* ---------- hero ---------- */
   .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;overflow:hidden;padding:0}
@@ -240,7 +270,7 @@
 
   /* ---------- charts ---------- */
   .chart{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:22px 20px 12px;overflow-x:auto}
-  .chart svg{display:block;width:100%;min-width:620px;height:auto}
+  .chart svg{display:block;width:100%;height:auto}
   .chart text{font-family:var(--mono);fill:var(--muted)}
   .chart .grid{stroke:var(--line);stroke-width:1}
   .chart .val{fill:var(--text);font-weight:700}
@@ -432,6 +462,116 @@
     .tdisplay{padding:22px}
     .cards{gap:34px}
   }
+
+  /* ---------- touch devices: no sticky hover lifts ---------- */
+  @media (hover:none){
+    .fan button:hover{transform:var(--t);z-index:var(--z)}
+    .fan button:hover img{box-shadow:0 30px 60px -20px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.06)}
+    .qcard .ph:hover{transform:rotate(var(--r,0deg))}
+    .cert:hover{transform:rotate(var(--r,0deg))}
+    .wall button:hover,.person:hover{transform:none}
+    .mag:hover img{transform:none}
+  }
+  .top{padding-top:env(safe-area-inset-top)}
+  footer{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+  @media (max-width:900px){
+    .menubtn{display:flex}
+    .snd{display:none}
+    .ctrl{gap:10px}
+  }
+  @media (max-width:600px){
+    .top .wrap{height:58px;gap:10px}
+    .brand{font-size:14px;gap:8px}
+    .ctrl .flags{padding:3px 5px;gap:4px}
+    .ctrl .flags button{width:28px;height:19px}
+    .hero .wrap{padding-top:84px;gap:28px}
+    .readout{font-size:12px;gap:8px 12px}
+    .readout .freq{font-size:18px}
+    .call{margin:18px 0 10px}
+    .decoder{font-size:13px;margin-bottom:20px}
+    .hero h1{font-size:23px}
+    .hero p.lead{font-size:16px}
+    .cta .btn{flex:1 1 auto;justify-content:center;padding:14px 16px}
+    .fan{height:250px}
+    .fan button{width:74%;left:13%}
+    .fan button:nth-child(1){--t:translateX(-9%) rotate(-7deg)}
+    .fan button:nth-child(2){--t:translateX(9%) rotate(5deg)}
+    .fan button:nth-child(3){--t:translateX(-1%) rotate(-2deg)}
+    .dialbar .wrap{padding-top:10px;padding-bottom:12px}
+    .scale b{font-size:10px}
+    .ticker div{font-size:13px;padding:12px 0}
+    h2{font-size:30px}
+    .lede{font-size:17px;margin-bottom:28px}
+    .kicker{font-size:12px}
+    .hugeone{font-size:200px;top:40px;right:-30px}
+    .certs{gap:26px}
+    .cert{padding:6px}
+    .stamp{right:-4px;font-size:14px;padding:7px 9px;border-width:2px}
+    .board td{padding:9px 12px;font-size:14px}
+    .board td:nth-child(2){white-space:nowrap}
+    .board td.n{font-size:12.5px;line-height:1.35}
+    .note-box{padding:18px}
+    .note-box b.big{font-size:18px}
+    .smeter{padding:16px 14px 10px}
+    .stat{padding:20px 18px}
+    .event{padding:22px}
+    .chart{padding:14px 14px 8px}
+    .ctip{white-space:normal;width:max-content;max-width:240px}
+    .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-18px;padding-right:18px}
+    .filters::-webkit-scrollbar{display:none}
+    .filters button{flex:none;padding:10px 16px}
+    .cards{grid-template-columns:minmax(0,1fr)}
+    .readcard{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .readcard div{padding:14px}
+    .readcard span{font-size:14px}
+    .wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .wall button{padding:6px}
+    .wall .t{flex-direction:column;gap:2px;padding-top:8px}
+    .wall .t b,.wall .t span{font-size:12.5px}
+    .wall .rec{font-size:10.5px}
+    .dxcc{gap:18px}
+    .press{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-right:-18px;padding-right:18px;scrollbar-width:none}
+    .press::-webkit-scrollbar{display:none}
+    .mag{flex:0 0 62%;scroll-snap-align:start}
+    .people{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+    .person{padding:16px}
+    .person .cs{font-size:16px}
+    .person b{font-size:14.5px}
+    .person p{font-size:13.5px}
+    .places li{font-size:14px;gap:10px}
+    .tdisplay p{font-size:17px}
+    .tx input{font-size:20px}
+    .chip{padding:9px 13px}
+    .qth figure{min-height:220px}
+    .qinfo{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .qinfo span{font-size:16px}
+    dialog.lb{max-width:100vw;width:100vw;margin:auto}
+    dialog.lb img{border-radius:0;max-height:70vh}
+    dialog.lb .bar{padding:12px 14px 0;flex-wrap:wrap}
+    dialog.lb .nav{display:none}
+    /* results log: one card per row */
+    .logwrap{background:none;border:0;overflow:visible}
+    table.log{min-width:0;display:block}
+    .log thead{display:none}
+    .log tbody{display:grid;gap:10px}
+    .log tr{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+    .log tr.hi{border-color:rgba(255,178,62,.45)}
+    .log td{display:block;padding:0;border:0;background:none !important}
+    .log td.yr{grid-row:1/4;font:800 22px var(--display);color:var(--amber);align-self:start}
+    .log td.ct{grid-column:2;font-weight:700}
+    .log td.pl{grid-column:3;grid-row:1;text-align:right;font-size:16px}
+    .log td.call,.log td.cat{grid-column:2/4;font-size:13px}
+    .log td.call{color:var(--amber2)}
+    .log td.qso,.log td.pts{display:inline-block;text-align:left;font-size:13px;color:var(--muted)}
+    .log td.qso{grid-column:2}
+    .log td.pts{grid-column:3;text-align:right}
+    .log td.qso::before,.log td.pts::before{content:attr(data-l) " ";color:var(--dim);font-size:11px;letter-spacing:.08em}
+  }
+  @media (max-width:380px){
+    .brand .b2{display:none}
+    .people{grid-template-columns:minmax(0,1fr)}
+  }
+
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
     .ticker div,.radar .sweep,.wave,.hop,.pulse,.decoder::after{animation:none}
@@ -444,7 +584,7 @@
 
 <header class="top" id="topbar">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="lamp" id="lamp"></span>UG6GAW <i>/</i> EK6GC</a>
+    <a class="brand" href="#top"><span class="lamp" id="lamp"></span>UG6GAW<span class="b2"> <i>/</i> EK6GC</span></a>
     <nav class="nav" aria-label="Sections">
       <a href="#champion">1990</a>
       <a href="#rescue"><span class="l-ru">Помощь</span><span class="l-en">Rescue</span><span class="l-hy">Փրկություն</span></a>
@@ -463,9 +603,25 @@
         <button type="button" data-lang="ru" aria-pressed="true" title="Русский" aria-label="Русский"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#D52B1E"/><rect width="30" height="13.33" fill="#0039A6"/><rect width="30" height="6.67" fill="#fff"/></svg></button>
         <button type="button" data-lang="en" aria-pressed="false" title="English" aria-label="English"><svg viewBox="0 0 38 20"><rect width="38" height="20" fill="#fff"/><g fill="#B22234"><rect y="0.000" width="38" height="1.538"/><rect y="3.077" width="38" height="1.538"/><rect y="6.154" width="38" height="1.538"/><rect y="9.231" width="38" height="1.538"/><rect y="12.308" width="38" height="1.538"/><rect y="15.385" width="38" height="1.538"/><rect y="18.462" width="38" height="1.538"/></g><rect width="15.2" height="10.77" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.30" cy="1.20" r=".55"/><circle cx="3.80" cy="1.20" r=".55"/><circle cx="6.30" cy="1.20" r=".55"/><circle cx="8.80" cy="1.20" r=".55"/><circle cx="11.30" cy="1.20" r=".55"/><circle cx="13.80" cy="1.20" r=".55"/><circle cx="2.55" cy="3.30" r=".55"/><circle cx="5.05" cy="3.30" r=".55"/><circle cx="7.55" cy="3.30" r=".55"/><circle cx="10.05" cy="3.30" r=".55"/><circle cx="12.55" cy="3.30" r=".55"/><circle cx="1.30" cy="5.40" r=".55"/><circle cx="3.80" cy="5.40" r=".55"/><circle cx="6.30" cy="5.40" r=".55"/><circle cx="8.80" cy="5.40" r=".55"/><circle cx="11.30" cy="5.40" r=".55"/><circle cx="13.80" cy="5.40" r=".55"/><circle cx="2.55" cy="7.50" r=".55"/><circle cx="5.05" cy="7.50" r=".55"/><circle cx="7.55" cy="7.50" r=".55"/><circle cx="10.05" cy="7.50" r=".55"/><circle cx="12.55" cy="7.50" r=".55"/><circle cx="1.30" cy="9.60" r=".55"/><circle cx="3.80" cy="9.60" r=".55"/><circle cx="6.30" cy="9.60" r=".55"/><circle cx="8.80" cy="9.60" r=".55"/><circle cx="11.30" cy="9.60" r=".55"/><circle cx="13.80" cy="9.60" r=".55"/></g></svg></button>
       </div>
+      <button type="button" class="menubtn" id="menubtn" aria-label="Menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
+
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sheet-in">
+    <nav class="sheet-nav" aria-label="Sections"><a href="#champion"><b>01</b><span>1990</span></a><a href="#rescue"><b>02</b><span><span class="l-ru">Помощь</span><span class="l-en">Rescue</span><span class="l-hy">Փրկություն</span></span></a><a href="#qsl"><b>03</b><span>QSL</span></a><a href="#awards"><b>04</b><span><span class="l-ru">Дипломы</span><span class="l-en">Awards</span><span class="l-hy">Պարգևներ</span></span></a><a href="#people"><b>05</b><span><span class="l-ru">Люди</span><span class="l-en">People</span><span class="l-hy">Մարդիկ</span></span></a><a href="#timeline"><b>06</b><span><span class="l-ru">Годы</span><span class="l-en">Years</span><span class="l-hy">Տարիներ</span></span></a><a href="#map"><b>07</b><span><span class="l-ru">Карта</span><span class="l-en">Map</span><span class="l-hy">Քարտեզ</span></span></a><a href="#tx"><b>08</b><span><span class="l-ru">Морзе</span><span class="l-en">Morse</span><span class="l-hy">Մորզե</span></span></a><a href="#log"><b>09</b><span><span class="l-ru">Журнал</span><span class="l-en">Log</span><span class="l-hy">Մատյան</span></span></a><a href="#sources"><b>10</b><span><span class="l-ru">Источники</span><span class="l-en">Sources</span><span class="l-hy">Աղբյուրներ</span></span></a></nav>
+    <div class="sheet-row">
+      <div class="flags big" role="group" aria-label="Language">
+        <button type="button" data-lang="hy" aria-pressed="false" title="Հայերեն" aria-label="Հայերեն"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#F2A800"/><rect width="30" height="13.33" fill="#0033A0"/><rect width="30" height="6.67" fill="#D90012"/></svg><span>Հայերեն</span></button>
+        <button type="button" data-lang="ru" aria-pressed="true" title="Русский" aria-label="Русский"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#D52B1E"/><rect width="30" height="13.33" fill="#0039A6"/><rect width="30" height="6.67" fill="#fff"/></svg><span>Русский</span></button>
+        <button type="button" data-lang="en" aria-pressed="false" title="English" aria-label="English"><svg viewBox="0 0 38 20"><rect width="38" height="20" fill="#fff"/><g fill="#B22234"><rect y="0.000" width="38" height="1.538"/><rect y="3.077" width="38" height="1.538"/><rect y="6.154" width="38" height="1.538"/><rect y="9.231" width="38" height="1.538"/><rect y="12.308" width="38" height="1.538"/><rect y="15.385" width="38" height="1.538"/><rect y="18.462" width="38" height="1.538"/></g><rect width="15.2" height="10.77" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.30" cy="1.20" r=".55"/><circle cx="3.80" cy="1.20" r=".55"/><circle cx="6.30" cy="1.20" r=".55"/><circle cx="8.80" cy="1.20" r=".55"/><circle cx="11.30" cy="1.20" r=".55"/><circle cx="13.80" cy="1.20" r=".55"/><circle cx="2.55" cy="3.30" r=".55"/><circle cx="5.05" cy="3.30" r=".55"/><circle cx="7.55" cy="3.30" r=".55"/><circle cx="10.05" cy="3.30" r=".55"/><circle cx="12.55" cy="3.30" r=".55"/><circle cx="1.30" cy="5.40" r=".55"/><circle cx="3.80" cy="5.40" r=".55"/><circle cx="6.30" cy="5.40" r=".55"/><circle cx="8.80" cy="5.40" r=".55"/><circle cx="11.30" cy="5.40" r=".55"/><circle cx="13.80" cy="5.40" r=".55"/><circle cx="2.55" cy="7.50" r=".55"/><circle cx="5.05" cy="7.50" r=".55"/><circle cx="7.55" cy="7.50" r=".55"/><circle cx="10.05" cy="7.50" r=".55"/><circle cx="12.55" cy="7.50" r=".55"/><circle cx="1.30" cy="9.60" r=".55"/><circle cx="3.80" cy="9.60" r=".55"/><circle cx="6.30" cy="9.60" r=".55"/><circle cx="8.80" cy="9.60" r=".55"/><circle cx="11.30" cy="9.60" r=".55"/><circle cx="13.80" cy="9.60" r=".55"/></g></svg><span>English</span></button>
+      </div>
+      <button type="button" class="sheet-snd" id="snd2" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></svg><span class="l-ru">Звук</span><span class="l-en">Sound</span><span class="l-hy">Ձայն</span></button>
+    </div>
+    <p class="sheet-foot">UG6GAW · EK6GC · 1 832 kHz</p>
+  </div>
+</div>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
@@ -490,9 +646,9 @@
     </div>
     <div class="fan" id="fan">
       <div class="stack" id="stack">
-        <button type="button" data-lb="img/qsl/ug6gaw-1984-10101984-ik6bak-F.jpg" data-group="qsl" data-cap="UG6GAW · 1984 · 60 лет радиолюбительства СССР · IK6BAK"><img src="img/qsl/ug6gaw-1984-10101984-ik6bak-F.jpg" alt="UG6GAW QSL, 1984"></button>
-        <button type="button" data-lb="img/qsl/ek6gc-1998-hb9cxz.jpg" data-group="qsl" data-cap="EK6GC · 1998 · #144 DXCC 160M · HB9CXZ"><img src="img/qsl/ek6gc-1998-hb9cxz.jpg" alt="EK6GC QSL, 1998, #144 DXCC 160M"></button>
-        <button type="button" data-lb="img/qsl/ug6gaw-1986-i4eat.jpg" data-group="qsl" data-cap="UG6GAW → I4EAT · 25.01.1986 · 1.8 MHz CW"><img src="img/qsl/ug6gaw-1986-i4eat.jpg" alt="UG6GAW QSL, 1986, Armenia, Charentcavan"></button>
+        <button type="button" data-lb="img/qsl/ug6gaw-1984-10101984-ik6bak-F.jpg" data-group="qsl" data-cap="UG6GAW · 1984 · 60 лет радиолюбительства СССР · IK6BAK"><img decoding="async" src="img/qsl/ug6gaw-1984-10101984-ik6bak-F.jpg" alt="UG6GAW QSL, 1984"></button>
+        <button type="button" data-lb="img/qsl/ek6gc-1998-hb9cxz.jpg" data-group="qsl" data-cap="EK6GC · 1998 · #144 DXCC 160M · HB9CXZ"><img decoding="async" src="img/qsl/ek6gc-1998-hb9cxz.jpg" alt="EK6GC QSL, 1998, #144 DXCC 160M"></button>
+        <button type="button" data-lb="img/qsl/ug6gaw-1986-i4eat.jpg" data-group="qsl" data-cap="UG6GAW → I4EAT · 25.01.1986 · 1.8 MHz CW"><img decoding="async" src="img/qsl/ug6gaw-1986-i4eat.jpg" alt="UG6GAW QSL, 1986, Armenia, Charentcavan"></button>
       </div>
     </div>
   </div>
@@ -514,8 +670,8 @@
     <h2><span class="l-ru">Первый в мире.<br>Дважды за один год.</span><span class="l-en">First in the world.<br>Twice in one year.</span><span class="l-hy">Աշխարհում առաջինը։<br>Երկու անգամ՝ մեկ տարում։</span></h2>
     <p class="lede"><span class="l-ru">CQ WW DX — крупнейшее соревнование радиолюбителей планеты: 48 часов, десятки тысяч станций, задача — провести как можно больше связей с разными странами и зонами. В категории «один оператор, 160 метров» в 1990 году UG6GAW — первый в мире и в телеграфном туре, и в телефонном. Это его официальные сертификаты CQ.</span><span class="l-en">CQ WW DX is the planet's biggest amateur radio contest: 48 hours, tens of thousands of stations, and the goal of contacting as many countries and zones as possible. In the single operator 160 m category in 1990, UG6GAW is first in the world in both the CW and the SSB weekends. These are his official CQ certificates.</span><span class="l-hy">CQ WW DX-ը մոլորակի ամենամեծ ռադիոսիրողական մրցումն է. 48 ժամ, տասնյակ հազարավոր կայաններ, և նպատակը՝ կապ հաստատել որքան հնարավոր է շատ երկրների ու գոտիների հետ։ 1990 թ. «մեկ օպերատոր, 160 մ» անվանակարգում UG6GAW-ն աշխարհում առաջինն է և՛ CW, և՛ SSB մրցափուլերում։ Ահա նրա պաշտոնական CQ վկայագրերը։</span></p>
     <div class="certs">
-      <button type="button" class="cert" style="--r:-1.5deg" data-lb="img/awards/cqww-cw-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-cw-1990-ug6gaw.pdf" data-cap="CQ WW DX CW 1990 · UG6GAW · #1 World · #1 Asia · World Record · CQ Zone 21 Record"><span class="badge">#1 WORLD · CW</span><img src="img/awards/cqww-cw-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX CW 1990 certificate for UG6GAW: #1 World, #1 Asia, World Record, CQ Zone 21 Record"><span class="stamp">WORLD RECORD</span></button>
-      <button type="button" class="cert" style="--r:1.2deg" data-lb="img/awards/cqww-ssb-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-ssb-1990-ug6gaw.pdf" data-cap="CQ WW DX SSB 1990 · UG6GAW · #1 World · #1 Asia"><span class="badge">#1 WORLD · SSB</span><img src="img/awards/cqww-ssb-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX SSB 1990 certificate for UG6GAW: #1 World, #1 Asia"></button>
+      <button type="button" class="cert" style="--r:-1.5deg" data-lb="img/awards/cqww-cw-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-cw-1990-ug6gaw.pdf" data-cap="CQ WW DX CW 1990 · UG6GAW · #1 World · #1 Asia · World Record · CQ Zone 21 Record"><span class="badge">#1 WORLD · CW</span><img decoding="async" src="img/awards/cqww-cw-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX CW 1990 certificate for UG6GAW: #1 World, #1 Asia, World Record, CQ Zone 21 Record"><span class="stamp">WORLD RECORD</span></button>
+      <button type="button" class="cert" style="--r:1.2deg" data-lb="img/awards/cqww-ssb-1990-ug6gaw.jpg" data-group="cert" data-pdf="img/awards/cqww-ssb-1990-ug6gaw.pdf" data-cap="CQ WW DX SSB 1990 · UG6GAW · #1 World · #1 Asia"><span class="badge">#1 WORLD · SSB</span><img decoding="async" src="img/awards/cqww-ssb-1990-ug6gaw.jpg" width="600" height="450" alt="CQ WW DX SSB 1990 certificate for UG6GAW: #1 World, #1 Asia"></button>
     </div>
     <div class="pod">
       <div class="board"><h4>CQ WW DX CW 1990 · SO HIGH 160M</h4><table>
@@ -616,7 +772,7 @@
       <div>
         <h3><span class="l-ru">CQ WW 160 CW: рост результата</span><span class="l-en">CQ WW 160 CW: score growth</span><span class="l-hy">CQ WW 160 CW՝ միավորների աճը</span></h3>
         <p class="cap" style="margin:0 0 16px"><span class="l-ru">Очки, один оператор. За двенадцать лет — в восемь раз больше. 1990 — второе место в мире, в 7 724 очках от первого.</span><span class="l-en">Points, single operator. Eightfold in twelve years. 1990: second in the world, 7,724 points behind first.</span><span class="l-hy">Միավորներ, մեկ օպերատոր։ Տասներկու տարում՝ ութապատիկ աճ։ 1990-ին՝ աշխարհում երկրորդ տեղ, առաջինից 7724 միավոր պակաս։</span></p>
-        <div class="chart"><svg id="growth" viewBox="0 0 640 300" role="img" aria-label="CQ WW 160 CW scores" style="min-width:440px"></svg></div>
+        <div class="chart"><svg id="growth" viewBox="0 0 640 300" role="img" aria-label="CQ WW 160 CW scores"></svg></div>
       </div>
       <div>
         <h3><span class="l-ru">Азия, Армения, зона 21</span><span class="l-en">Asia, Armenia, zone 21</span><span class="l-hy">Ասիա, Հայաստան, 21-րդ գոտի</span></h3>
@@ -815,8 +971,8 @@
       </div>
       <figure class="keyart" id="keyart">
         <div class="kframe"><div class="kstage">
-          <img class="kbase" src="img/photo/key-base.jpg" alt="Brass and steel straight telegraph key on an oak base, about 1900" width="1440" height="960" loading="lazy">
-          <img class="klever" src="img/photo/key-lever.png" alt="" aria-hidden="true" loading="lazy">
+          <img decoding="async" class="kbase" src="img/photo/key-base.webp" alt="Brass and steel straight telegraph key on an oak base, about 1900" width="1440" height="960" loading="lazy">
+          <img decoding="async" class="klever" src="img/photo/key-lever.webp" alt="" aria-hidden="true" loading="lazy">
           <span class="kspark" aria-hidden="true"></span>
         </div></div>
         <figcaption><span class="l-ru">Телеграфный ключ, около 1900 года.</span><span class="l-en">Straight telegraph key, about 1900.</span><span class="l-hy">Հեռագրական բանալի, մոտ 1900 թ.</span> © Hp.Baumeler, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Morsetaste.jpg">Wikimedia Commons</a></figcaption>
@@ -861,10 +1017,10 @@
     <h2><span class="l-ru">Чаренцаван</span><span class="l-en">Charentsavan</span><span class="l-hy">Չարենցավան</span></h2>
     <p class="lede"><span class="l-ru">Город в Котайкской области Армении, у подножия гор. Основан в 1947 году как Лусаван, с 1967-го носит имя поэта Егише Чаренца. Отсюда его сигнал уходит на весь мир.</span><span class="l-en">A town in Armenia's Kotayk province, at the foot of the mountains. Founded in 1947 as Lusavan and named after the poet Yeghishe Charents since 1967. From here his signal goes out to the whole world.</span><span class="l-hy">Քաղաք Հայաստանի Կոտայքի մարզում, լեռների ստորոտին։ Հիմնադրվել է 1947 թվականին՝ Լուսավան անունով, իսկ 1967-ից կրում է բանաստեղծ Եղիշե Չարենցի անունը։ Այստեղից նրա ազդանշանը հասնում է ողջ աշխարհին։</span></p>
     <div class="qth">
-      <figure><img src="img/photo/charentsavan-aragats.jpg" alt="Charentsavan in winter with Mount Aragats behind" loading="lazy"><figcaption><span class="l-ru">Чаренцаван и гора Арагац.</span><span class="l-en">Charentsavan and Mount Aragats.</span><span class="l-hy">Չարենցավանը և Արագած լեռը։</span> © Serouj Ourishian, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:%D5%89%D5%A1%D6%80%D5%A5%D5%B6%D6%81%D5%A1%D5%BE%D5%A1%D5%B6.JPG">Wikimedia Commons</a></figcaption></figure>
+      <figure><img decoding="async" src="img/photo/charentsavan-aragats.jpg" alt="Charentsavan in winter with Mount Aragats behind" loading="lazy"><figcaption><span class="l-ru">Чаренцаван и гора Арагац.</span><span class="l-en">Charentsavan and Mount Aragats.</span><span class="l-hy">Չարենցավանը և Արագած լեռը։</span> © Serouj Ourishian, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:%D5%89%D5%A1%D6%80%D5%A5%D5%B6%D6%81%D5%A1%D5%BE%D5%A1%D5%B6.JPG">Wikimedia Commons</a></figcaption></figure>
       <div class="side">
-        <figure><img src="img/photo/charentsavan-town.jpg" alt="Charentsavan in summer" loading="lazy"><figcaption>© Armtoursites, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Charentsavan_town1.jpg">Wikimedia Commons</a></figcaption></figure>
-        <figure><img src="img/photo/charents-monument.jpg" alt="Monument to Yeghishe Charents in Charentsavan" loading="lazy"><figcaption><span class="l-ru">Памятник Чаренцу.</span><span class="l-en">Charents monument.</span><span class="l-hy">Չարենցի հուշարձանը։</span> © AndyHM, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Monumento_a_Yeghishe_Charents.jpg">Wikimedia Commons</a></figcaption></figure>
+        <figure><img decoding="async" src="img/photo/charentsavan-town.jpg" alt="Charentsavan in summer" loading="lazy"><figcaption>© Armtoursites, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Charentsavan_town1.jpg">Wikimedia Commons</a></figcaption></figure>
+        <figure><img decoding="async" src="img/photo/charents-monument.jpg" alt="Monument to Yeghishe Charents in Charentsavan" loading="lazy"><figcaption><span class="l-ru">Памятник Чаренцу.</span><span class="l-en">Charents monument.</span><span class="l-hy">Չարենցի հուշարձանը։</span> © AndyHM, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Monumento_a_Yeghishe_Charents.jpg">Wikimedia Commons</a></figcaption></figure>
       </div>
     </div>
     <div class="qinfo">
@@ -963,7 +1119,7 @@
 
 <dialog class="lb" id="lb">
   <div class="lbimg">
-    <img id="lb-img" alt="">
+    <img decoding="async" id="lb-img" alt="">
     <button type="button" class="ic nav prev" id="lb-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
     <button type="button" class="ic nav next" id="lb-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
   </div>
@@ -994,6 +1150,18 @@ function TR(s){return window.HY[s]||s}
   /* ---------- top bar ---------- */
   var tb=$('#topbar'); function onScroll(){tb.classList.toggle('solid',scrollY>40)} addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
+
+  /* ---------- mobile menu ---------- */
+  (function(){
+    var btn=$('#menubtn'), sh=$('#sheet');
+    function set(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);btn.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);tb.classList.toggle('solid',o||scrollY>40)}
+    btn.addEventListener('click',function(){set(!sh.classList.contains('open'))});
+    sh.addEventListener('click',function(e){if(e.target.closest('.sheet-nav a'))set(false)});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sh.classList.contains('open'))set(false)});
+    $$('.sheet-nav a').forEach(function(a,i){a.style.transitionDelay=(i*25)+'ms'});
+    $('#snd2').addEventListener('click',function(){sndBtn.click()});
+  })();
+
   /* ---------- Morse core ---------- */
   var CODE={A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
     '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','/':'-..-.','?':'..--..','.':'.-.-.-',',':'--..--','=':'-...-'};
@@ -1018,7 +1186,7 @@ function TR(s){return window.HY[s]||s}
   /* ---------- audio ---------- */
   var ctx=null, master=null, soundOn=false, live=[], lastAudioLoop=-1;
   function ac(){try{if(!ctx){ctx=new (window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.connect(ctx.destination)}if(ctx.state==='suspended')ctx.resume();master.gain.value=1;return ctx}catch(e){return null}}
-  function updSnd(){sndBtn.setAttribute('aria-pressed',soundOn||live.length>0)}
+  function updSnd(){var v=soundOn||live.length>0;sndBtn.setAttribute('aria-pressed',v);var s2=document.getElementById('snd2');if(s2)s2.setAttribute('aria-pressed',v)}
   function stopAll(){live.forEach(function(o){try{o.onended=null;o.stop()}catch(e){}});live=[];if(master)master.gain.value=0;lastAudioLoop=-1;updSnd()}
   function playAudio(sq,unit,t0){
     var c=ac(); if(!c)return;
@@ -1034,7 +1202,7 @@ function TR(s){return window.HY[s]||s}
     osc.stop(t+.1);
   }
   var sndBtn=$('#snd');
-  sndBtn.addEventListener('click',function(){if(soundOn||live.length){soundOn=false;stopAll()}else{soundOn=true;ac();updSnd()}});
+  sndBtn.addEventListener('click',function(){if(soundOn||live.length){soundOn=false;stopAll()}else{soundOn=true;ac();updSnd()}});updSnd();
 
   /* ---------- beacon: hero keying ---------- */
   var BEACON='CQ CQ DE UG6GAW UG6GAW K   ';
@@ -1202,6 +1370,8 @@ function TR(s){return window.HY[s]||s}
   $('#lb-prev').addEventListener('click',function(){show((gi-1+group.length)%group.length)});
   $('#lb-next').addEventListener('click',function(){show((gi+1)%group.length)});
   lb.addEventListener('click',function(e){if(e.target===lb)lb.close()});
+  (function(){var sx=0,sy=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+    lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3&&group.length>1){show(dx<0?(gi+1)%group.length:(gi-1+group.length)%group.length)}else if(dy>90&&Math.abs(dy)>Math.abs(dx)*1.5){lb.close()}},{passive:true})})();
   document.addEventListener('keydown',function(e){if(!lb.open)return;if(e.key==='ArrowLeft')$('#lb-prev').click();if(e.key==='ArrowRight')$('#lb-next').click()});
 
   /* ---------- QSL desk ---------- */
@@ -1226,7 +1396,7 @@ function TR(s){return window.HY[s]||s}
       if(f!=='all'&&q.c!==f)return;
       var d=document.createElement('div'); d.className='qcard'+(q.tall?' tall':'');
       var cap=q.t+' · '+q.cr;
-      d.innerHTML='<button type="button" class="ph" style="--r:'+rots[i%rots.length]+'deg" data-lb="'+q.f+'" data-group="qsl" data-cap="'+cap+'"><img loading="lazy" src="'+q.f+'" alt="'+q.t+'"></button>'+
+      d.innerHTML='<button type="button" class="ph" style="--r:'+rots[i%rots.length]+'deg" data-lb="'+q.f+'" data-group="qsl" data-cap="'+cap+'"><img decoding="async" loading="lazy" src="'+q.f+'" alt="'+q.t+'"></button>'+
         (q.b?'<button type="button" class="flipbtn" data-front="'+q.f+'" data-back="'+q.b+'">↻ <span class="l-ru">оборот</span><span class="l-en">back</span><span class="l-hy">դարձերես</span></button>':'')+
         '<div class="meta"><b>'+q.t+'</b><span class="l-ru">'+q.ru+'</span><span class="l-en">'+q.en+'</span><span class="l-hy">'+TR(q.en)+'</span><a href="'+q.u+'" target="_blank" rel="noopener">'+q.cr+' ↗</a></div>';
       cardsEl.appendChild(d);
@@ -1259,7 +1429,7 @@ function TR(s){return window.HY[s]||s}
     var b=document.createElement('button'); b.type='button';
     b.dataset.lb='img/awards/'+a[0]+'.jpg'; b.dataset.pdf='img/awards/'+a[0]+'.pdf'; b.dataset.group='cert';
     b.dataset.cap='CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4]+' · '+a[5];
-    b.innerHTML='<img loading="lazy" width="600" height="450" src="img/awards/'+a[0]+'.jpg" alt="CQ WW DX '+a[2]+' '+a[1]+' certificate, '+a[3]+', '+a[4]+'"><div class="t"><b>'+a[1]+' '+a[2]+'</b><span class="'+(a[4]==='#1 World'?'w1':'')+'">'+a[4]+'</span></div><div class="rec">'+a[5]+'</div>';
+    b.innerHTML='<img decoding="async" loading="lazy" width="600" height="450" src="img/awards/'+a[0]+'.jpg" alt="CQ WW DX '+a[2]+' '+a[1]+' certificate, '+a[3]+', '+a[4]+'"><div class="t"><b>'+a[1]+' '+a[2]+'</b><span class="'+(a[4]==='#1 World'?'w1':'')+'">'+a[4]+'</span></div><div class="rec">'+a[5]+'</div>';
     wall.appendChild(b);
   });
 
@@ -1269,7 +1439,7 @@ function TR(s){return window.HY[s]||s}
   P.forEach(function(p){
     var b=document.createElement('button'); b.type='button'; b.className='mag';
     b.dataset.lb='img/press/radio-'+p[0]+'.jpg'; b.dataset.group='press'; b.dataset.cap=p[1]+' — «Достижения на 160 м» · '+p[3]+' · Internet Archive';
-    b.innerHTML='<img loading="lazy" src="img/press/radio-'+p[0]+'.jpg" alt="'+p[1]+'"><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span><span class="l-hy">'+TR(p[2])+'</span></b><span class="l-ru">'+p[3]+'</span><span class="l-en">'+p[4]+'</span><span class="l-hy">'+TR(p[4])+'</span>';
+    b.innerHTML='<img decoding="async" loading="lazy" src="img/press/radio-'+p[0]+'.jpg" alt="'+p[1]+'"><b><span class="l-ru">'+p[1]+'</span><span class="l-en">'+p[2]+'</span><span class="l-hy">'+TR(p[2])+'</span></b><span class="l-ru">'+p[3]+'</span><span class="l-en">'+p[4]+'</span><span class="l-hy">'+TR(p[4])+'</span>';
     pg.appendChild(b);
   });
 
@@ -1318,7 +1488,7 @@ function TR(s){return window.HY[s]||s}
     lbody.innerHTML='';
     R.filter(function(r){return f==='all'||r[1]===f}).forEach(function(r){
       var tr=document.createElement('tr'); if(r[8])tr.className='hi';
-      tr.innerHTML='<td class="c">'+r[0]+'</td><td>'+r[2]+(r[8]?'<span class="note"><span class="l-ru">'+r[8]+'</span><span class="l-en">'+r[9]+'</span><span class="l-hy">'+TR(r[9])+'</span></span>':'')+'</td><td class="c">'+r[3]+'</td><td class="cat"><span class="l-ru">'+r[4]+'</span><span class="l-en">'+r[5]+'</span><span class="l-hy">'+TR(r[5])+'</span></td><td class="n">'+num(r[6])+'</td><td class="n">'+num(r[7])+'</td><td class="pl'+(r[10]==='#1'?' w1':'')+'">'+(r[10]||'—')+'</td>';
+      tr.innerHTML='<td class="c yr">'+r[0]+'</td><td class="ct">'+r[2]+(r[8]?'<span class="note"><span class="l-ru">'+r[8]+'</span><span class="l-en">'+r[9]+'</span><span class="l-hy">'+TR(r[9])+'</span></span>':'')+'</td><td class="c call">'+r[3]+'</td><td class="cat"><span class="l-ru">'+r[4]+'</span><span class="l-en">'+r[5]+'</span><span class="l-hy">'+TR(r[5])+'</span></td><td class="n qso" data-l="QSO">'+num(r[6])+'</td><td class="n pts" data-l="PTS">'+num(r[7])+'</td><td class="pl'+(r[10]==='#1'?' w1':'')+'">'+(r[10]||'—')+'</td>';
       lbody.appendChild(tr);
     });
   }
@@ -1332,16 +1502,19 @@ function TR(s){return window.HY[s]||s}
   function tipFor(box){var d=box.querySelector('.ctip');if(!d){d=document.createElement('div');d.className='ctip';box.appendChild(d)}return d}
   function showTip(box,svg,x,y,html){var tip=tipFor(box),r=svg.getBoundingClientRect(),br=box.getBoundingClientRect(),vb=svg.viewBox.baseVal,k=r.width/vb.width;tip.innerHTML=html;tip.style.left=(r.left-br.left+x*k+box.scrollLeft)+'px';tip.style.top=(r.top-br.top+y*k)+'px';tip.style.transform=(y*k<90)?'translate(-50%,26px)':'translate(-50%,-100%)';tip.classList.add('on')}
   function hideTip(box){var t=box.querySelector('.ctip');if(t)t.classList.remove('on')}
+  document.addEventListener('pointerdown',function(e){if(!e.target.closest('.chart'))$$('.ctip.on').forEach(function(x){x.classList.remove('on')})});
   var C_CW='#c4821e', C_SSB='#4a8fe0';
   /* world placings: bump chart, log rank scale */
   (function(){
-    var svg=$('#rankchart'), box=svg.parentNode, el=mk(svg), W=900,H=360,L=64,Rm=70,T=40,Bm=48,y0=1984,y1=1995,maxP=12;
+    var svg=$('#rankchart'), box=svg.parentNode;
+    function draw(){
+    svg.innerHTML=''; var el=mk(svg), cw=Math.max(300,box.clientWidth-(innerWidth<600?28:40)), sm=cw<640, W=sm?cw:900,H=sm?300:360,L=sm?34:64,Rm=sm?34:70,T=40,Bm=sm?40:48,y0=1984,y1=1995,maxP=12; svg.setAttribute('viewBox','0 0 '+W+' '+H);
     function X(y){return L+(W-L-Rm)*(y-y0)/(y1-y0)} function Y(p){return T+(H-T-Bm)*Math.log(p)/Math.log(maxP)}
     var defs=el('defs',{}); defs.innerHTML='<linearGradient id="band90" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#c4821e" stop-opacity=".22"/><stop offset="1" stop-color="#c4821e" stop-opacity="0"/></linearGradient>';
     el('rect',{x:X(1990)-26,y:T-26,width:52,height:H-T-Bm+26,fill:'url(#band90)',rx:6});
-    [1,2,3,5,10].forEach(function(p){el('line',{x1:L,x2:W-Rm,y1:Y(p),y2:Y(p),stroke:'#1c283a','stroke-width':1});el('text',{x:L-14,y:Y(p)+4,'text-anchor':'end','font-size':12,fill:'#5d6a80'},'#'+p)});
-    el('text',{x:L-14,y:T-22,'text-anchor':'end','font-size':11,fill:'#5d6a80','letter-spacing':'.08em'},'WORLD');
-    for(var y=y0;y<=y1;y++)el('text',{x:X(y),y:H-Bm+30,'text-anchor':'middle','font-size':12,fill:y===1990?'#ffd98a':'#5d6a80','font-weight':y===1990?700:400},String(y));
+    [1,2,3,5,10].forEach(function(p){el('line',{x1:L,x2:W-Rm,y1:Y(p),y2:Y(p),stroke:'#1c283a','stroke-width':1});el('text',{x:L-(sm?8:14),y:Y(p)+4,'text-anchor':'end','font-size':12,fill:'#5d6a80'},'#'+p)});
+    if(!sm)el('text',{x:L-14,y:T-22,'text-anchor':'end','font-size':11,fill:'#5d6a80','letter-spacing':'.08em'},'WORLD');
+    for(var y=y0;y<=y1;y++){if(sm&&[1984,1985,1986,1987,1990,1995].indexOf(y)<0)continue;el('text',{x:X(y),y:H-Bm+28,'text-anchor':'middle','font-size':sm?11:12,fill:y===1990?'#ffd98a':'#5d6a80','font-weight':y===1990?700:400},sm?"'"+String(y).slice(2):String(y))}
     var S=[
       {k:'CW',c:C_CW,d:[[1984,11,268,35475,'UG6GAW'],[1985,9,327,55440,'UG6GAW'],[1987,2,498,103016,'UG6GAW'],[1990,1,851,164430,'UG6GAW'],[1995,5,680,173604,'EK6GC']]},
       {k:'SSB',c:C_SSB,d:[[1985,9,140,17202,'UG6GAW'],[1986,6,182,23712,'UG6GAW'],[1990,1,805,119955,'UG6GAW']]}
@@ -1363,13 +1536,17 @@ function TR(s){return window.HY[s]||s}
     el('text',{x:X(1986)+10,y:Y(6)+16,'font-size':13,'font-weight':700,fill:'#eaf0f8'},'SSB');
     /* 1990 annotation */
     var a=el('text',{x:X(1990),y:T-12,'text-anchor':'middle','font-size':12,'font-weight':700,fill:'#ffd98a','letter-spacing':'.06em'},'');
-    function ann(){a.textContent=T3('ЧЕМПИОН МИРА · CW + SSB','WORLD CHAMPION · CW + SSB','ԱՇԽԱՐՀԻ ՉԵՄՊԻՈՆ · CW + SSB')}
-    ann(); document.addEventListener('langchange',ann);
+    function ann(){a.textContent=sm?T3('ЧЕМПИОН МИРА','WORLD CHAMPION','ԱՇԽԱՐՀԻ ՉԵՄՊԻՈՆ'):T3('ЧЕМПИОН МИРА · CW + SSB','WORLD CHAMPION · CW + SSB','ԱՇԽԱՐՀԻ ՉԵՄՊԻՈՆ · CW + SSB')}
+    ann(); if(!svg.__l){svg.__l=1;document.addEventListener('langchange',function(){draw()})}
+    }
+    draw(); var rw=box.clientWidth; addEventListener('resize',function(){if(Math.abs(box.clientWidth-rw)>20){rw=box.clientWidth;clearTimeout(svg.__t);svg.__t=setTimeout(draw,150)}});
   })();
   /* CQ WW 160 CW score growth: bars */
   (function(){
     var C=[[1985,60060,169,80],[1986,171216,315,24],[1987,189803,342,25],[1988,250932,411,12],[1990,264574,428,2],[1997,494073,657,16]];
-    var svg=$('#growth'), box=svg.parentNode, el=mk(svg), W=640,H=300,L=52,Rm=12,T=30,Bm=44,max=500000;
+    var svg=$('#growth'), box=svg.parentNode;
+    function draw(){
+    svg.innerHTML=''; var el=mk(svg), cw=Math.max(300,box.clientWidth-(innerWidth<600?28:40)), sm=cw<560, W=sm?cw:640,H=sm?260:300,L=sm?40:52,Rm=12,T=30,Bm=44,max=500000; svg.setAttribute('viewBox','0 0 '+W+' '+H);
     [0,100000,200000,300000,400000,500000].forEach(function(v){var y=T+(H-T-Bm)*(1-v/max);el('line',{x1:L,x2:W-Rm,y1:y,y2:y,stroke:v?'#1c283a':'#2a3a52','stroke-width':1});el('text',{x:L-10,y:y+4,'text-anchor':'end','font-size':11,fill:'#5d6a80'},v===0?'0':(v/1000)+'k')});
     var slot=(W-L-Rm)/C.length, bw=Math.min(46,slot*.5), r=4;
     C.forEach(function(d,i){
@@ -1382,6 +1559,8 @@ function TR(s){return window.HY[s]||s}
       function on(){showTip(box,svg,x+bw/2,y-14,'<b>CQ WW 160 CW · '+d[0]+'</b><br>'+num(d[1])+T3(' очков',' points',' միավոր')+'<br>'+d[2]+' QSO · '+T3('место в мире ','world place ','տեղ աշխարհում ')+'<em>#'+d[3]+'</em>')}
       hit.addEventListener('pointerenter',on); hit.addEventListener('pointerleave',function(){hideTip(box)}); hit.addEventListener('click',on);
     });
+    }
+    draw(); var rw=box.clientWidth; addEventListener('resize',function(){if(Math.abs(box.clientWidth-rw)>20){rw=box.clientWidth;clearTimeout(svg.__t);svg.__t=setTimeout(draw,150)}});
   })();
 
   /* ---------- timeline tuner ---------- */
@@ -1459,11 +1638,15 @@ function TR(s){return window.HY[s]||s}
 })();
 </script>
 
-<script src="vendor/d3-array.min.js" defer></script>
-<script src="vendor/d3-geo.min.js" defer></script>
-<script src="vendor/topojson-client.min.js" defer></script>
 <script>
-window.addEventListener('DOMContentLoaded',function(){
+(function(){
+  var started=false;
+  function load(src){return new Promise(function(res,rej){var s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+  function go(){if(started)return;started=true;load('vendor/d3-array.min.js').then(function(){return load('vendor/d3-geo.min.js')}).then(function(){return load('vendor/topojson-client.min.js')}).then(initMap).catch(function(){})}
+  var m=document.getElementById('map');
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();go()}},{rootMargin:'900px 0px'});io.observe(m)}else go();
+})();
+function initMap(){
   if(!window.d3||!window.topojson)return;
   var HOME=[44.642,40.403], NS='http://www.w3.org/2000/svg', el=document.getElementById('worldmap');
   var P=[
@@ -1494,7 +1677,7 @@ window.addEventListener('DOMContentLoaded',function(){
   function brg(a,b){var r=Math.PI/180,f1=a[1]*r,f2=b[1]*r,dl=(b[0]-a[0])*r;return(Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))/r+360)%360}
   function list(){var ul=document.getElementById('places'),lg=document.documentElement.dataset.lang;ul.innerHTML='';P.forEach(function(p){var km=Math.round(d3.geoDistance(HOME,p.c)*6371/10)*10,li=document.createElement('li');li.innerHTML='<span>'+(lg==='en'?p.en:lg==='hy'?(window.HY[p.en]||p.en):p.ru)+'</span><span class="n">'+km.toLocaleString('en-US').replace(/,/g,' ')+' km</span><span class="n">'+Math.round(brg(HOME,p.c))+'°</span>';ul.appendChild(li)})}
   list(); document.addEventListener('langchange',list);
-});
+}
 </script>
 </body>
 </html>
