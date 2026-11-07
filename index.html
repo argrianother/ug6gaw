@@ -163,6 +163,18 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .intro{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding:110px 0}
 .intro h2{font:600 clamp(30px,3.4vw,46px)/1.08 var(--sans);letter-spacing:-.03em;margin:0}
 .intro p{margin:18px 0 0;color:var(--ink2);max-width:48ch}
+.mag{margin:0;align-self:start}
+.magp{padding:48px clamp(20px,4vw,56px) clamp(20px,3vw,40px)}
+.magp img{max-height:640px;width:auto;margin:0 auto}
+.magbar{display:flex;gap:16px;align-items:center;margin-top:14px}
+.magbar .cov{flex:none;width:64px;border:0;padding:0;background:none;cursor:zoom-in;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
+.magbar .cov img{width:100%;height:auto;display:block}
+.magbar b{display:block;font:600 16px/1.2 var(--sans)}
+.maglinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.maglinks .btn{height:30px;padding:0 12px;font-size:12px;text-decoration:none;color:var(--ink)}
+.iq{margin:22px 0 4px;padding:0 0 0 18px;border-left:2px solid var(--amber)}
+.iq p{margin:0!important;color:var(--ink)!important;font-size:18px;line-height:1.5}
+.iq cite{display:block;margin-top:8px;font-style:normal}
 .portrait{margin:0;align-self:start}
 .portrait .ph{display:block;width:100%;border:0;padding:0;background:none;cursor:zoom-in;position:relative;line-height:0}
 .portrait img{width:100%;height:auto;box-shadow:0 30px 60px -30px rgba(0,0,0,.45)}
@@ -300,6 +312,11 @@ table.res{width:100%;border-collapse:collapse;font:400 14px var(--mono)}
 .gtags .lbtag.up i{border-bottom-width:0}.gtags .lbtag.r i{border-left-width:0}.gtags .lbtag.l i{border-right-width:0}
 
 /* people */
+.crew{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;align-items:start;margin:0 0 56px}
+.crew .portrait figcaption{display:none}
+.crewtxt h3{font:600 26px/1.15 var(--sans);letter-spacing:-.02em;margin:10px 0 12px}
+.crewtxt p{color:var(--ink2);margin:0 0 12px}
+.crewtxt p.m a{color:var(--ink2)}
 .ppl{width:100%;border-collapse:collapse}
 .ppl td{padding:18px 18px 18px 0;border-bottom:1px solid var(--rule);vertical-align:top}
 .ppl tr:first-child td{border-top:1px solid var(--ink)}
@@ -416,7 +433,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   .hmeta{grid-template-columns:repeat(2,minmax(0,1fr))}.hmeta div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.1);margin-top:12px}
   .pcap{position:static;text-align:left;margin-top:22px}
   .mrow{max-width:100%}
-  .intro,.sh,.dx{grid-template-columns:minmax(0,1fr);gap:20px}
+  .intro,.sh,.dx,.crew{grid-template-columns:minmax(0,1fr);gap:20px}
   .intro{padding:80px 0}
   .figs{grid-template-columns:minmax(0,1fr);gap:36px}.fg{border-left:0;padding:0;border-top:1px solid var(--rule);padding-top:18px}
   .duo,.boards{grid-template-columns:minmax(0,1fr)}
@@ -511,11 +528,19 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     <div>
       <h2><span class="l-ru">Чемпион мира на самом трудном любительском диапазоне.</span><span class="l-en">A world champion on the hardest amateur band.</span><span class="l-hy">Աշխարհի չեմպիոն ամենադժվար սիրողական տիրույթում։</span></h2>
       <p><span class="l-ru">160 метров (1,8–2,0 МГц) — самый низкочастотный любительский КВ-диапазон. Днём сигнал гасит ионосфера, антенны нужны огромные, а атмосферный треск часто громче корреспондента. Поэтому сто стран здесь стоят больше, чем где-либо.</span><span class="l-en">160 meters (1.8–2.0 MHz) is the lowest amateur shortwave band. By day the ionosphere swallows the signal, antennas must be huge, and static is often louder than the other station. A hundred countries here count for more than anywhere else.</span><span class="l-hy">160 մետրը (1,8–2,0 ՄՀց) ամենացածր սիրողական կարճալիքային տիրույթն է։ Ցերեկը իոնոլորտը կլանում է ազդանշանը, ալեհավաքները պետք է հսկայական լինեն, իսկ խանգարումները հաճախ ավելի ուժեղ են, քան դիմացի կայանը։ Այստեղ հարյուր երկիրն ավելին արժե, քան որևէ այլ տիրույթում։</span></p>
-      <p><span class="l-ru">Роберт Григорян на 160 метрах с 1982 года. В 1986 году американский журнал Radiosporting называет его одной из самых активных станций своей страны на этом диапазоне. На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров.</span><span class="l-en">Robert Grigoryan is on 160 meters since 1982. In 1986 the American magazine Radiosporting calls him one of the most active 160 m stations of his country. On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up.</span><span class="l-hy">Ռոբերտ Գրիգորյանը 160 մետրում է 1982-ից։ 1986-ին ամերիկյան Radiosporting ամսագիրը նրան անվանում է իր երկրի այս տիրույթի ամենաակտիվ կայաններից մեկը։ 1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։</span></p>
+      <p><span class="l-ru">Роберта Григоряна также зовут Карлен — так он подписан в американском журнале Radiosporting. В мае 1986 года журнал посвящает ему заметку с фотографией: ему 21 год, он студент-физик последнего курса Ереванского университета и с 1982 года работает на 160 метрах на самодельном трансивере по схеме UW3DI с антеннами «дельта», вертикал и «inverted Vee».</span><span class="l-en">Robert Grigoryan is also called Karlen, which is how the American magazine Radiosporting names him. In May 1986 the magazine runs a short profile with his photo: he is 21, a final-year physics student at Yerevan University, and on 160 meters since 1982 with a home-built UW3DI-design transceiver and Delta Loop, wire vertical and inverted Vee antennas.</span><span class="l-hy">Ռոբերտ Գրիգորյանին անվանում են նաև Կարլեն. այդպես է նա նշված ամերիկյան Radiosporting ամսագրում։ 1986 թ. մայիսին ամսագիրը նրան նվիրում է լուսանկարով հոդված. նա 21 տարեկան է, Երևանի համալսարանի ֆիզիկայի ավարտական կուրսի ուսանող, և 1982-ից աշխատում է 160 մետրում՝ UW3DI սխեմայով ինքնաշեն հաղորդիչ-ընդունիչով և «դելտա», ուղղահայաց ու «inverted Vee» ալեհավաքներով։</span></p>
+      <blockquote class="iq"><p><span class="l-ru">«Пожалуй, самый заметный азиатский DX-мен на 160 м — Карлен, UG6GAW, который порадовал многих жаждущих DX-менов и контестменов».</span><span class="l-en">“Probably the most notable Asian 160 m DXer is Karlen, UG6GAW, who satisfied many hungry 160 m DXers and contesters.”</span><span class="l-hy">«Հավանաբար 160 մ-ի ամենանշանավոր ասիացի DX-մենը Կարլենն է՝ UG6GAW-ն, որը գոհացրել է 160 մ-ի բազմաթիվ DX-մեններին և մրցորդներին»։</span></p><cite class="m">Radiosporting · <span class="l-ru">май 1986, стр. 12</span><span class="l-en">May 1986, p. 12</span><span class="l-hy">մայիս 1986, էջ 12</span> · LZ2CJ</cite></blockquote>
+      <p><span class="l-ru">На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров.</span><span class="l-en">On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up.</span><span class="l-hy">1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։</span></p>
     </div>
-    <figure class="portrait">
-      <button type="button" class="ph" data-lb="img/hero/ug7gwo-1988.jpg" data-tags="[[20,37,16]]" data-pin data-cap="UG7GWO, Ереван, декабрь 1988. Слева направо: Роберт Григорян (UG6GAW), Рубен Симонян (UG6GDR), Бернд Лангер (DL1VJ), Карен Карапетян (UG6GAT) · архив EK7DX"><img src="img/hero/ug7gwo-1988.jpg" width="1656" height="1286" alt="UG7GWO, Yerevan, December 1988: UG6GAW, UG6GDR, DL1VJ, UG6GAT" loading="lazy" decoding="async"><span class="gtags" aria-hidden="true"></span></button>
-      <figcaption class="m"><span class="l-ru">Станция UG7GWO, Ереван, декабрь 1988. Слева направо: Роберт Григорян (UG6GAW), Рубен Симонян (UG6GDR), Бернд Лангер (DL1VJ, спасательная служба THW, Германия), Карен Карапетян (UG6GAT). Архив EK7DX.</span><span class="l-en">UG7GWO station, Yerevan, December 1988. Left to right: Robert Grigoryan (UG6GAW), Ruben Simonyan (UG6GDR), Bernd Langer (DL1VJ, THW relief agency, Germany), Karen Karapetyan (UG6GAT). EK7DX archive.</span><span class="l-hy">UG7GWO կայան, Երևան, դեկտեմբեր 1988։ Ձախից աջ՝ Ռոբերտ Գրիգորյան (UG6GAW), Ռուբեն Սիմոնյան (UG6GDR), Բեռնդ Լանգեր (DL1VJ, THW փրկարար ծառայություն, Գերմանիա), Կարեն Կարապետյան (UG6GAT)։ EK7DX արխիվ։</span></figcaption>
+    <figure class="mag">
+      <button type="button" class="obj magp" data-lb="img/press/radiosporting-1986-05-karlen.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, No. 18, p. 13 — «Karlen Grigorian, UG6GAW» · archive.org"><span class="m t1">Radiosporting · 05/1986 · p. 13</span><img src="img/press/radiosporting-1986-05-karlen.jpg" width="722" height="1250" alt="Radiosporting, May 1986: Karlen Grigorian, UG6GAW, with photo" loading="lazy" decoding="async"></button>
+      <figcaption class="magbar">
+        <button type="button" class="cov" data-lb="img/press/radiosporting-1986-05-cover.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, No. 18 — cover · archive.org"><img src="img/press/radiosporting-1986-05-cover.jpg" width="1100" height="1439" alt="Radiosporting, May 1986, cover" loading="lazy" decoding="async"></button>
+        <div><b>Radiosporting</b><span class="m"><span class="l-ru">май 1986 · №18 · США</span><span class="l-en">May 1986 · No. 18 · USA</span><span class="l-hy">մայիս 1986 · №18 · ԱՄՆ</span></span>
+          <span class="maglinks"><button type="button" class="btn" data-lb="img/press/radiosporting-1986-05-p13.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, p. 13 · archive.org"><span class="l-ru">Страница целиком</span><span class="l-en">Full page</span><span class="l-hy">Ամբողջ էջը</span></button><a class="btn" href="img/press/radiosporting-1986-05.pdf"><span class="l-ru">Журнал целиком, PDF</span><span class="l-en">Whole issue, PDF</span><span class="l-hy">Ամբողջ համարը, PDF</span></a><a class="btn" href="https://archive.org/details/radiosportingmay00unse_3">archive.org</a></span>
+          <button type="button" hidden data-lb="img/press/radiosporting-1986-05-p12.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, p. 12 — 160 m DX News (LZ2CJ) · archive.org"></button>
+        </div>
+      </figcaption>
     </figure>
   </section>
 
@@ -661,6 +686,18 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <h2><span class="l-ru">Рядом с ним</span><span class="l-en">The people around him</span><span class="l-hy">Մարդիկ նրա կողքին</span></h2>
       <p><span class="l-ru">Некоторые из тех, кто был рядом: в команде, в эфире, в дни беды и на соревнованиях. Это не полный список — только те, кого называют найденные документы.</span><span class="l-en">Some of those who were beside him: on the team, on the air, in the days of disaster and at contests. Not a complete list, only the people named in the documents we found.</span><span class="l-hy">Մի քանիսը նրանցից, ովքեր նրա կողքին էին՝ թիմում, եթերում, աղետի օրերին և մրցումներում։ Սա ամբողջական ցուցակ չէ՝ միայն գտնված փաստաթղթերում նշվածները։</span></p>
     </div></div>
+    <div class="crew">
+    <figure class="portrait">
+      <button type="button" class="ph" data-lb="img/hero/ug7gwo-1988.jpg" data-tags="[[20,37,16]]" data-pin data-cap="UG7GWO, Ереван, декабрь 1988. Слева направо: Роберт Григорян (UG6GAW), Рубен Симонян (UG6GDR), Бернд Лангер (DL1VJ), Карен Карапетян (UG6GAT) · архив EK7DX"><img src="img/hero/ug7gwo-1988.jpg" width="1656" height="1286" alt="UG7GWO, Yerevan, December 1988: UG6GAW, UG6GDR, DL1VJ, UG6GAT" loading="lazy" decoding="async"><span class="gtags" aria-hidden="true"></span></button>
+      <figcaption class="m"><span class="l-ru">Станция UG7GWO, Ереван, декабрь 1988. Слева направо: Роберт Григорян (UG6GAW), Рубен Симонян (UG6GDR), Бернд Лангер (DL1VJ, спасательная служба THW, Германия), Карен Карапетян (UG6GAT). Архив EK7DX.</span><span class="l-en">UG7GWO station, Yerevan, December 1988. Left to right: Robert Grigoryan (UG6GAW), Ruben Simonyan (UG6GDR), Bernd Langer (DL1VJ, THW relief agency, Germany), Karen Karapetyan (UG6GAT). EK7DX archive.</span><span class="l-hy">UG7GWO կայան, Երևան, դեկտեմբեր 1988։ Ձախից աջ՝ Ռոբերտ Գրիգորյան (UG6GAW), Ռուբեն Սիմոնյան (UG6GDR), Բեռնդ Լանգեր (DL1VJ, THW փրկարար ծառայություն, Գերմանիա), Կարեն Կարապետյան (UG6GAT)։ EK7DX արխիվ։</span></figcaption>
+    </figure>
+      <div class="crewtxt">
+        <span class="m"><span class="l-ru">Ереван · декабрь 1988</span><span class="l-en">Yerevan · December 1988</span><span class="l-hy">Երևան · դեկտեմբեր 1988</span></span>
+        <h3><span class="l-ru">На станции UG7GWO</span><span class="l-en">At the UG7GWO station</span><span class="l-hy">UG7GWO կայանում</span></h3>
+        <p><span class="l-ru">Дни после землетрясения. Коллективная станция UG7GWO в Ереване работает круглосуточно, держит связь с Москвой и зоной бедствия. На снимке слева направо: Роберт Григорян (UG6GAW), Рубен Симонян (UG6GDR), Бернд Лангер (DL1VJ) — радист немецкой спасательной службы THW, приехавший в Армению, — и начальник станции Карен Карапетян (UG6GAT).</span><span class="l-en">The days after the earthquake. The UG7GWO club station in Yerevan runs around the clock, keeping the link with Moscow and the disaster zone. Left to right: Robert Grigoryan (UG6GAW), Ruben Simonyan (UG6GDR), Bernd Langer (DL1VJ), a radio operator of the German THW relief agency who came to Armenia, and the station chief Karen Karapetyan (UG6GAT).</span><span class="l-hy">Երկրաշարժին հաջորդող օրերը։ Երևանի UG7GWO ակումբային կայանն աշխատում է շուրջօրյա՝ կապ պահելով Մոսկվայի և աղետի գոտու հետ։ Լուսանկարում ձախից աջ՝ Ռոբերտ Գրիգորյան (UG6GAW), Ռուբեն Սիմոնյան (UG6GDR), Բեռնդ Լանգեր (DL1VJ)՝ Հայաստան ժամանած գերմանական THW փրկարար ծառայության ռադիստ, և կայանի ղեկավար Կարեն Կարապետյան (UG6GAT)։</span></p>
+        <p class="m"><span class="l-ru">Фото из архива Карена Карапетяна (EK7DX)</span><span class="l-en">Photo from Karen Karapetyan's archive (EK7DX)</span><span class="l-hy">Լուսանկարը Կարեն Կարապետյանի արխիվից (EK7DX)</span> · <a href="https://forum.qrz.ru/273-istoriya-korotkovolnovogo-dvizheniya/49014-tragediya-armenii-dekabr-1988-a-24.html">forum.qrz.ru</a></p>
+      </div>
+    </div>
     <table class="ppl"><tbody id="ppl"></tbody></table>
   </section>
 
@@ -1075,6 +1112,10 @@ function TR(s){return window.HY[s]||s}
   /* ---------- archive ---------- */
   (function(){
     var G=GBASE.slice();
+    G.splice(4,0,{t:'photo',f:'img/press/radiosporting-1986-05-photo.jpg',ru:'Карлен (Роберт) Григорян, UG6GAW · фото в журнале Radiosporting, май 1986',en:'Karlen (Robert) Grigoryan, UG6GAW · photo in Radiosporting, May 1986',hy:'Կարլեն (Ռոբերտ) Գրիգորյան, UG6GAW · լուսանկար Radiosporting ամսագրում, մայիս 1986',cr:'Radiosporting · archive.org',y:'1986'});
+    G.splice(5,0,{t:'press',f:'img/press/radiosporting-1986-05-p13.jpg',th:'img/press/radiosporting-1986-05-karlen.jpg',ru:'Radiosporting, май 1986, стр. 13 — «Karlen Grigorian, UG6GAW»',en:'Radiosporting, May 1986, p. 13 — «Karlen Grigorian, UG6GAW»',hy:'Radiosporting, մայիս 1986, էջ 13՝ «Karlen Grigorian, UG6GAW»',cr:'archive.org',y:'1986'},
+      {t:'press',f:'img/press/radiosporting-1986-05-p12.jpg',th:'img/press/radiosporting-1986-05-p12-quote.jpg',ru:'Radiosporting, май 1986, стр. 12 — «самый заметный азиатский DX-мен на 160 м»',en:'Radiosporting, May 1986, p. 12 — “the most notable Asian 160 m DXer”',hy:'Radiosporting, մայիս 1986, էջ 12՝ «160 մ-ի ամենանշանավոր ասիացի DX-մենը»',cr:'archive.org',y:'1986'},
+      {t:'press',f:'img/press/radiosporting-1986-05-cover.jpg',ru:'Radiosporting, май 1986, №18 — обложка',en:'Radiosporting, May 1986, No. 18 — cover',hy:'Radiosporting, մայիս 1986, №18՝ շապիկ',cr:'archive.org',y:'1986'});
     P.forEach(function(p){G.push({t:'press',f:'img/press/radio-'+p[0]+'.jpg',ru:p[1]+' — '+p[3],en:p[2]+' — '+p[4],hy:TR(p[2])+' — '+TR(p[4]),cr:'Internet Archive',y:p[0].slice(0,4)})});
     Q.forEach(function(q){var y=(q.t.match(/(19|20)\d\d/)||[''])[0];G.push({t:'qsl',f:q.f,ru:q.t,en:q.t,hy:q.t,cr:q.cr,y:y});if(q.b)G.push({t:'qsl',f:q.b,ru:q.t+' · оборот',en:q.t+' · back',hy:q.t+' · դարձերես',cr:q.cr,y:y})});
     A.forEach(function(a){G.push({t:'cert',f:'img/awards/'+a[0]+'.jpg',pdf:'img/awards/'+a[0]+'.pdf',ru:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],en:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],hy:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],cr:'cqww.com',y:String(a[1])})});
