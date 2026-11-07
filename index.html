@@ -198,6 +198,15 @@
   .board td.n{text-align:right;color:var(--muted)}
   .board tr.me td{background:linear-gradient(90deg,rgba(255,178,62,.18),rgba(255,178,62,.04));color:var(--amber2);font-weight:700}
   .board tr.me td:first-child{color:var(--amber)}
+  .facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:44px}
+  .fact{border-top:1px solid var(--line);padding-top:18px}
+  .fact .k{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+  .fact .v{font:700 clamp(30px,3.4vw,44px)/1.05 var(--display);letter-spacing:-.03em;color:var(--text);margin:12px 0 10px;white-space:nowrap}
+  .fact .v .u{font-size:.42em;font-weight:600;letter-spacing:0;color:var(--muted)}
+  .fact p{margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
+  @media (max-width:900px){.facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}}
+  @media (max-width:520px){.facts{grid-template-columns:minmax(0,1fr)}.fact .v{font-size:34px}}
+  #tdisplay .y small.age{display:block;font:600 12px var(--mono);letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
   .note-box{border-color:var(--line) !important;background:var(--panel) !important;margin-top:36px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;padding:22px 26px;border:1px solid rgba(255,74,61,.35);border-radius:12px;background:linear-gradient(90deg,rgba(255,74,61,.08),transparent)}
   .note-box b.big{font:700 18px var(--display);color:var(--amber2);letter-spacing:-.01em;white-space:nowrap}
   .note-box p{margin:0;color:#c7d0de}
@@ -280,6 +289,10 @@
   .gi:hover img{transform:scale(1.025)}
   .gi .gcap{display:block;padding:8px 2px 0;font-size:13px;line-height:1.4;color:var(--muted)}
   .gi .gcr{display:block;font:600 10.5px var(--mono);letter-spacing:.06em;color:var(--dim);margin-top:2px}
+  .gi .gtags{position:absolute;inset:0;pointer-events:none}
+  .gi .gtags .lbtag b{font-size:10.5px;padding:4px 8px}
+  .gi .gtags .lbtag i{border-width:4px}
+  .gi .gtags .lbtag.up i{border-bottom-width:0}.gi .gtags .lbtag.r i{border-left-width:0}.gi .gtags .lbtag.l i{border-right-width:0}
   .gi .gme{position:absolute;left:8px;top:8px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 7px;border-radius:999px;background:rgba(5,8,13,.78);backdrop-filter:blur(6px);font:700 11.5px var(--body);color:#ffe2a6}
   .gi .gme::before{content:"";width:7px;height:7px;border-radius:50%;background:#ffd98a}
   .gi[hidden]{display:none}
@@ -801,11 +814,13 @@
         <tr><td>5</td><td>SM5AQD</td><td class="n">309</td><td class="n">19 588</td></tr>
       </table></div>
     </div>
-    <div class="note-box">
-      <b class="big">WORLD RECORD</b>
-      <p><span class="l-ru">Так напечатано красным на телеграфном сертификате 1990 года, рядом — «CQ Zone 21 Record». Второе место в тот год — бельгиец ON4UN, автор книги «Low-Band DXing», настольной для всех низкочастотников. В телефонном туре отрыв от второго места почти четырёхкратный.</span><span class="l-en">That is printed in red on the 1990 CW certificate, next to «CQ Zone 21 Record». Second that year is ON4UN of Belgium, author of «Low-Band DXing», the handbook every low-band operator keeps. In SSB the margin over second place is almost fourfold.</span><span class="l-hy">Սա կարմիրով տպված է 1990 թ. CW վկայագրի վրա՝ «CQ Zone 21 Record»-ի կողքին։ Այդ տարի երկրորդը բելգիացի ON4UN-ն է՝ «Low-Band DXing» գրքի հեղինակը, որը ցածր տիրույթների յուրաքանչյուր օպերատորի սեղանի գիրքն է։ SSB-ում առավելությունը երկրորդ տեղի նկատմամբ գրեթե քառապատիկ է։</span></p>
+    <div class="facts">
+      <div class="fact"><div class="k"><span class="l-ru">Возраст</span><span class="l-en">Age</span><span class="l-hy">Տարիք</span></div><div class="v">26<span class="u"><span class="l-ru"> лет</span><span class="l-en"> years</span><span class="l-hy"> տարեկան</span></span></div><p><span class="l-ru">Столько Роберту осенью 1990 года, когда он выигрывает оба тура CQ WW DX. На телеграфном сертификате — World Record.</span><span class="l-en">Robert’s age in autumn 1990, when he wins both CQ WW DX contests. The CW certificate reads World Record.</span><span class="l-hy">Այսքան է Ռոբերտը 1990-ի աշնանը, երբ հաղթում է CQ WW DX-ի երկու մրցույթներում։ CW վկայականին գրված է World Record։</span></p></div>
+      <div class="fact"><div class="k">CW · <span class="l-ru">2-е место</span><span class="l-en">2nd place</span><span class="l-hy">2-րդ տեղ</span></div><div class="v">ON4UN</div><p><span class="l-ru">Джон Девольдере, Бельгия, автор книги «Low-Band DXing» — настольной для всех, кто работает на низких диапазонах. Связей у него больше, 936 против 851, но UG6GAW впереди на 45 654 очка.</span><span class="l-en">John Devoldere, Belgium, author of «Low-Band DXing», the standard book for every low-band operator. He makes more contacts, 936 to 851, yet UG6GAW finishes 45,654 points ahead.</span><span class="l-hy">Ջոն Դևոլդերե, Բելգիա, «Low-Band DXing» գրքի հեղինակը, որը սեղանի գիրք է ցածր տիրույթներում աշխատող բոլորի համար։ Նա ավելի շատ կապ ունի՝ 936՝ 851-ի դիմաց, բայց UG6GAW-ն 45 654 միավորով առաջ է։</span></p></div>
+      <div class="fact"><div class="k">SSB · <span class="l-ru">2-е место</span><span class="l-en">2nd place</span><span class="l-hy">2-րդ տեղ</span></div><div class="v">VE1ZZ</div><p><span class="l-ru">Канада. 31 974 очка — почти вчетверо меньше, чем 119 955 у UG6GAW.</span><span class="l-en">Canada. 31,974 points, barely a quarter of UG6GAW’s 119,955.</span><span class="l-hy">Կանադա։ 31 974 միավոր՝ գրեթե չորս անգամ պակաս, քան UG6GAW-ի 119 955-ը։</span></p></div>
+      <div class="fact"><div class="k">CQ WW 160 CW · <span class="l-ru">1-е место</span><span class="l-en">1st place</span><span class="l-hy">1-ին տեղ</span></div><div class="v">VE6OU/3</div><p><span class="l-ru">Канада. В январе 1990 года, в 25 лет, UG6GAW — второй в мире, всего на 7 724 очка позади.</span><span class="l-en">Canada. In January 1990, at 25, UG6GAW is second in the world, only 7,724 points behind.</span><span class="l-hy">Կանադա։ 1990-ի հունվարին, 25 տարեկանում, UG6GAW-ն աշխարհում երկրորդն է՝ ընդամենը 7 724 միավոր հետ։</span></p></div>
     </div>
-    <p class="cap"><a href="https://www.cqww.com/scorescw.htm?yr=1990&amp;cat=SH+160M">cqww.com · CW 1990</a> · <a href="https://www.cqww.com/scoresph.htm?yr=1990&amp;cat=SH+160M">cqww.com · SSB 1990</a> · <a href="https://www.arrl.org/news/low-band-titan-john-devoldere-on4un-sk">ARRL · ON4UN</a></p>
+    <p class="cap"><a href="https://www.cqww.com/scorescw.htm?yr=1990&amp;cat=SH+160M">cqww.com · CW 1990</a> · <a href="https://www.cqww.com/scoresph.htm?yr=1990&amp;cat=SH+160M">cqww.com · SSB 1990</a> · <a href="https://cq160.com/scores.htm?mode=CW&amp;yr=1990&amp;cat=A&amp;order=score">cq160.com · 1990</a> · <a href="https://www.arrl.org/news/low-band-titan-john-devoldere-on4un-sk">ARRL · ON4UN</a></p>
   </div>
 </section>
 
@@ -1445,13 +1460,15 @@ function TR(s){return window.HY[s]||s}
   /* ---------- lightbox ---------- */
   var lb=$('#lb'), li=$('#lb-img'), lc=$('#lb-cap'), lp=$('#lb-pdf'), group=[], gi=0;
   function show(i){var t=group[i];if(!t)return;gi=i;li.src=t.dataset.lb;li.alt=t.dataset.cap||'';lc.textContent=t.dataset.cap||'';var tg=$('#lb-tags');tg.innerHTML='';tg.classList.remove('off');tg.__p=t.dataset.tags?JSON.parse(t.dataset.tags):[];placeTags();if(t.dataset.pdf){lp.href=t.dataset.pdf;lp.style.display=''}else lp.style.display='none';$('#lb-prev').style.visibility=group.length>1?'':'hidden';$('#lb-next').style.visibility=group.length>1?'':'hidden'}
-  function placeTags(){var tg=$('#lb-tags'),W=li.clientWidth,Hh=li.clientHeight;tg.innerHTML='';if(!W||!Hh||!li.complete)return;
-    (tg.__p||[]).forEach(function(p){var cx=p[0]/100*W,cy=p[1]/100*Hh,r=(p[2]||14)/200*W,top=cy-r,s=document.createElement('span'),g=5;
+  function pinTags(box,img,tags,sm){box.innerHTML='';var W=img.clientWidth,Hh=img.clientHeight;if(!W||!Hh||!tags||!tags.length)return;
+    tags.forEach(function(p){var cx=p[0]/100*W,cy=p[1]/100*Hh,r=(p[2]||14)/200*W,top=cy-r,s=document.createElement('span'),g=sm?3:5,need=sm?28:40,half=sm?32:46;
       s.innerHTML='<i></i><b>'+T3('Роберт','Robert','Ռոբերտ')+'</b>';
-      if(top>=40){s.className='lbtag up';s.style.left=Math.min(Math.max(cx,46),W-46)+'px';s.style.top=(top-g)+'px'}
+      if(top>=need){s.className='lbtag up';s.style.left=Math.min(Math.max(cx,half),W-half)+'px';s.style.top=(top-g)+'px'}
       else if(W-(cx+r)>=cx-r){s.className='lbtag r';s.style.left=(cx+r+g)+'px';s.style.top=cy+'px'}
       else{s.className='lbtag l';s.style.left=(cx-r-g)+'px';s.style.top=cy+'px'}
-      tg.appendChild(s)})}
+      box.appendChild(s)})}
+  window.pinTags=pinTags;
+  function placeTags(){var tg=$('#lb-tags');if(!li.complete){tg.innerHTML='';return}pinTags(tg,li,tg.__p,false)}
   li.addEventListener('load',placeTags);addEventListener('resize',function(){if(lb.open)placeTags()});
   document.addEventListener('langchange',function(){if(lb.open)placeTags()});
   li.addEventListener('click',function(){$('#lb-tags').classList.toggle('off')});
@@ -1578,12 +1595,18 @@ function TR(s){return window.HY[s]||s}
     A.forEach(function(a){G.push({t:'cert',f:'img/awards/'+a[0]+'.jpg',pdf:'img/awards/'+a[0]+'.pdf',ru:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],en:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],hy:'CQ WW DX '+a[2]+' '+a[1]+' · '+a[3]+' · '+a[4],cr:'cqww.com'})});
     [['img/photo/charentsavan-aragats.jpg','Чаренцаван и гора Арагац','Charentsavan and Mount Aragats','Չարենցավանը և Արագած լեռը','© Serouj Ourishian · CC BY 3.0'],['img/photo/charentsavan-town.jpg','Чаренцаван','Charentsavan','Չարենցավան','© Armtoursites · CC BY-SA 3.0'],['img/photo/charents-monument.jpg','Памятник Егише Чаренцу','Yeghishe Charents monument','Եղիշե Չարենցի հուշարձանը','© AndyHM · CC BY-SA 4.0']].forEach(function(c){G.push({t:'photo',f:c[0],ru:c[1],en:c[2],hy:c[3],cr:c[4]})});
     var gal=$('#gal');
+    var pins=[];
     G.forEach(function(g){
       var b=document.createElement('button');b.type='button';b.className='gi';b.dataset.t=g.t;b.dataset.lb=g.f;b.dataset.group='gal';b.dataset.cap=g.ru+' · '+g.cr;
       if(g.pdf)b.dataset.pdf=g.pdf; if(g.tags)b.dataset.tags=JSON.stringify(g.tags);
-      b.innerHTML='<span class="gimg"><img loading="lazy" decoding="async" src="'+(g.th||g.f)+'" alt="'+g.en.replace(/"/g,'&quot;')+'">'+(g.tags?'<span class="gme"><span class="l-ru">Роберт</span><span class="l-en">Robert</span><span class="l-hy">Ռոբերտ</span></span>':'')+'</span><span class="gcap"><span class="l-ru">'+g.ru+'</span><span class="l-en">'+g.en+'</span><span class="l-hy">'+g.hy+'</span><span class="gcr">'+g.cr+'</span></span>';
+      b.innerHTML='<span class="gimg"><img loading="lazy" decoding="async" src="'+(g.th||g.f)+'" alt="'+g.en.replace(/"/g,'&quot;')+'">'+(g.tags?'<span class="gtags" aria-hidden="true"></span>':'')+'</span><span class="gcap"><span class="l-ru">'+g.ru+'</span><span class="l-en">'+g.en+'</span><span class="l-hy">'+g.hy+'</span><span class="gcr">'+g.cr+'</span></span>';
       gal.appendChild(b);
+      if(g.tags){var im=b.querySelector('img'),gt=b.querySelector('.gtags'),f=function(){if(im.complete&&im.naturalWidth&&window.pinTags)pinTags(gt,im,g.tags,true)};im.addEventListener('load',f);f();pins.push(f)}
     });
+    var rpt;addEventListener('resize',function(){clearTimeout(rpt);rpt=setTimeout(function(){pins.forEach(function(f){f()})},150)});
+    document.addEventListener('langchange',function(){pins.forEach(function(f){f()})});
+    addEventListener('load',function(){pins.forEach(function(f){f()})});
+    $$('[data-gf]').forEach(function(f){f.addEventListener('click',function(){setTimeout(function(){pins.forEach(function(x){x()})},30)})});
     $$('[data-gf]').forEach(function(f){f.addEventListener('click',function(){$$('[data-gf]').forEach(function(x){x.setAttribute('aria-pressed',x===f)});$$('#gal .gi').forEach(function(it){it.hidden=!(f.dataset.gf==='all'||it.dataset.t===f.dataset.gf)})})});
   })();
 
@@ -1653,7 +1676,7 @@ function TR(s){return window.HY[s]||s}
         var off=(p[0]===1990)?(si?5:-5):0,cx=X(p[0])+off,cy=Y(p[1]);
         el('circle',{cx:cx,cy:cy,r:4,fill:s.c,stroke:'#0e1521','stroke-width':2});
         var hit=el('circle',{cx:cx,cy:cy,r:16,fill:'transparent',style:'cursor:pointer'});
-        function on(){showTip(box,svg,cx,cy-12,'<b>'+p[0]+' · CQ WW DX '+s.k+'</b><br>'+T3('Место в мире: ','World place: ','Տեղ աշխարհում՝ ')+'<em>#'+p[1]+'</em><br>'+p[4]+' · '+p[2]+' QSO · '+num(p[3]))}
+        function on(){showTip(box,svg,cx,cy-12,'<b>'+p[0]+' · CQ WW DX '+s.k+'</b><br>'+T3('Место в мире: ','World place: ','Տեղ աշխարհում՝ ')+'<em>#'+p[1]+'</em><br>'+p[4]+' · '+p[2]+' QSO · '+num(p[3])+'<br>'+T3('Возраст: ','Age: ','Տարիք՝ ')+(p[0]-1964))}
         hit.addEventListener('pointerenter',on);hit.addEventListener('pointerleave',function(){hideTip(box)});hit.addEventListener('click',on);
       })});
       var e=S[0].d[S[0].d.length-1];
@@ -1680,7 +1703,7 @@ function TR(s){return window.HY[s]||s}
         el('text',{x:x+bw/2,y:H-Bm+20,'text-anchor':'middle','font-size':11.5,fill:'#8e9bb1'},String(d[0]));
         el('text',{x:x+bw/2,y:H-Bm+36,'text-anchor':'middle','font-size':10,fill:'#4d5a70'},d[0]===1997?'EK6GC':'#'+d[3]);
         var hit=el('rect',{x:x-8,y:T-10,width:bw+16,height:H-T-Bm+10,fill:'transparent',style:'cursor:pointer'});
-        function on(){showTip(box,svg,x+bw/2,y-14,'<b>CQ WW 160 CW · '+d[0]+'</b><br>'+num(d[1])+T3(' очков',' points',' միավոր')+'<br>'+d[2]+' QSO · '+T3('место в мире ','world place ','տեղ աշխարհում ')+'<em>#'+d[3]+'</em>')}
+        function on(){showTip(box,svg,x+bw/2,y-14,'<b>CQ WW 160 CW · '+d[0]+'</b><br>'+num(d[1])+T3(' очков',' points',' միավոր')+'<br>'+d[2]+' QSO · '+T3('место в мире ','world place ','տեղ աշխարհում ')+'<em>#'+d[3]+'</em><br>'+T3('Возраст: ','Age: ','Տարիք՝ ')+(d[0]-1965))}
         hit.addEventListener('pointerenter',on);hit.addEventListener('pointerleave',function(){hideTip(box)});hit.addEventListener('click',on);
       });
     }
@@ -1688,6 +1711,8 @@ function TR(s){return window.HY[s]||s}
   })();
 
   /* ---------- timeline tuner ---------- */
+  function ruYears(n){var a=n%10,b=n%100;return n+' '+(a===1&&b!==11?'год':(a>=2&&a<=4&&(b<12||b>14)?'года':'лет'))}
+  function ageTxt(n){return '<span class="l-ru">'+ruYears(n)+'</span><span class="l-en">age '+n+'</span><span class="l-hy">'+n+' տարեկան</span>'}
   var TL=[
     [1982,0,'На 160 метрах — с 1982 года, одна из самых активных станций республики. Первый позывной — EZ6GAW.','On 160 meters since 1982, one of the most active stations in the republic. His first callsign is EZ6GAW.'],
     [1984,1,'Первые результаты в CQ WW DX на 160 м: телеграф — 11-е место в мире. В октябре на QSL-карточке в Италию он пишет «160m DXCC #144» и «Delta up 35 m». В ноябре журнал «Радио» впервые включает UG6GAW в таблицу «Достижения на 160 м».','First CQ WW DX results on 160 m: 11th in the world in CW. In October he writes «160m DXCC #144» and «Delta up 35 m» on a QSL card to Italy. In November «Radio» magazine lists UG6GAW in its «160 m achievements» table for the first time.'],
@@ -1711,7 +1736,7 @@ function TR(s){return window.HY[s]||s}
     TL.forEach(function(t,i){var b=document.createElement('button');b.type='button';b.textContent=t[0];if(t[1])b.className='key';b.addEventListener('click',function(){go(i)});tu.appendChild(b);btns.push(b)});
     function render(i){
       if(i===act)return; act=i; btns.forEach(function(b,k){b.classList.toggle('act',k===i)});
-      var t=TL[i]; disp.innerHTML='<div class="y fade">'+t[0]+'</div><div class="fade"><p class="l-ru">'+t[2]+'</p><p class="l-en">'+t[3]+'</p><p class="l-hy">'+TR(t[3])+'</p></div>';
+      var t=TL[i]; disp.innerHTML='<div class="y fade">'+t[0]+'<small class="age">'+ageTxt(t[0]-1964)+'</small></div><div class="fade"><p class="l-ru">'+t[2]+'</p><p class="l-en">'+t[3]+'</p><p class="l-hy">'+TR(t[3])+'</p></div>';
       if(soundOn&&ctx){var c=ctx,o=c.createOscillator(),g=c.createGain();o.frequency.value=900+i*40;g.gain.value=.05;o.connect(g);g.connect(master);o.start();g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.08);o.stop(c.currentTime+.09)}
     }
     function center(){var r=tu.getBoundingClientRect(),cx=r.left+r.width/2,best=0,bd=1e9;btns.forEach(function(b,k){var br=b.getBoundingClientRect(),d=Math.abs(br.left+br.width/2-cx);if(d<bd){bd=d;best=k}});render(best)}
