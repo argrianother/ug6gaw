@@ -68,8 +68,15 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .grain{position:absolute;inset:-50%;z-index:-1;opacity:.16;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1.2s steps(4) infinite}
 @keyframes gr{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}}
 .hero .in{position:relative;width:100%;padding-top:130px;padding-bottom:40px}
-.ant{position:absolute;left:max(32px,calc((100vw - 1320px)/2 + 32px));top:96px;width:clamp(170px,15vw,230px);margin:0;opacity:.95;pointer-events:none}
+.call .now{position:relative}
+.ant{position:absolute;left:58%;bottom:100%;width:1.2em;margin-bottom:.2em;transform:translateX(-50%);pointer-events:none;line-height:0}
 .ant svg{display:block;width:100%;height:auto;overflow:visible}
+.ant svg path,.ant svg circle{vector-effect:non-scaling-stroke}
+.ant .loop{stroke:rgba(243,239,232,.8)!important;stroke-width:1.3px!important}
+.ant .rail{stroke:rgba(243,239,232,.5)!important;stroke-width:1px!important}
+.ant .guy,.ant .gnd,.ant .dim{stroke:rgba(243,239,232,.3)!important}
+.ant .dt{display:none}
+.ant .waves circle{stroke-width:1.2px}
 .ant .loop{stroke:rgba(243,239,232,.55);stroke-width:1.3}
 .ant .rail{stroke:rgba(243,239,232,.32);stroke-width:1}
 .ant .guy{stroke:rgba(243,239,232,.16);stroke-width:1;stroke-dasharray:3 4}
@@ -82,12 +89,11 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .ant .waves circle{stroke:var(--amber);stroke-width:1.2;transform-origin:160px 46px;animation:wave 3.6s ease-out infinite;opacity:0}
 .ant .waves circle:nth-child(2){animation-delay:1.2s}.ant .waves circle:nth-child(3){animation-delay:2.4s}
 @keyframes wave{0%{transform:scale(.6);opacity:.85}100%{transform:scale(4.4);opacity:0}}
-.ant figcaption{margin-top:10px;font:400 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--light3)}
-@media (max-width:1180px){.ant{display:none}}
+@media (max-width:900px){.ant{display:none}}
 .freq{display:flex;align-items:center;gap:12px;font:400 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--light2)}
 .freq i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber);animation:bl 2.4s infinite}
 .call{font:800 clamp(76px,15.5vw,250px)/.8 var(--sans);letter-spacing:-.065em;margin:22px 0 0 -.05em;color:var(--light);white-space:nowrap}
-.call .now{display:inline-block;vertical-align:top;margin:.06em 0 0 .32em;padding:.32em .55em;border:1px solid rgba(243,239,232,.3);border-radius:999px;background:rgba(11,11,10,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font:500 max(13px,.1em)/1 var(--mono);letter-spacing:.08em;color:var(--light)}
+.call .now{font-weight:300;font-size:.34em;letter-spacing:-.02em;margin-left:.12em;color:var(--light2);vertical-align:.12em}
 .hero h1{font:300 clamp(28px,3.4vw,48px)/1.1 var(--sans);letter-spacing:-.03em;margin:22px 0 0}
 .hero h1 b{font-weight:600}
 .champ{display:inline-flex;align-items:center;gap:14px;margin-top:20px;font:500 clamp(18px,1.6vw,22px)/1.2 var(--sans);letter-spacing:-.01em;color:var(--amber)}
@@ -423,6 +429,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 }
 @media (max-width:520px){
   .wrap{padding:0 18px}
+  .call .now{display:block;font-size:.34em;margin:12px 0 0;vertical-align:0}
 
   .call{font-size:clamp(60px,19vw,96px)}
   .hero h1{font-size:28px;margin-top:16px}
@@ -467,8 +474,9 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 <section class="hero" id="top">
   <div class="photos" aria-hidden="true"><div class="photo"></div></div>
   <div class="grain" aria-hidden="true"></div>
-  <figure class="ant" aria-hidden="true">
-      <svg viewBox="0 0 320 360" fill="none">
+  <div class="wrap in">
+    <div class="freq"><i></i><span class="l-ru">1 832 кГц · CW · 160 м</span><span class="l-en">1,832 kHz · CW · 160 m</span><span class="l-hy">1 832 կՀց · CW · 160 մ</span></div>
+    <div class="call">UG6GAW<span class="now">/EK6GC<span class="ant" aria-hidden="true"><svg viewBox="0 0 320 360" fill="none">
         <g class="waves"><circle cx="160" cy="46" r="18"/><circle cx="160" cy="46" r="18"/><circle cx="160" cy="46" r="18"/></g>
         <path class="loop" d="M160 46 L34 300 L286 300 Z"/>
         <path class="rail" d="M156 46 V328 M164 46 V328 M156 58 L164 70 L156 82 M156 82 L164 94 L156 106 M156 106 L164 118 L156 130 M156 130 L164 142 L156 154 M156 154 L164 166 L156 178 M156 178 L164 190 L156 202 M156 202 L164 214 L156 226 M156 226 L164 238 L156 250 M156 250 L164 262 L156 274 M156 274 L164 286 L156 298 M156 298 L164 310 L156 322"/>
@@ -478,12 +486,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
         <path class="gnd" d="M14 330 H306"/>
         <path class="dim" d="M302 46 V328 M298 46 H306 M298 328 H306"/>
         <text x="296" y="190" class="dt" transform="rotate(-90 296 190)">35 m</text>
-      </svg>
-      <figcaption>Ant. Delta up 35 m · QSL 1984</figcaption>
-    </figure>
-  <div class="wrap in">
-    <div class="freq"><i></i><span class="l-ru">1 832 кГц · CW · 160 м</span><span class="l-en">1,832 kHz · CW · 160 m</span><span class="l-hy">1 832 կՀց · CW · 160 մ</span></div>
-    <div class="call">UG6GAW<span class="now" title="EK6GC">EK6GC</span></div>
+      </svg></span></span></div>
     <h1><span class="l-ru">Роберт <b>Григорян</b></span><span class="l-en">Robert <b>Grigoryan</b></span><span class="l-hy">Ռոբերտ <b>Գրիգորյան</b></span></h1>
     <p class="lead"><span class="l-ru">1990 год, CQ World Wide DX Contest, 160 метров: первое место в мире сразу телеграфом и телефоном. Армения.</span><span class="l-en">1990, CQ World Wide DX Contest, 160 meters: first in the world in both CW and SSB. Armenia.</span><span class="l-hy">1990 թ., CQ World Wide DX Contest, 160 մետր՝ առաջին տեղ աշխարհում և՛ CW-ում, և՛ SSB-ում։ Հայաստան։</span></p>
     <div class="hmeta">
@@ -914,12 +917,6 @@ function TR(s){return window.HY[s]||s}
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
   mb.addEventListener('click',function(){menu(!sh.classList.contains('open'))});
   sh.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
-
-  /* ---------- antenna drawing fits the empty corner ---------- */
-  (function(){var ant=$('.ant'),fq=$('.hero .freq');if(!ant||!fq)return;
-    function fit(){if(innerWidth<=1180){ant.style.display='none';return}ant.style.display='';var top=96,room=fq.getBoundingClientRect().top-hero.getBoundingClientRect().top-top-34;
-      var w=Math.min(230,room/1.27);if(w<110){ant.style.display='none';return}ant.style.width=w+'px';ant.style.top=top+'px'}
-    addEventListener('resize',fit);fit();if(document.fonts)document.fonts.ready.then(fit)})();
 
   /* ---------- Morse ticker ---------- */
   (function(){
