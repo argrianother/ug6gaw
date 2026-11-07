@@ -87,7 +87,7 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .freq{display:flex;align-items:center;gap:12px;font:400 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--light2)}
 .freq i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber);animation:bl 2.4s infinite}
 .call{font:800 clamp(76px,15.5vw,250px)/.8 var(--sans);letter-spacing:-.065em;margin:22px 0 0 -.05em;color:var(--light);white-space:nowrap}
-.call .now{font-weight:300;font-size:.34em;letter-spacing:-.02em;margin-left:.12em;color:var(--light2);vertical-align:.12em}
+.call .now{display:inline-block;vertical-align:top;margin:.06em 0 0 .32em;padding:.32em .55em;border:1px solid rgba(243,239,232,.3);border-radius:999px;background:rgba(11,11,10,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font:500 max(13px,.1em)/1 var(--mono);letter-spacing:.08em;color:var(--light)}
 .hero h1{font:300 clamp(28px,3.4vw,48px)/1.1 var(--sans);letter-spacing:-.03em;margin:22px 0 0}
 .hero h1 b{font-weight:600}
 .champ{display:inline-flex;align-items:center;gap:14px;margin-top:20px;font:500 clamp(18px,1.6vw,22px)/1.2 var(--sans);letter-spacing:-.01em;color:var(--amber)}
@@ -423,7 +423,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 }
 @media (max-width:520px){
   .wrap{padding:0 18px}
-  .call .now{display:block;font-size:.34em;margin:12px 0 0;vertical-align:0}
+
   .call{font-size:clamp(60px,19vw,96px)}
   .hero h1{font-size:28px;margin-top:16px}
   .champ{font-size:17px;gap:10px;margin-top:14px}
@@ -483,7 +483,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     </figure>
   <div class="wrap in">
     <div class="freq"><i></i><span class="l-ru">1 832 кГц · CW · 160 м</span><span class="l-en">1,832 kHz · CW · 160 m</span><span class="l-hy">1 832 կՀց · CW · 160 մ</span></div>
-    <div class="call">UG6GAW<span class="now">/EK6GC</span></div>
+    <div class="call">UG6GAW<span class="now" title="EK6GC">EK6GC</span></div>
     <h1><span class="l-ru">Роберт <b>Григорян</b></span><span class="l-en">Robert <b>Grigoryan</b></span><span class="l-hy">Ռոբերտ <b>Գրիգորյան</b></span></h1>
     <p class="lead"><span class="l-ru">1990 год, CQ World Wide DX Contest, 160 метров: первое место в мире сразу телеграфом и телефоном. Армения.</span><span class="l-en">1990, CQ World Wide DX Contest, 160 meters: first in the world in both CW and SSB. Armenia.</span><span class="l-hy">1990 թ., CQ World Wide DX Contest, 160 մետր՝ առաջին տեղ աշխարհում և՛ CW-ում, և՛ SSB-ում։ Հայաստան։</span></p>
     <div class="hmeta">
