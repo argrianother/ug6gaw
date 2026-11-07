@@ -287,10 +287,20 @@
   dialog.lb .lbimg{text-align:center}
   dialog.lb .lbfig{position:relative;display:inline-block;max-width:100%;vertical-align:top}
   dialog.lb .lbfig img{display:block}
-  #lb-tags{position:absolute;inset:0;pointer-events:none}
-  .lbtag{position:absolute;transform:translate(-50%,-50%)}
-  .lbtag i{display:block;width:100%;aspect-ratio:1;border:2px solid #ffd98a;border-radius:50%;box-shadow:0 0 0 2px rgba(0,0,0,.35),inset 0 0 0 1px rgba(0,0,0,.25)}
-  .lbtag b{position:absolute;top:100%;left:50%;transform:translate(-50%,6px);background:#ffd98a;color:#1a1205;font:700 12.5px var(--body);padding:3px 9px;border-radius:6px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+  #lb-tags{position:absolute;inset:0;pointer-events:none;transition:opacity .25s}
+  #lb-tags.off{opacity:0}
+  dialog.lb .lbfig img{cursor:pointer}
+  .lbtag{position:absolute;display:flex;align-items:center;filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));animation:lbtag .35s ease both}
+  .lbtag b{background:#ffd98a;color:#1a1205;font:600 12.5px/1 var(--body);letter-spacing:.01em;padding:6px 11px;border-radius:999px;white-space:nowrap}
+  .lbtag i{width:0;height:0;border:6px solid transparent}
+  .lbtag.up{flex-direction:column-reverse;transform:translate(-50%,-100%)}
+  .lbtag.up i{border-top-color:#ffd98a;border-bottom-width:0}
+  .lbtag.r{flex-direction:row;transform:translate(0,-50%)}
+  .lbtag.r i{border-right-color:#ffd98a;border-left-width:0}
+  .lbtag.l{flex-direction:row-reverse;transform:translate(-100%,-50%)}
+  .lbtag.l i{border-left-color:#ffd98a;border-right-width:0}
+  @keyframes lbtag{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.lbtag{animation:none}}
   @media (max-width:600px){.gal{columns:2 150px;column-gap:10px}.gi{margin-bottom:10px}.gi .gcap{font-size:12px}}
 
   /* ---------- people ---------- */
@@ -1434,7 +1444,17 @@ function TR(s){return window.HY[s]||s}
 
   /* ---------- lightbox ---------- */
   var lb=$('#lb'), li=$('#lb-img'), lc=$('#lb-cap'), lp=$('#lb-pdf'), group=[], gi=0;
-  function show(i){var t=group[i];if(!t)return;gi=i;li.src=t.dataset.lb;li.alt=t.dataset.cap||'';lc.textContent=t.dataset.cap||'';var tg=$('#lb-tags');tg.innerHTML='';(t.dataset.tags?JSON.parse(t.dataset.tags):[]).forEach(function(p){var s=document.createElement('span');s.className='lbtag';s.style.left=p[0]+'%';s.style.top=p[1]+'%';s.style.width=(p[2]||14)+'%';s.innerHTML='<i></i><b>'+T3('Роберт','Robert','Ռոբերտ')+'</b>';tg.appendChild(s)});if(t.dataset.pdf){lp.href=t.dataset.pdf;lp.style.display=''}else lp.style.display='none';$('#lb-prev').style.visibility=group.length>1?'':'hidden';$('#lb-next').style.visibility=group.length>1?'':'hidden'}
+  function show(i){var t=group[i];if(!t)return;gi=i;li.src=t.dataset.lb;li.alt=t.dataset.cap||'';lc.textContent=t.dataset.cap||'';var tg=$('#lb-tags');tg.innerHTML='';tg.classList.remove('off');tg.__p=t.dataset.tags?JSON.parse(t.dataset.tags):[];placeTags();if(t.dataset.pdf){lp.href=t.dataset.pdf;lp.style.display=''}else lp.style.display='none';$('#lb-prev').style.visibility=group.length>1?'':'hidden';$('#lb-next').style.visibility=group.length>1?'':'hidden'}
+  function placeTags(){var tg=$('#lb-tags'),W=li.clientWidth,Hh=li.clientHeight;tg.innerHTML='';if(!W||!Hh||!li.complete)return;
+    (tg.__p||[]).forEach(function(p){var cx=p[0]/100*W,cy=p[1]/100*Hh,r=(p[2]||14)/200*W,top=cy-r,s=document.createElement('span'),g=5;
+      s.innerHTML='<i></i><b>'+T3('Роберт','Robert','Ռոբերտ')+'</b>';
+      if(top>=40){s.className='lbtag up';s.style.left=Math.min(Math.max(cx,46),W-46)+'px';s.style.top=(top-g)+'px'}
+      else if(W-(cx+r)>=cx-r){s.className='lbtag r';s.style.left=(cx+r+g)+'px';s.style.top=cy+'px'}
+      else{s.className='lbtag l';s.style.left=(cx-r-g)+'px';s.style.top=cy+'px'}
+      tg.appendChild(s)})}
+  li.addEventListener('load',placeTags);addEventListener('resize',function(){if(lb.open)placeTags()});
+  document.addEventListener('langchange',function(){if(lb.open)placeTags()});
+  li.addEventListener('click',function(){$('#lb-tags').classList.toggle('off')});
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-lb]'); if(!t||e.target.closest('.flipbtn'))return;
     var gname=t.dataset.group; group=gname?$$('[data-lb][data-group="'+gname+'"]').filter(function(x){return x.offsetParent!==null||x.closest('.fan')}):[t];
