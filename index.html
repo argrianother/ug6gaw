@@ -39,13 +39,6 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .brand{display:flex;align-items:center;gap:10px;font:700 15px var(--sans);text-decoration:none;white-space:nowrap}
 .brand i{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:bl 1.6s infinite}
 .brand em{font-style:normal;font-weight:400;opacity:.55}
-.bant{display:inline-block;width:22px;height:26px;margin-left:2px;color:currentColor;opacity:.75}
-.bant svg{display:block;width:100%;height:100%;overflow:visible}
-.bant .bl,.bant .bm{stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
-.bant .bf{fill:var(--amber)}
-.bant .bw circle{stroke:var(--amber);stroke-width:1.1;transform-origin:13px 5px;animation:bwave 2.4s ease-out infinite;opacity:0}
-.bant .bw circle:nth-child(2){animation-delay:1.2s}
-@keyframes bwave{0%{transform:scale(.5);opacity:.9}100%{transform:scale(3.2);opacity:0}}
 
 .nav{display:flex;justify-content:center;gap:26px;font-size:14px}
 .nav a{text-decoration:none;opacity:.78;transition:opacity .2s}
@@ -98,6 +91,19 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 .ant .waves circle:nth-child(2){animation-delay:1.2s}.ant .waves circle:nth-child(3){animation-delay:2.4s}
 @keyframes wave{0%{transform:scale(.6);opacity:.85}100%{transform:scale(4.4);opacity:0}}
 @media (max-width:900px){.ant{display:none}}
+.tower{position:absolute;left:0;top:78px;bottom:34px;z-index:1;pointer-events:none;display:none}
+.tower svg{display:block;width:100%;height:100%;overflow:visible}
+.tower .lg{stroke:rgba(243,239,232,.62);stroke-width:1.4}
+.tower .br{stroke:rgba(243,239,232,.32);stroke-width:1}
+.tower .hz{stroke:rgba(243,239,232,.45);stroke-width:1}
+.tower .gy{stroke:rgba(243,239,232,.14);stroke-width:1;stroke-dasharray:3 5}
+.tower .gd{stroke:rgba(243,239,232,.22);stroke-width:1}
+.tower .pl{stroke:rgba(243,239,232,.55);stroke-width:1.2}
+.tower .lamp{fill:#ff3b2f;filter:drop-shadow(0 0 6px #ff3b2f) drop-shadow(0 0 14px rgba(255,59,47,.7));animation:lampb 1.6s steps(1) infinite}
+.tower .lamp.mid{animation-delay:.8s}
+.tower .halo{fill:rgba(255,59,47,.18);animation:lampb 1.6s steps(1) infinite}
+@keyframes lampb{0%,55%{opacity:1}56%,100%{opacity:.12}}
+@media (prefers-reduced-motion:reduce){.tower .lamp,.tower .halo{animation:none}}
 .freq{display:flex;align-items:center;gap:12px;font:400 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--light2)}
 .freq i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber);animation:bl 2.4s infinite}
 .call{font:800 clamp(76px,15.5vw,250px)/.8 var(--sans);letter-spacing:-.065em;margin:22px 0 0 -.05em;color:var(--light);white-space:nowrap}
@@ -457,7 +463,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 </head>
 <body>
 <header id="hd"><div class="wrap">
-  <a class="brand" href="#top"><i></i>UG6GAW <em>/ EK6GC</em><span class="bant" aria-hidden="true"><svg viewBox="0 0 26 30" fill="none"><g class="bw"><circle cx="13" cy="5" r="3"/><circle cx="13" cy="5" r="3"/></g><path class="bl" d="M13 5 L3 23 L23 23 Z"/><path class="bm" d="M13 5 V28 M6 28 H20"/><circle class="bf" cx="13" cy="23" r="1.6"/></svg></span></a>
+  <a class="brand" href="#top"><i></i>UG6GAW <em>/ EK6GC</em></a>
   <nav class="nav" id="nav">
     <a href="#y1990">1990</a>
     <a href="#dxcc">№144</a>
@@ -482,6 +488,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 <section class="hero" id="top">
   <div class="photos" aria-hidden="true"><div class="photo"></div></div>
   <div class="grain" aria-hidden="true"></div>
+  <div class="tower" id="tower" aria-hidden="true"></div>
   <div class="wrap in">
     <div class="freq"><i></i><span class="l-ru">1 832 кГц · CW · 160 м</span><span class="l-en">1,832 kHz · CW · 160 m</span><span class="l-hy">1 832 կՀց · CW · 160 մ</span></div>
     <div class="call">UG6GAW<span class="now">/EK6GC</span></div>
@@ -916,6 +923,27 @@ function TR(s){return window.HY[s]||s}
   mb.addEventListener('click',function(){menu(!sh.classList.contains('open'))});
   sh.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
 
+  /* ---------- lattice tower in the left margin ---------- */
+  (function(){var tw=$('#tower'),wrap=$('.hero .in');if(!tw||!wrap)return;
+    function draw(){var r=wrap.getBoundingClientRect(),pad=parseFloat(getComputedStyle(wrap).paddingLeft)||0,margin=r.left+pad-24;
+      if(innerWidth<=900||margin<96){tw.style.display='none';return}
+      tw.style.display='block';var W=Math.min(150,margin*.62),H=tw.clientHeight||hero.clientHeight-112;tw.style.left=Math.max(12,(margin-W)/2)+'px';tw.style.width=W+'px';
+      var cx=W/2,top=46,base=H-6,bw=W*.62,tw0=W*.08,n=Math.max(8,Math.round((base-top)/46)),o=[];
+      function hw(y){return tw0/2+(bw/2-tw0/2)*(y-top)/(base-top)}
+      o.push('<path class="gd" d="M0 '+base+' H'+W+'"/>');
+      var gy=top+(base-top)*.33,gy2=top+(base-top)*.62;
+      o.push('<path class="gy" d="M'+(cx-hw(gy))+' '+gy+' L2 '+base+' M'+(cx+hw(gy))+' '+gy+' L'+(W-2)+' '+base+' M'+(cx-hw(gy2))+' '+gy2+' L'+(W*.12)+' '+base+' M'+(cx+hw(gy2))+' '+gy2+' L'+(W*.88)+' '+base+'"/>');
+      var d='',h='';for(var i=0;i<n;i++){var y1=top+(base-top)*i/n,y2=top+(base-top)*(i+1)/n,a1=hw(y1),a2=hw(y2);
+        d+='M'+(cx-a1)+' '+y1+' L'+(cx+a2)+' '+y2+' M'+(cx+a1)+' '+y1+' L'+(cx-a2)+' '+y2+' ';h+='M'+(cx-a2)+' '+y2+' H'+(cx+a2)+' '}
+      o.push('<path class="br" d="'+d+'"/><path class="hz" d="M'+(cx-hw(top))+' '+top+' H'+(cx+hw(top))+' '+h+'"/>');
+      o.push('<path class="lg" d="M'+(cx-hw(top))+' '+top+' L'+(cx-bw/2)+' '+base+' M'+(cx+hw(top))+' '+top+' L'+(cx+bw/2)+' '+base+'"/>');
+      var py=top+(base-top)*.5,pw=hw(py)+6;o.push('<path class="pl" d="M'+(cx-pw)+' '+py+' H'+(cx+pw)+' M'+(cx-hw(gy)-5)+' '+gy+' H'+(cx+hw(gy)+5)+'"/>');
+      o.push('<path class="pl" d="M'+cx+' '+top+' V10 M'+(cx-7)+' 22 H'+(cx+7)+' M'+(cx-4)+' 32 H'+(cx+4)+'"/>');
+      o.push('<circle class="halo" cx="'+cx+'" cy="7" r="9"/><circle class="lamp" cx="'+cx+'" cy="7" r="3.6"/>');
+      o.push('<circle class="lamp mid" cx="'+(cx-pw)+'" cy="'+py+'" r="2.4"/><circle class="lamp mid" cx="'+(cx+pw)+'" cy="'+py+'" r="2.4"/>');
+      tw.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" fill="none">'+o.join('')+'</svg>'}
+    var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,120)});draw();if(document.fonts)document.fonts.ready.then(draw)})();
+
   /* ---------- Morse ticker ---------- */
   (function(){
     var M={A:'.-',C:'-.-.',D:'-..',E:'.',G:'--.',K:'-.-',Q:'--.-',U:'..-',W:'.--','3':'...--','6':'-....','7':'--...'};
@@ -972,6 +1000,10 @@ function TR(s){return window.HY[s]||s}
     b.addEventListener('click',function(){on=!on;b.setAttribute('aria-pressed',on);if(on){if(!audio()){on=false;b.setAttribute('aria-pressed',false);return}tick()}else{cancelAnimationFrame(raf);set(false)}});
     document.addEventListener('visibilitychange',function(){if(document.hidden&&on){cancelAnimationFrame(raf);set(false)}else if(on)tick()});
   })();
+
+  /* ---------- external links and PDFs open in a new tab ---------- */
+  function newTabs(root){$$('a[href]').forEach(function(a){var h=a.getAttribute('href');if(/^https?:/i.test(h)||/\.pdf$/i.test(h)){a.target='_blank';a.rel='noopener'}})}
+  newTabs();document.addEventListener('langchange',newTabs);
 
   /* ---------- reveal ---------- */
   if('IntersectionObserver' in window&&!RM){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});$$('.rv').forEach(function(el){io.observe(el)})}
