@@ -104,15 +104,14 @@
   .btn svg{width:16px;height:16px}
   /* card fan */
   .fan{position:relative;height:440px;perspective:1300px}
-  .fan .stack{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s ease-out}
-  .fan button{position:absolute;width:78%;left:11%;border:0;padding:0;background:none;cursor:zoom-in;border-radius:6px;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  .fan .stack{position:absolute;inset:0;transition:transform .25s ease-out}
+  .fan button{position:absolute;width:78%;left:11%;border:0;padding:0;background:none;cursor:zoom-in;border-radius:6px;transform:var(--t);transition:transform .45s cubic-bezier(.2,.8,.2,1);z-index:var(--z)}
+  .fan button:hover,.fan button:focus-visible{transform:var(--t) translateY(-16px) scale(1.04);z-index:5}
+  .fan button:hover img{box-shadow:0 40px 70px -20px rgba(0,0,0,.95),0 0 0 2px var(--amber)}
   .fan img{width:100%;border-radius:6px;box-shadow:0 30px 60px -20px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.06)}
-  .fan button:nth-child(1){top:4%;transform:translate3d(-14%,0,-60px) rotate(-11deg)}
-  .fan button:nth-child(2){top:20%;transform:translate3d(16%,0,-30px) rotate(8deg)}
-  .fan button:nth-child(3){top:38%;transform:translate3d(-2%,0,0) rotate(-2deg)}
-  .fan:hover button:nth-child(1){transform:translate3d(-22%,-6%,-60px) rotate(-15deg)}
-  .fan:hover button:nth-child(2){transform:translate3d(24%,-3%,-30px) rotate(12deg)}
-  .fan:hover button:nth-child(3){transform:translate3d(-2%,6%,10px) rotate(-1deg)}
+  .fan button:nth-child(1){top:2%;--t:translateX(-13%) rotate(-9deg);--z:1}
+  .fan button:nth-child(2){top:19%;--t:translateX(15%) rotate(7deg);--z:2}
+  .fan button:nth-child(3){top:37%;--t:translateX(-2%) rotate(-2deg);--z:3}
   .fan .tag{position:absolute;right:2%;bottom:0;font:700 12px var(--mono);letter-spacing:.1em;color:var(--dim)}
   /* dial strip */
   .dialbar{position:relative;z-index:2;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(10,15,24,.4),rgba(10,15,24,.9))}
@@ -324,14 +323,17 @@
   .wpm{display:flex;align-items:center;gap:12px;margin-top:10px;font:700 12px var(--mono);color:var(--muted);letter-spacing:.08em}
   .wpm input[type=range]{width:160px;accent-color:var(--amber);padding:0;font-size:12px;border:0;background:none}
   .keyart{margin:0}
-  .kstage{position:relative;aspect-ratio:3/2;-webkit-mask-image:radial-gradient(ellipse 62% 58% at 52% 56%,#000 58%,transparent 100%);mask-image:radial-gradient(ellipse 62% 58% at 52% 56%,#000 58%,transparent 100%)}
+  .kframe{position:relative;aspect-ratio:1740/1100;border-radius:18px;overflow:hidden;border:1px solid var(--line2);background:#120d08;box-shadow:0 30px 60px -30px rgba(0,0,0,.9),inset 0 0 0 1px rgba(255,255,255,.03)}
+  .kframe::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 70% at 50% 52%,transparent 55%,rgba(5,8,13,.55) 100%),linear-gradient(180deg,rgba(5,8,13,.25),transparent 25%,transparent 80%,rgba(5,8,13,.35))}
+  .kstage{position:absolute;width:110.345%;left:-3.448%;top:-14.545%;aspect-ratio:3/2}
   .kstage img{position:absolute;display:block;max-width:none}
   .kbase{inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.82) contrast(1.08) saturate(1.05)}
   .klever{left:25.781%;top:19.531%;width:65.573%;transform-origin:34.95% 87.33%;transition:transform .03s linear;filter:brightness(.82) contrast(1.08) saturate(1.05);will-change:transform}
   .keyart.down .klever{transform:rotate(.9deg)}
   .kspark{position:absolute;left:64.844%;top:64.2%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe7a8 22%,rgba(255,178,62,.6) 45%,transparent 70%);opacity:0;transition:opacity .03s;mix-blend-mode:screen}
   .keyart.down .kspark{opacity:1}
-  .keyart figcaption{font-size:12.5px;color:var(--dim);text-align:center;margin-top:6px}
+  .keyart{min-width:0}
+  .keyart figcaption{font-size:12.5px;color:var(--dim);text-align:center;margin-top:10px}
   .keyart figcaption a{color:var(--muted)}
 
   /* ---------- log ---------- */
@@ -383,9 +385,15 @@
   dialog.lb .bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 2px 0;font:500 14px var(--body);color:#cfd7e3}
   dialog.lb .bar span{max-width:70ch}
   dialog.lb .acts{display:flex;gap:8px;flex:none}
-  dialog.lb a,dialog.lb button{font:700 12px var(--mono);letter-spacing:.06em;background:#fff;color:#111;border:0;border-radius:999px;padding:8px 14px;cursor:pointer;text-decoration:none}
-  dialog.lb .nav{position:absolute;top:40%;width:46px;height:46px;border-radius:50%;padding:0;font-size:20px;background:rgba(255,255,255,.12);color:#fff}
-  dialog.lb .prev{left:-60px} dialog.lb .next{right:-60px}
+  dialog.lb .lbimg{position:relative}
+  dialog.lb .acts a{display:inline-flex;align-items:center;height:36px;font:700 12px var(--mono);letter-spacing:.08em;background:transparent;color:#eaf0f8;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:0 16px;text-decoration:none}
+  dialog.lb .acts a:hover{border-color:var(--amber);color:var(--amber)}
+  dialog.lb .ic{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid rgba(255,255,255,.25);border-radius:50%;background:rgba(10,15,24,.75);color:#fff;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:border-color .2s,color .2s,background .2s}
+  dialog.lb .ic:hover{border-color:var(--amber);color:var(--amber)}
+  dialog.lb .ic svg{width:20px;height:20px;display:block}
+  dialog.lb .nav{position:absolute;top:50%;transform:translateY(-50%)}
+  dialog.lb .prev{left:-64px} dialog.lb .next{right:-64px}
+  dialog.lb .close{width:36px;height:36px}
 
   /* reveal */
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
@@ -405,7 +413,7 @@
     .scroll-hint{display:none}
     .sources{columns:1}
     .tdisplay{grid-template-columns:minmax(0,1fr);gap:10px}
-    dialog.lb .prev{left:4px} dialog.lb .next{right:4px}
+    dialog.lb .prev{left:8px} dialog.lb .next{right:8px}
   }
   @media (max-width:600px){
     body{font-size:17px}
@@ -486,7 +494,6 @@
         <button type="button" data-lb="img/qsl/ek6gc-1998-hb9cxz.jpg" data-group="qsl" data-cap="EK6GC · 1998 · #144 DXCC 160M · HB9CXZ"><img src="img/qsl/ek6gc-1998-hb9cxz.jpg" alt="EK6GC QSL, 1998, #144 DXCC 160M"></button>
         <button type="button" data-lb="img/qsl/ug6gaw-1986-i4eat.jpg" data-group="qsl" data-cap="UG6GAW → I4EAT · 25.01.1986 · 1.8 MHz CW"><img src="img/qsl/ug6gaw-1986-i4eat.jpg" alt="UG6GAW QSL, 1986, Armenia, Charentcavan"></button>
       </div>
-      <span class="tag">QSL · 1984 · 1986 · 1998</span>
     </div>
   </div>
   <div class="dialbar">
@@ -807,11 +814,11 @@
         <div class="cta" style="margin-top:18px"><button type="button" class="btn primary" id="txgo"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg><span class="l-ru">Передать</span><span class="l-en">Transmit</span><span class="l-hy">Հաղորդել</span></button></div>
       </div>
       <figure class="keyart" id="keyart">
-        <div class="kstage">
+        <div class="kframe"><div class="kstage">
           <img class="kbase" src="img/photo/key-base.jpg" alt="Brass and steel straight telegraph key on an oak base, about 1900" width="1440" height="960" loading="lazy">
           <img class="klever" src="img/photo/key-lever.png" alt="" aria-hidden="true" loading="lazy">
           <span class="kspark" aria-hidden="true"></span>
-        </div>
+        </div></div>
         <figcaption><span class="l-ru">Телеграфный ключ, около 1900 года.</span><span class="l-en">Straight telegraph key, about 1900.</span><span class="l-hy">Հեռագրական բանալի, մոտ 1900 թ.</span> © Hp.Baumeler, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/wiki/File:Morsetaste.jpg">Wikimedia Commons</a></figcaption>
       </figure>
       </div>
@@ -955,10 +962,12 @@
 </footer>
 
 <dialog class="lb" id="lb">
-  <button type="button" class="nav prev" id="lb-prev" aria-label="Previous">‹</button>
-  <img id="lb-img" alt="">
-  <button type="button" class="nav next" id="lb-next" aria-label="Next">›</button>
-  <div class="bar"><span id="lb-cap"></span><span class="acts"><a id="lb-pdf" href="#" download>PDF</a><button type="button" id="lb-close">✕</button></span></div>
+  <div class="lbimg">
+    <img id="lb-img" alt="">
+    <button type="button" class="ic nav prev" id="lb-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="ic nav next" id="lb-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <div class="bar"><span id="lb-cap"></span><span class="acts"><a id="lb-pdf" href="#" download>PDF ↓</a><button type="button" class="ic close" id="lb-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div>
 </dialog>
 
 <script>
@@ -1424,7 +1433,7 @@ function TR(s){return window.HY[s]||s}
     }
     inp.addEventListener('input',function(){draw(-1)}); draw(-1);
     /* manual keying: press and hold the real key */
-    var ko=null,kg=null,stage=keyart.querySelector('.kstage');
+    var ko=null,kg=null,stage=keyart.querySelector('.kframe');
     stage.style.cursor='pointer'; stage.setAttribute('role','button'); stage.setAttribute('tabindex','0'); stage.setAttribute('aria-label','Telegraph key: press and hold');
     function kdown(e){if(busy)return;if(e)e.preventDefault();var c=ac();keyart.classList.add('down');lamps.forEach(function(l){l.classList.add('on')});
       if(c&&!ko){ko=c.createOscillator();kg=c.createGain();ko.frequency.value=640;kg.gain.value=0;ko.connect(kg);kg.connect(master);ko.start();kg.gain.linearRampToValueAtTime(.24,c.currentTime+.006)}}
