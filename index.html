@@ -214,8 +214,22 @@
 
   /* ---------- rescue ---------- */
   .rescue{background:linear-gradient(180deg,var(--bg),#0b0607 30%,#0b0607 70%,var(--bg))}
-  .sosw{display:block;width:100%;max-width:980px;height:auto;margin:22px 0 6px}
-  .sosw .sosl text{font:800 22px var(--mono);fill:#ff4a3d;opacity:.85;letter-spacing:.1em}
+  .sosx{display:flex;align-items:center;gap:clamp(18px,3.4vw,44px);margin:26px 0 10px;padding:24px clamp(18px,3vw,34px);border:1px solid #3d1714;border-radius:22px;background:radial-gradient(120% 140% at 0% 50%,rgba(255,74,61,.10),transparent 55%),linear-gradient(180deg,#140a0a,#0c0707);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 30px 60px -30px rgba(0,0,0,.9);cursor:pointer;color:inherit;font:inherit;text-align:left;max-width:100%;transition:border-color .2s}
+  .sosx:hover{border-color:#6a2620}
+  .slamp{position:relative;flex:none;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#2a0f0d 0,#120707 70%);box-shadow:inset 0 0 0 3px #3a1a17,inset 0 0 0 8px #160a09,0 0 0 1px #4a1d18}
+  .slamp i{position:absolute;inset:14px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#5a2420,#2a0f0d 70%);box-shadow:inset 0 -6px 12px rgba(0,0,0,.6);transition:background .04s,box-shadow .04s}
+  .slamp.on i{background:radial-gradient(circle at 42% 36%,#fff 0,#ffe0d9 14%,#ff6a5c 42%,#c41e12 100%);box-shadow:0 0 26px 8px rgba(255,74,61,.6),0 0 80px 24px rgba(255,74,61,.28)}
+  .sletters{display:flex;gap:clamp(16px,3vw,40px)}
+  .sl{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .sl b{font:900 clamp(46px,6.4vw,84px)/.9 var(--display);color:#1e0d0c;-webkit-text-stroke:1.5px #5a2420;transition:color .06s,text-shadow .06s,-webkit-text-stroke-color .06s}
+  .sl.on b{color:#ff5a4d;-webkit-text-stroke-color:#ff8a7d;text-shadow:0 0 22px rgba(255,74,61,.75),0 0 60px rgba(255,74,61,.35)}
+  .mc{display:flex;gap:8px;align-items:center;height:16px}
+  .mc i{display:block;height:13px;border-radius:13px;background:#1e0d0c;box-shadow:inset 0 0 0 1.5px #5a2420;transition:background .04s,box-shadow .04s}
+  .mc i.d{width:13px}
+  .mc i.h{width:40px}
+  .mc i.on{background:linear-gradient(180deg,#ffe0d9,#ff4a3d 60%,#d52a1e);box-shadow:0 0 12px rgba(255,74,61,.95),0 0 30px rgba(255,74,61,.45)}
+  .soscap{font:700 12px/1.7 var(--mono);letter-spacing:.1em;color:#a0625b;padding-left:clamp(0px,1vw,10px)}
+  .soscap em{font-style:normal;color:#ff8a7d}
   .events{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
   .event{position:relative;border:1px solid #3a1a18;border-radius:16px;padding:30px;background:radial-gradient(90% 80% at 0% 0%,rgba(255,74,61,.12),transparent 60%),#100909;overflow:hidden}
   .event .date{font:700 13px var(--mono);letter-spacing:.14em;color:var(--red)}
@@ -546,7 +560,16 @@
     .stat{padding:20px 18px}
     .event{padding:22px}
     .chart{padding:14px 14px 8px}
-    .sosw .sosl text{font-size:46px}
+    .sosx{flex-wrap:wrap;gap:16px 20px;padding:20px}
+    .slamp{width:56px;height:56px}
+    .slamp i{inset:10px}
+    .sletters{gap:18px}
+    .sl b{font-size:44px}
+    .mc{gap:5px}
+    .mc i{height:10px}
+    .mc i.d{width:10px}
+    .mc i.h{width:28px}
+    .soscap{flex-basis:100%;padding-left:0}
     .ctip{white-space:normal;width:max-content;max-width:240px}
     .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-18px;padding-right:18px}
     .filters::-webkit-scrollbar{display:none}
@@ -664,7 +687,7 @@
       <div class="call" id="call">UG6GAW</div>
       <div class="bars" id="bars" aria-hidden="true"></div>
       <div class="decoder" id="decoder" aria-hidden="true"></div>
-      <h1><span class="l-ru">Роберт Григорян — <b>чемпион мира</b> на 160 метрах. Чаренцаван, Армения.</span><span class="l-en">Robert Grigoryan, <b>world champion</b> on 160 meters. Charentsavan, Armenia.</span><span class="l-hy">Ռոբերտ Գրիգորյան՝ 160 մետրանոց տիրույթի <b>աշխարհի չեմպիոն</b>։ Չարենցավան, Հայաստան։</span></h1>
+      <h1><span class="l-ru">Роберт Григорян — <b>чемпион мира</b> на 160 метрах. Армения.</span><span class="l-en">Robert Grigoryan, <b>world champion</b> on 160 meters. Armenia.</span><span class="l-hy">Ռոբերտ Գրիգորյան՝ 160 մետրանոց տիրույթի <b>աշխարհի չեմպիոն</b>։ Հայաստան։</span></h1>
       <p class="lead l-ru">Позывной UG6GAW, сегодня EK6GC. Первое место в мире в CQ World Wide DX Contest 1990 — сразу телеграфом и телефоном. Диплом ARRL DXCC на 160 метрах №144, второй в Советском Союзе. Сорок лет в эфире, тысячи связей со всем миром.</p>
       <p class="lead l-en">Callsign UG6GAW, today EK6GC. First in the world in the 1990 CQ World Wide DX Contest, in both CW and SSB. ARRL 160-meter DXCC #144, the second in the Soviet Union. Forty years on the air and thousands of contacts with the whole world.</p><p class="lead l-hy">Կոչանշանը՝ UG6GAW, այսօր՝ EK6GC։ Աշխարհում առաջին տեղ 1990 թ. CQ World Wide DX Contest-ում՝ և՛ CW-ում, և՛ SSB-ում։ ARRL 160 մետրի DXCC #144՝ Խորհրդային Միությունում երկրորդը։ Քառասուն տարի եթերում և հազարավոր կապեր ամբողջ աշխարհի հետ։</p>
       <div class="cta">
@@ -753,7 +776,7 @@
 <section id="rescue" class="rescue reveal">
   <div class="wrap">
     <div class="kicker" style="color:var(--red)">02 · <span class="l-ru">Когда эфир спасает жизни</span><span class="l-en">When radio saves lives</span><span class="l-hy">Երբ ռադիոն կյանքեր է փրկում</span></div>
-    <svg class="sosw" id="sos" viewBox="0 0 1000 130" aria-hidden="true"><defs><linearGradient id="sosf" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff4a3d" stop-opacity=".45"/><stop offset="1" stop-color="#ff4a3d" stop-opacity="0"/></linearGradient><filter id="sosg" x="-5%" y="-40%" width="110%" height="180%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><clipPath id="sosc"><rect id="sosr" x="0" y="0" width="0" height="130"><animate attributeName="width" values="0;1000;1000" keyTimes="0;.82;1" dur="4.2s" repeatCount="indefinite"/></rect></clipPath></defs><g stroke="#2a1414" stroke-width="1"><line x1="32.3" x2="32.3" y1="14" y2="96"/><line x1="64.5" x2="64.5" y1="14" y2="96"/><line x1="96.8" x2="96.8" y1="14" y2="96"/><line x1="129.0" x2="129.0" y1="14" y2="96"/><line x1="161.3" x2="161.3" y1="14" y2="96"/><line x1="193.5" x2="193.5" y1="14" y2="96"/><line x1="225.8" x2="225.8" y1="14" y2="96"/><line x1="258.1" x2="258.1" y1="14" y2="96"/><line x1="290.3" x2="290.3" y1="14" y2="96"/><line x1="322.6" x2="322.6" y1="14" y2="96"/><line x1="354.8" x2="354.8" y1="14" y2="96"/><line x1="387.1" x2="387.1" y1="14" y2="96"/><line x1="419.4" x2="419.4" y1="14" y2="96"/><line x1="451.6" x2="451.6" y1="14" y2="96"/><line x1="483.9" x2="483.9" y1="14" y2="96"/><line x1="516.1" x2="516.1" y1="14" y2="96"/><line x1="548.4" x2="548.4" y1="14" y2="96"/><line x1="580.6" x2="580.6" y1="14" y2="96"/><line x1="612.9" x2="612.9" y1="14" y2="96"/><line x1="645.2" x2="645.2" y1="14" y2="96"/><line x1="677.4" x2="677.4" y1="14" y2="96"/><line x1="709.7" x2="709.7" y1="14" y2="96"/><line x1="741.9" x2="741.9" y1="14" y2="96"/><line x1="774.2" x2="774.2" y1="14" y2="96"/><line x1="806.5" x2="806.5" y1="14" y2="96"/><line x1="838.7" x2="838.7" y1="14" y2="96"/><line x1="871.0" x2="871.0" y1="14" y2="96"/><line x1="903.2" x2="903.2" y1="14" y2="96"/><line x1="935.5" x2="935.5" y1="14" y2="96"/><line x1="967.7" x2="967.7" y1="14" y2="96"/></g><line x1="0" x2="1000" y1="26" y2="26" stroke="#3a1a18" stroke-dasharray="3 5"/><path d="M0 84 H64.5 V26 H96.8 V84 H129.0 V26 H161.3 V84 H193.5 V26 H225.8 V84 H322.6 V26 H419.4 V84 H451.6 V26 H548.4 V84 H580.6 V26 H677.4 V84 H774.2 V26 H806.5 V84 H838.7 V26 H871.0 V84 H903.2 V26 H935.5 V84 H1000" fill="none" stroke="#5a2420" stroke-width="2"/><g clip-path="url(#sosc)"><path d="M64.5 26 H96.8 V84 H64.5 Z M129.0 26 H161.3 V84 H129.0 Z M193.5 26 H225.8 V84 H193.5 Z M322.6 26 H419.4 V84 H322.6 Z M451.6 26 H548.4 V84 H451.6 Z M580.6 26 H677.4 V84 H580.6 Z M774.2 26 H806.5 V84 H774.2 Z M838.7 26 H871.0 V84 H838.7 Z M903.2 26 H935.5 V84 H903.2 Z " fill="url(#sosf)"/><path d="M0 84 H64.5 V26 H96.8 V84 H129.0 V26 H161.3 V84 H193.5 V26 H225.8 V84 H322.6 V26 H419.4 V84 H451.6 V26 H548.4 V84 H580.6 V26 H677.4 V84 H774.2 V26 H806.5 V84 H838.7 V26 H871.0 V84 H903.2 V26 H935.5 V84 H1000" fill="none" stroke="#ff4a3d" stroke-width="3" stroke-linejoin="round" filter="url(#sosg)"/></g><g id="sosph"><line x1="0" x2="0" y1="10" y2="100" stroke="#ffd0c8" stroke-width="1.5"><animate attributeName="x1" values="0;1000;1000" keyTimes="0;.82;1" dur="4.2s" repeatCount="indefinite"/><animate attributeName="x2" values="0;1000;1000" keyTimes="0;.82;1" dur="4.2s" repeatCount="indefinite"/></line></g><g class="sosl"><text x="145.2" y="118" text-anchor="middle">S</text><text x="500.0" y="118" text-anchor="middle">O</text><text x="854.8" y="118" text-anchor="middle">S</text></g></svg>
+    <button type="button" class="sosx" id="sos" aria-label="SOS — play in Morse code"><span class="slamp" aria-hidden="true"><i></i></span><span class="sletters" aria-hidden="true"><div class="sl"><b>S</b><span class="mc"><i class="d"></i><i class="d"></i><i class="d"></i></span></div><div class="sl"><b>O</b><span class="mc"><i class="h"></i><i class="h"></i><i class="h"></i></span></div><div class="sl"><b>S</b><span class="mc"><i class="d"></i><i class="d"></i><i class="d"></i></span></div></span><span class="soscap"><span class="l-ru">· · · — — — · · ·<br>международный сигнал бедствия<br><em>▶ нажмите, чтобы услышать</em></span><span class="l-en">· · · — — — · · ·<br>the international distress signal<br><em>▶ tap to hear it</em></span><span class="l-hy">· · · — — — · · ·<br>միջազգային աղետի ազդանշան<br><em>▶ սեղմեք՝ լսելու համար</em></span></span></button>
     <h2><span class="l-ru">Не только рекорды</span><span class="l-en">Not only records</span><span class="l-hy">Ոչ միայն ռեկորդներ</span></h2>
     <p class="lede" id="rescue-lede"><span class="l-ru">Радиолюбитель — это ещё и человек, который едет туда, где беда, и выходит на связь, когда всё остальное молчит. Роберт Григорян — в Чернобыле в 1986-м и в Спитаке и Ленинакане в 1988-м.</span><span class="l-en">A radio amateur is also someone who goes where disaster strikes and gets on the air when everything else is silent. Robert Grigoryan is in Chernobyl in 1986 and in Spitak and Leninakan in 1988.</span><span class="l-hy">Ռադիոսիրողը նաև նա է, ով գնում է այնտեղ, ուր աղետ է եկել, և դուրս է գալիս եթեր, երբ մնացած ամեն ինչ լռում է։ Ռոբերտ Գրիգորյանը 1986-ին Չեռնոբիլում է, 1988-ին՝ Սպիտակում և Լենինականում։</span></p>
     <div class="events" id="events">
@@ -1343,8 +1366,27 @@ function TR(s){return window.HY[s]||s}
     if(!RM)requestAnimationFrame(step); else nd.style.transform='rotate(52deg)';
   })();
 
-  /* ---------- SOS ---------- */
-  if(RM){var sr=$('#sosr');if(sr){sr.setAttribute('width','1000');$$('#sos animate').forEach(function(a){a.remove()});var ph=$('#sosph');if(ph)ph.remove()}}
+  /* ---------- SOS: real Morse timing ---------- */
+  (function(){
+    var box=$('#sos'); if(!box)return;
+    var lamp=box.querySelector('.slamp'), L=$$('#sos .sl'), E=$$('#sos .mc i'), U=.11, S=seq('SOS'), seqStart=performance.now()/1000, vis=false;
+    var map=[]; (function(){var k=0;'SOS'.split('').forEach(function(ch,ci){CODE[ch].split('').forEach(function(){map.push([ci,k++])})})})();
+    if(RM){E.forEach(function(e){e.classList.add('on')});L.forEach(function(l){l.classList.add('on')});return}
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(box);
+    var total=S.total+7, last=-1;
+    function tick(){
+      if(vis){
+        var u=((performance.now()/1000-seqStart)/U)%total, acc=0, idx=-1, on=false, mi=0;
+        for(var i=0;i<S.items.length;i++){var it=S.items[i];if(u<acc+it.units){idx=i;on=it.on;break}acc+=it.units;if(it.on)mi++}
+        var key=on?mi:-1;
+        if(key!==last){last=key;lamp.classList.toggle('on',on);E.forEach(function(e,k){e.classList.toggle('on',on&&k===mi)});
+          var li=on?map[mi][0]:-1;L.forEach(function(l,k){l.classList.toggle('on',k===li)})}
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    box.addEventListener('click',function(){var c=ac();if(!c)return;stopAll();ac();var lead=.08;playAudio(S,U,c.currentTime+lead);seqStart=performance.now()/1000+lead;last=-2});
+  })();
 
   /* ---------- lightbox ---------- */
   var lb=$('#lb'), li=$('#lb-img'), lc=$('#lb-cap'), lp=$('#lb-pdf'), group=[], gi=0;
