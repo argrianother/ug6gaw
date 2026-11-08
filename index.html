@@ -93,18 +93,12 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 @keyframes wave{0%{transform:scale(.6);opacity:.85}100%{transform:scale(4.4);opacity:0}}
 @media (max-width:900px){.ant{display:none}}
 .tower{position:absolute;left:0;top:78px;bottom:34px;z-index:1;pointer-events:none;display:none}
-.tower svg{display:block;width:100%;height:100%;overflow:visible}
-.tower .lg{stroke:rgba(243,239,232,.62);stroke-width:1.4}
-.tower .br{stroke:rgba(243,239,232,.32);stroke-width:1}
-.tower .hz{stroke:rgba(243,239,232,.45);stroke-width:1}
-.tower .gy{stroke:rgba(243,239,232,.14);stroke-width:1;stroke-dasharray:3 5}
-.tower .gd{stroke:rgba(243,239,232,.22);stroke-width:1}
-.tower .pl{stroke:rgba(243,239,232,.55);stroke-width:1.2}
-.tower .lamp{fill:#ff3b2f;filter:drop-shadow(0 0 6px #ff3b2f) drop-shadow(0 0 14px rgba(255,59,47,.7));animation:lampb 1.6s steps(1) infinite}
-.tower .lamp.mid{animation-delay:.8s}
-.tower .halo{fill:rgba(255,59,47,.18);animation:lampb 1.6s steps(1) infinite}
-@keyframes lampb{0%,55%{opacity:1}56%,100%{opacity:.12}}
-@media (prefers-reduced-motion:reduce){.tower .lamp,.tower .halo{animation:none}}
+.tower canvas{position:absolute;left:0;top:58px;display:block;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%,#000 62%,transparent 100%),linear-gradient(180deg,transparent 0,#000 14%,#000 50%,transparent 96%);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 30%,#000 70%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 58%,transparent 100%);mask-composite:intersect}
+.tower .wl{position:absolute;left:50%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font:500 10px/1 "JetBrains Mono",monospace;letter-spacing:.08em;color:rgba(255,138,31,.92);white-space:nowrap}
+.tower .wl i{width:6px;height:6px;border-radius:50%;background:#4a1a16;transition:background .06s,box-shadow .06s}
+.tower .wl i.on{background:#ff3b2f;box-shadow:0 0 6px #ff3b2f,0 0 14px rgba(255,59,47,.6)}
+.tower .wl em{font-style:normal;color:rgba(243,239,232,.42);font-size:9px;letter-spacing:.14em}
+.tower .wl b{width:1px;height:16px;background:linear-gradient(rgba(255,138,31,.55),transparent)}
 .freq{display:flex;align-items:center;gap:12px;font:400 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--light2)}
 .freq i{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 12px var(--amber);animation:bl 2.4s infinite}
 .call{font:800 clamp(76px,15.5vw,250px)/.8 var(--sans);letter-spacing:-.065em;margin:22px 0 0 -.05em;color:var(--light);white-space:nowrap}
@@ -121,12 +115,17 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .pcap{position:absolute;right:32px;bottom:40px;font:400 11px/1.6 var(--mono);letter-spacing:.06em;color:var(--light3);text-align:right}
 /* Morse ticker */
 .mrow{display:flex;align-items:center;gap:14px;margin-top:30px;max-width:min(810px,calc(100% - 340px))}
-.snd{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:var(--light2);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,color .2s,background .2s,box-shadow .2s}
-.snd svg{width:19px;height:19px}
-.snd:hover{border-color:var(--light);color:var(--light)}
-.snd[aria-pressed="true"]{border-color:var(--amber);color:var(--amber);background:rgba(255,138,31,.1)}
+.snd{flex:none;width:34px;height:34px;margin-left:-6px;border:0;background:none;padding:0;color:rgba(243,239,232,.55);display:grid;place-items:center;cursor:pointer;transition:color .2s}
+.snd svg{width:24px;height:24px;overflow:visible}
+.snd .bd{fill:currentColor;fill-opacity:.14}
+.snd .w{opacity:0;transition:opacity .12s}
+.snd:hover{color:var(--light)}
+.snd:focus-visible{outline:1px solid var(--amber);outline-offset:2px;border-radius:6px}
+.snd[aria-pressed="true"]{color:var(--amber)}
 .snd[aria-pressed="true"] .x{display:none}
-.snd.beep{box-shadow:0 0 0 4px rgba(255,138,31,.18)}
+.snd[aria-pressed="true"] .w{opacity:.45}
+.snd.beep .w{opacity:1}
+.snd.beep .w2{transition-delay:.03s}
 .morse{position:relative;flex:1;min-width:0;margin-top:0;height:34px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .morse .lay{position:absolute;inset:0}
 .morse .tr{position:absolute;left:0;top:0;display:flex;white-space:nowrap;animation:mv 40s linear infinite}
@@ -538,7 +537,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <div><span class="m">1990</span><p><span class="l-ru">№1 в мире, CQ WW DX</span><span class="l-en">#1 in the world, CQ WW DX</span><span class="l-hy">№1 աշխարհում, CQ WW DX</span></p></div>
       <div><span class="m"><span class="l-ru">Диплом</span><span class="l-en">Award</span><span class="l-hy">Դիպլոմ</span></span><p><span class="l-ru">DXCC 160 м · №144</span><span class="l-en">DXCC 160 m · #144</span><span class="l-hy">DXCC 160 մ · №144</span></p></div>
     </div>
-    <div class="mrow"><button type="button" class="snd" id="snd" aria-pressed="false" title="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4.5" height="7" rx="2"/><rect x="16.5" y="13" width="4.5" height="7" rx="2"/><path class="x" d="M9.5 10.5l5 5M14.5 10.5l-5 5"/></svg><span class="sr">Sound</span></button><div class="morse" id="morse" aria-hidden="true"><div class="lay cold"><div class="tr"></div></div><div class="lay hot"><div class="tr"></div></div><div class="win"></div></div></div>
+    <div class="mrow"><button type="button" class="snd" id="snd" aria-pressed="false" title="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path class="bd" d="M3.5 9.2h3.2L11.5 5v14l-4.8-4.2H3.5z"/><path class="w" d="M15 9.3a3.8 3.8 0 0 1 0 5.4"/><path class="w w2" d="M17.8 6.6a7.6 7.6 0 0 1 0 10.8"/><path class="x" d="M15.5 9.8l4.4 4.4M19.9 9.8l-4.4 4.4"/></svg><span class="sr">Sound</span></button><div class="morse" id="morse" aria-hidden="true"><div class="lay cold"><div class="tr"></div></div><div class="lay hot"><div class="tr"></div></div><div class="win"></div></div></div>
     <div class="pcap"><span class="l-ru">1988 · Роберт Григорян за аппаратурой</span><span class="l-en">1988 · Robert Grigoryan at the station</span><span class="l-hy">1988 · Ռոբերտ Գրիգորյանը կայանում</span><br>«Հայաստանի ֆիզկուլտուրնիկ» · ek7dx.com</div>
   </div>
 </section>
@@ -997,25 +996,35 @@ function TR(s){return window.HY[s]||s}
   mb.addEventListener('click',function(){menu(!sh.classList.contains('open'))});
   sh.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
 
-  /* ---------- lattice tower in the left margin ---------- */
-  (function(){var tw=$('#tower'),wrap=$('.hero .in');if(!tw||!wrap)return;
+  /* ---------- waterfall in the left margin (keyed by the hero Morse ticker) ---------- */
+  (function(){var tw=$('#tower'),wrap=$('.hero .in'),mo=$('#morse');if(!tw||!wrap)return;
+    tw.innerHTML='<div class="wl"><i></i><span><span class="l-ru">1 832 кГц</span><span class="l-en">1,832 kHz</span><span class="l-hy">1 832 կՀց</span></span><em>CW</em><b></b></div><canvas></canvas>';
+    var cv=tw.querySelector('canvas'),c=cv.getContext('2d'),lamp=tw.querySelector('.wl i'),W=0,H=0,dpr=1,rh=2,run=false,vis=true,last=0,segs=null,
+      ghosts=[{x:.24,p:.012,a:.12},{x:.78,p:.02,a:.09}];
+    function keyNow(){if(!mo)return false;if(!segs)segs=[].slice.call(mo.querySelectorAll('.cold .sg i'));
+      var r=mo.getBoundingClientRect(),x=r.left+r.width*.28;for(var i=0;i<segs.length;i++){var q=segs[i].getBoundingClientRect();if(q.left<=x&&q.right>=x)return true}return false}
+    function row(k,g){var w=cv.width,img=c.createImageData(w,rh),d=img.data,sx=w/2,sw=1.4*dpr,nv=0;
+      for(var x=0;x<w;x++){var r=243,gg=239,bb=232;if(x%dpr===0)nv=Math.random()<.22?Math.pow(Math.random(),2.6)*.16:0;var v=nv;
+        if(k){var dx=Math.abs(x-sx);if(dx<sw){v=.82-dx/sw*.3;r=255;gg=138;bb=31}else if(dx<sw*3){var gl=(1-(dx-sw)/(sw*2))*.14;if(gl>v){v=gl;r=255;gg=138;bb=31}}}
+        for(var h=0;h<ghosts.length;h++){var G=ghosts[h];if(g[h]&&Math.abs(x-w*G.x)<1.3*dpr&&G.a>v)v=G.a}
+        for(var y=0;y<rh;y++){var o=(y*w+x)*4;d[o]=r;d[o+1]=gg;d[o+2]=bb;d[o+3]=v*255}}
+      return img}
+    var gs=[false,false];function ghostStep(){for(var h=0;h<ghosts.length;h++)if(Math.random()<ghosts[h].p*6)gs[h]=!gs[h];return gs}
+    function prefill(){var M={A:'.-',C:'-.-.',D:'-..',E:'.',G:'--.',K:'-.-',Q:'--.-',U:'..-',W:'.--','3':'...--','6':'-....','7':'--...'},t=[];
+      'CQ CQ DE UG6GAW EK6GC 73 '.split('').forEach(function(ch){if(ch===' '){for(var n=0;n<14;n++)t.push(0);return}
+        M[ch].split('').forEach(function(x,i,a){for(var n=0;n<(x==='.'?2:6);n++)t.push(1);for(n=0;n<(i===a.length-1?6:2);n++)t.push(0)})});
+      var N=Math.ceil(cv.height/rh);for(var j=0;j<N;j++)c.putImageData(row(t[(t.length*4-j)%t.length],ghostStep()),0,j*rh)}
+    function push(){var k=keyNow();lamp.classList.toggle('on',k);c.drawImage(cv,0,0,cv.width,cv.height-rh,0,rh,cv.width,cv.height-rh);c.putImageData(row(k,ghostStep()),0,0)}
+    function loop(t){if(!run)return;if(t-last>=42){last=t;push()}requestAnimationFrame(loop)}
+    function go(){var want=vis&&!document.hidden&&!RM&&tw.style.display!=='none';if(want&&!run){run=true;requestAnimationFrame(loop)}else if(!want)run=false}
     function draw(){var r=wrap.getBoundingClientRect(),pad=parseFloat(getComputedStyle(wrap).paddingLeft)||0,margin=r.left+pad-24;
-      if(innerWidth<=900||margin<96){tw.style.display='none';return}
-      tw.style.display='block';var W=Math.min(150,margin*.62),H=tw.clientHeight||hero.clientHeight-112;tw.style.left=Math.max(12,(margin-W)/2)+'px';tw.style.width=W+'px';
-      var cx=W/2,top=46,base=H-6,bw=W*.62,tw0=W*.08,n=Math.max(8,Math.round((base-top)/46)),o=[];
-      function hw(y){return tw0/2+(bw/2-tw0/2)*(y-top)/(base-top)}
-      o.push('<path class="gd" d="M0 '+base+' H'+W+'"/>');
-      var gy=top+(base-top)*.33,gy2=top+(base-top)*.62;
-      o.push('<path class="gy" d="M'+(cx-hw(gy))+' '+gy+' L2 '+base+' M'+(cx+hw(gy))+' '+gy+' L'+(W-2)+' '+base+' M'+(cx-hw(gy2))+' '+gy2+' L'+(W*.12)+' '+base+' M'+(cx+hw(gy2))+' '+gy2+' L'+(W*.88)+' '+base+'"/>');
-      var d='',h='';for(var i=0;i<n;i++){var y1=top+(base-top)*i/n,y2=top+(base-top)*(i+1)/n,a1=hw(y1),a2=hw(y2);
-        d+='M'+(cx-a1)+' '+y1+' L'+(cx+a2)+' '+y2+' M'+(cx+a1)+' '+y1+' L'+(cx-a2)+' '+y2+' ';h+='M'+(cx-a2)+' '+y2+' H'+(cx+a2)+' '}
-      o.push('<path class="br" d="'+d+'"/><path class="hz" d="M'+(cx-hw(top))+' '+top+' H'+(cx+hw(top))+' '+h+'"/>');
-      o.push('<path class="lg" d="M'+(cx-hw(top))+' '+top+' L'+(cx-bw/2)+' '+base+' M'+(cx+hw(top))+' '+top+' L'+(cx+bw/2)+' '+base+'"/>');
-      var py=top+(base-top)*.5,pw=hw(py)+6;o.push('<path class="pl" d="M'+(cx-pw)+' '+py+' H'+(cx+pw)+' M'+(cx-hw(gy)-5)+' '+gy+' H'+(cx+hw(gy)+5)+'"/>');
-      o.push('<path class="pl" d="M'+cx+' '+top+' V10 M'+(cx-7)+' 22 H'+(cx+7)+' M'+(cx-4)+' 32 H'+(cx+4)+'"/>');
-      o.push('<circle class="halo" cx="'+cx+'" cy="7" r="9"/><circle class="lamp" cx="'+cx+'" cy="7" r="3.6"/>');
-      o.push('<circle class="lamp mid" cx="'+(cx-pw)+'" cy="'+py+'" r="2.4"/><circle class="lamp mid" cx="'+(cx+pw)+'" cy="'+py+'" r="2.4"/>');
-      tw.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" fill="none">'+o.join('')+'</svg>'}
+      if(innerWidth<=900||margin<96){tw.style.display='none';go();return}
+      tw.style.display='block';W=Math.round(Math.min(150,margin*.66));H=(tw.clientHeight||hero.clientHeight-112)-58;
+      tw.style.left=Math.max(12,(margin-W)/2)+'px';tw.style.width=W+'px';
+      dpr=Math.min(2,window.devicePixelRatio||1);rh=Math.round(2*dpr);cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);cv.style.width=W+'px';cv.style.height=H+'px';
+      prefill();go()}
+    if('IntersectionObserver' in window)new IntersectionObserver(function(e){vis=e[0].isIntersecting;go()}).observe(tw);
+    document.addEventListener('visibilitychange',go);
     var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,120)});draw();if(document.fonts)document.fonts.ready.then(draw)})();
 
   /* ---------- Morse ticker ---------- */
