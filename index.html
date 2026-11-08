@@ -143,13 +143,23 @@ header.solid .flags button[aria-pressed="true"]{background:#fff;box-shadow:0 1px
 
 /* ---------- archive (light) base ---------- */
 .sec{padding:0 0 110px}
+.press{padding:0 0 110px}
+.ptrack{gap:20px}
+.pc{flex:0 0 min(340px,84%);scroll-snap-align:start;margin:0;display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--rule)}
+.pimg{display:block;width:100%;height:230px;border:0;padding:16px;background:var(--plinth);cursor:zoom-in;overflow:hidden}
+.pimg img{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.22))}
+.pc figcaption{padding:16px 18px 20px;display:flex;flex-direction:column;gap:6px}
+.pc .pco{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--amber-ink)}
+.pc .pme{color:var(--ink2)}
+.pc h4{margin:4px 0 2px;font:600 17px/1.25 var(--sans);letter-spacing:-.01em}
+.pc p{margin:0;font-size:15px;line-height:1.5;color:var(--ink)}
 .quotes{padding:0 0 110px}
 .quotes .qh{display:block;margin-bottom:18px}
 .qg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .qc{margin:0;border-top:1px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .qc blockquote{margin:0;font:400 19px/1.45 var(--sans);letter-spacing:-.01em;color:var(--ink)}
 .qc .btn{height:30px;padding:0 12px;font-size:12px}
-@media (max-width:900px){.qg{grid-template-columns:minmax(0,1fr);gap:24px}.quotes{padding-bottom:84px}}
+@media (max-width:900px){.qg{grid-template-columns:minmax(0,1fr);gap:24px}.quotes{padding-bottom:84px}.press{padding-bottom:84px}.pimg{height:200px}}
 .sh{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;border-top:1px solid var(--ink);padding:18px 0 44px}
 .sh .m{padding-top:6px}
 .sh h2{font:600 clamp(34px,4.4vw,64px)/1.02 var(--sans);letter-spacing:-.04em;margin:0}
@@ -553,19 +563,11 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     </figure>
   </section>
 
-  <section class="quotes rv" id="quotes">
-    <span class="m qh"><span class="l-ru">Что о нём пишут</span><span class="l-en">What they write about him</span><span class="l-hy">Ինչ են գրում նրա մասին</span></span>
-    <div class="qg">
-      <figure class="qc"><blockquote><span class="l-ru">«Первым мы услышали UG6GAW — задолго до заката, на 50 дБ выше S9».</span><span class="l-en">“The first signal heard was UG6GAW, way before sunset, 50 dB over S9.”</span><span class="l-hy">«Առաջին լսված ազդանշանը UG6GAW-ն էր՝ մայրամուտից շատ առաջ, S9-ից 50 դԲ բարձր»։</span></blockquote>
-        <figcaption class="m">Jim Dionne, K1MEM · «K1MM/SV5: Holiday in Rhodes» · Radiosporting, <span class="l-ru">март 1986</span><span class="l-en">March 1986</span><span class="l-hy">մարտ 1986</span></figcaption>
-        <button type="button" class="btn" data-lb="img/press/radiosporting-1986-03-rhodes.jpg" data-group="quotes" data-cap="Radiosporting, March 1986, p. 11 — «K1MM/SV5: Holiday in Rhodes», Jim Dionne, K1MEM · archive.org"><span class="l-ru">Скан</span><span class="l-en">Scan</span><span class="l-hy">Սկան</span></button></figure>
-      <figure class="qc"><blockquote><span class="l-ru">«UG6GAW снова в эфире с новым трансивером и новой антенной-слопером — с тем невероятным сигналом, который мы так часто слышали раньше».</span><span class="l-en">“UG6GAW is back on the air with his new transceiver and new sloper antenna system putting that unbelievable signal we used to hear so often before.”</span><span class="l-hy">«UG6GAW-ն կրկին եթերում է նոր հաղորդիչ-ընդունիչով և նոր «սլոպեր» ալեհավաքով՝ այն անհավատալի ազդանշանով, որը մենք այդքան հաճախ էինք լսում նախկինում»։</span></blockquote>
-        <figcaption class="m">Wally Stefanoff, LZ2CJ · «160 m DX News» · Radiosporting, <span class="l-ru">декабрь 1986</span><span class="l-en">December 1986</span><span class="l-hy">դեկտեմբեր 1986</span></figcaption>
-        <button type="button" class="btn" data-lb="img/press/radiosporting-1986-12-lz2cj.jpg" data-group="quotes" data-cap="Radiosporting, December 1986, p. 8 — «160 m DX News», LZ2CJ · archive.org"><span class="l-ru">Скан</span><span class="l-en">Scan</span><span class="l-hy">Սկան</span></button></figure>
-      <figure class="qc"><blockquote><span class="l-ru">«На 1,8 МГц UG6GAW занимает первое место вместо VE1ZZ».</span><span class="l-en">“On 1.8 MHz, UG6GAW takes first place instead of VE1ZZ.”</span><span class="l-hy">«1,8 ՄՀց-ում UG6GAW-ն զբաղեցնում է առաջին տեղը VE1ZZ-ի փոխարեն»։</span></blockquote>
-        <figcaption class="m">Megahertz <span class="l-ru">(Франция) №104, октябрь 1991 · окончательные итоги CQ WW Phone 1990</span><span class="l-en">(France) No. 104, October 1991 · CQ WW Phone 1990 final results</span><span class="l-hy">(Ֆրանսիա) №104, հոկտեմբեր 1991 · CQ WW Phone 1990-ի վերջնական արդյունքներ</span></figcaption>
-        <button type="button" class="btn" data-lb="img/press/megahertz-104-1991-10.jpg" data-group="quotes" data-cap="Megahertz No. 104, October 1991, p. 50 — CQWW Phone 1990, résultat final · worldradiohistory.com"><span class="l-ru">Скан</span><span class="l-en">Scan</span><span class="l-hy">Սկան</span></button></figure>
-    </div>
+  <section class="press rv" id="press">
+    <div class="chead"><span class="m"><span class="l-ru">Пресса о нём · США, Великобритания, СССР, Чехословакия, Франция, Нидерланды, Германия</span><span class="l-en">In the press · USA, UK, USSR, Czechoslovakia, France, Netherlands, Germany</span><span class="l-hy">Մամուլը նրա մասին · ԱՄՆ, Մեծ Բրիտանիա, ԽՍՀՄ, Չեխոսլովակիա, Ֆրանսիա, Նիդեռլանդներ, Գերմանիա</span></span>
+      <div class="cnav"><span class="m" id="pcount">01</span><button type="button" class="cbtn" id="pprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="pnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+    <div class="ctrack ptrack" id="ptrack" tabindex="0" aria-label="Press"></div>
+    <div class="cbar"><i id="pfill"></i></div>
   </section>
 
   <section class="sec rv" id="y1990">
@@ -1089,6 +1091,55 @@ function TR(s){return window.HY[s]||s}
       box.appendChild(s)})}
 
   $$('[data-pin]').forEach(function(b){var im=b.querySelector('img'),gt=b.querySelector('.gtags'),tg=JSON.parse(b.dataset.tags),f=function(){if(im.complete&&im.naturalWidth)pinTags(gt,im,tg,false)};im.addEventListener('load',f);f();addEventListener('resize',f);document.addEventListener('langchange',f)});
+
+  /* ---------- press wall ---------- */
+  (function(){
+    var PR=[
+      ['США','USA','ԱՄՆ','Radiosporting','февраль 1986','February 1986','փետրվար 1986','«160 m DX News» · LZ2CJ','radiosporting-1986-02-karlen-letter-card.jpg',
+       '«Пару дней назад я получил письмо от UG6GAW, Карлена… 335 связей, 46 стран и 16 зон. Карлен на днях отправил заявку на диплом DXCC на 160 м».',
+       '“I’ve got a letter from UG6GAW, Karlen couple of days ago… UG6GAW has worked 335 QSOs, 46 countries and 16 zones. Karlen sent application for 160 m DXCC a few days ago.”',
+       '«Մի քանի օր առաջ նամակ ստացա UG6GAW-ից՝ Կարլենից… 335 կապ, 46 երկիր և 16 գոտի։ Կարլենը օրերս ուղարկել է 160 մ-ի DXCC դիպլոմի հայտը»։'],
+      ['США','USA','ԱՄՆ','Radiosporting','март 1986','March 1986','մարտ 1986','«K1MM/SV5: Holiday in Rhodes» · K1MEM','radiosporting-1986-03-rhodes.jpg',
+       '«Первым мы услышали UG6GAW — задолго до заката, на 50 дБ выше S9».','“The first signal heard was UG6GAW, way before sunset, 50 dB over S9.”','«Առաջին լսված ազդանշանը UG6GAW-ն էր՝ մայրամուտից շատ առաջ, S9-ից 50 դԲ բարձր»։'],
+      ['США','USA','ԱՄՆ','Radiosporting','май 1986','May 1986','մայիս 1986','«160 m DX News» · LZ2CJ','radiosporting-1986-05-p12-quote.jpg',
+       '«Пожалуй, самый заметный азиатский DX-мен на 160 м — Карлен, UG6GAW».','“Probably the most notable Asian 160 m DXer is Karlen, UG6GAW.”','«Հավանաբար 160 մ-ի ամենանշանավոր ասիացի DX-մենը Կարլենն է՝ UG6GAW-ն»։'],
+      ['Великобритания','United Kingdom','Մեծ Բրիտանիա','Short Wave Magazine','ноябрь 1986','November 1986','նոյեմբեր 1986','«Top Band»','swm-1986-11-topband.jpg',
+       '«…а у UG6GAW уже 137 подтверждённых!»','“…but UG6GAW has now 137 confirmed!”','«…իսկ UG6GAW-ն արդեն ունի 137 հաստատված»։'],
+      ['США','USA','ԱՄՆ','Radiosporting','декабрь 1986','December 1986','դեկտեմբեր 1986','«160 m DX News» · LZ2CJ','radiosporting-1986-12-lz2cj-card.jpg',
+       '«UG6GAW снова в эфире с новым трансивером… с тем невероятным сигналом, который мы так часто слышали раньше».','“UG6GAW is back on the air with his new transceiver… putting that unbelievable signal we used to hear so often before.”','«UG6GAW-ն կրկին եթերում է նոր հաղորդիչ-ընդունիչով… այն անհավատալի ազդանշանով, որը մենք այդքան հաճախ էինք լսում»։'],
+      ['СССР','USSR','ԽՍՀՄ','«Радио»','№6, 1987','No. 6, 1987','№6, 1987','«Достижения на диапазоне 1,8 МГц»','radio-1987-06-p150c.jpg',
+       'Таблица Р-150-С: UG6GAW — 155 подтверждённых стран из 164, первое место; UT5AB — 154 из 163.','Table R-150-S: UG6GAW, 155 confirmed countries of 164, first place; UT5AB, 154 of 163.','Р-150-С աղյուսակ՝ UG6GAW՝ 164-ից 155 հաստատված երկիր, առաջին տեղ, UT5AB՝ 163-ից 154։'],
+      ['США','USA','ԱՄՆ','Radiosporting','май 1987','May 1987','մայիս 1987','«DXCC 160 Standings»','radiosporting-1987-05-dxcc160-asia1.jpg',
+       'Мировой список DXCC на 160 м. Азия: 1. UG6GAW — 149 подтверждённых из 154.','World DXCC 160 standings. Asia: 1. UG6GAW, 149 confirmed of 154.','DXCC 160-ի համաշխարհային ցուցակ։ Ասիա՝ 1. UG6GAW՝ 154-ից 149 հաստատված։'],
+      ['Чехословакия','Czechoslovakia','Չեխոսլովակիա','Amatérské radio','№7, 1988','No. 7, 1988','№7, 1988','«OK-DX Contest» · top scores','amaterske-radio-1988-07-okdx1987.jpg',
+       'Один оператор, 1,8 МГц: 3. UG6GAW — 201 связь, 3072 очка.','Single operator, 1.8 MHz: 3. UG6GAW, 201 QSOs, 3,072 points.','Մեկ օպերատոր, 1,8 ՄՀց՝ 3. UG6GAW՝ 201 կապ, 3072 միավոր։'],
+      ['Франция','France','Ֆրանսիա','Megahertz','№104, октябрь 1991','No. 104, October 1991','№104, հոկտեմբեր 1991','«Résultats des concours» · CQWW Phone 1990','megahertz-104-1991-10.jpg',
+       '«На 1,8 МГц UG6GAW занимает первое место вместо VE1ZZ».','“Sur 1,8 MHz, UG6GAW prend la première place au lieu de VE1ZZ.”','«1,8 ՄՀց-ում UG6GAW-ն զբաղեցնում է առաջին տեղը VE1ZZ-ի փոխարեն»։'],
+      ['Нидерланды','Netherlands','Նիդեռլանդներ','Electron (VERON)','декабрь 1991','December 1991','դեկտեմբեր 1991','«CQ WW DX SSB 1990 · World wide winners»','electron-1991-12-cqww1990.jpg',
+       'Победители в мире, один оператор: 1,8 МГц — UG6GAW, 119 955.','World wide winners, single operator: 1.8 MHz, UG6GAW, 119,955.','Աշխարհի հաղթողներ, մեկ օպերատոր՝ 1,8 ՄՀց՝ UG6GAW, 119 955։'],
+      ['Германия','Germany','Գերմանիա','FUNKAMATEUR','№8, 1997','No. 8, 1997','№8, 1997','DX-QSL','funkamateur-1997-08-ek6gc.jpg',
+       '«W3HNK теперь ведёт карточки EK6GC. Хорошая новость: многие письма напрямую в Армению не доходили».','“W3HNK hat jetzt EK6GC in seiner Managerliste. Dies dürfte ein Lichtblick sein, da viele Direktpost nicht (oder nicht komplett) in Armenien ankam.”','«W3HNK-ն այժմ վարում է EK6GC-ի քարտերը։ Լավ լուր է, քանի որ շատ նամակներ ուղղակիորեն Հայաստան չէին հասնում»։']
+    ];
+    var tr=$('#ptrack'),cnt=$('#pcount'),fill=$('#pfill'),pv=$('#pprev'),nx=$('#pnext');
+    tr.innerHTML=PR.map(function(a){var cap=a[3]+' · '+a[4]+' · '+a[7];
+      return '<figure class="pc"><button type="button" class="pimg" data-lb="img/press/'+a[8].replace('-card','')+'" data-group="presswall" data-cap="'+esc(a[1]+' · '+cap)+'"><img src="img/press/'+a[8]+'" alt="'+esc(a[3]+', '+a[5])+'" loading="lazy" decoding="async" draggable="false"></button>'+
+        '<figcaption><span class="pco"><span class="l-ru">'+a[0]+'</span><span class="l-en">'+a[1]+'</span><span class="l-hy">'+a[2]+'</span></span>'+
+        '<span class="m pme">'+a[3]+' · <span class="l-ru">'+a[4]+'</span><span class="l-en">'+a[5]+'</span><span class="l-hy">'+a[6]+'</span></span>'+
+        '<h4>'+a[7]+'</h4><p><span class="l-ru">'+a[9]+'</span><span class="l-en">'+a[10]+'</span><span class="l-hy">'+a[11]+'</span></p></figcaption></figure>'}).join('');
+    var items=[].slice.call(tr.children),n=items.length;
+    function idx(){var x=tr.scrollLeft,best=0,bd=1e9;items.forEach(function(it,k){var d=Math.abs(it.offsetLeft-tr.offsetLeft-x);if(d<bd){bd=d;best=k}});return best}
+    function upd(){var k=idx(),vis=Math.max(1,Math.round(tr.clientWidth/(items[0].offsetWidth+20)));cnt.textContent=('0'+(k+1)).slice(-2)+' / '+('0'+n).slice(-2);
+      fill.style.width=(100*vis/n)+'%';fill.style.left=(100*Math.min(k,n-vis)/n)+'%';pv.disabled=tr.scrollLeft<4;nx.disabled=tr.scrollLeft>tr.scrollWidth-tr.clientWidth-4}
+    function go(k){k=Math.max(0,Math.min(n-1,k));tr.scrollTo({left:items[k].offsetLeft-tr.offsetLeft,behavior:RM?'auto':'smooth'})}
+    pv.addEventListener('click',function(){go(idx()-1)});nx.addEventListener('click',function(){go(idx()+1)});
+    tr.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();go(idx()+1)}if(e.key==='ArrowLeft'){e.preventDefault();go(idx()-1)}});
+    var t;tr.addEventListener('scroll',function(){cancelAnimationFrame(t);t=requestAnimationFrame(upd)},{passive:true});addEventListener('resize',upd);upd();
+    var down=false,sx=0,sl=0,moved=false;
+    tr.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;moved=false;sx=e.clientX;sl=tr.scrollLeft});
+    addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>4){moved=true;tr.classList.add('drag')}if(moved)tr.scrollLeft=sl-dx});
+    addEventListener('pointerup',function(){if(!down)return;down=false;if(moved){tr.classList.remove('drag');go(idx())}});
+    tr.addEventListener('click',function(e){if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+  })();
 
   /* ---------- live certificate carousel ---------- */
   (function(){
