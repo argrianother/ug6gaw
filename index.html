@@ -393,12 +393,21 @@ table.log{width:100%;min-width:760px;border-collapse:collapse;font:400 14px var(
 .log .nt{display:block;font:500 12px var(--sans);color:var(--amber-ink);margin-top:3px}
 .log tr.w1 td{font-weight:600}
 
-/* soon */
-.soon{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
-.soon div{background:var(--plinth);padding:26px 24px 30px}
-.soon b{display:flex;justify-content:space-between;align-items:center;font:600 22px/1.2 var(--sans);letter-spacing:-.02em}
-.soon b small{font:600 11px var(--mono);letter-spacing:.12em;color:var(--amber-ink);border:1px solid currentColor;border-radius:999px;padding:4px 9px}
-.soon p{margin:12px 0 0;color:var(--ink2)}
+/* contact */
+.mail{position:relative;background:var(--plinth);padding:clamp(28px,5vw,64px) clamp(22px,5vw,64px);overflow:hidden}
+.mail::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:1px solid var(--rule);box-shadow:0 0 0 40px rgba(255,255,255,.18),0 0 0 41px var(--rule),0 0 0 90px rgba(255,255,255,.1),0 0 0 91px var(--rule);pointer-events:none}
+.mail .mk{position:relative;z-index:1;display:block;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.mail .addr{position:relative;z-index:1;display:inline-block;margin-top:14px;font:600 clamp(30px,6.2vw,76px)/1.05 var(--sans);letter-spacing:-.035em;color:var(--ink);text-decoration:none;word-break:break-all;background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;transition:background-size .5s cubic-bezier(.2,.8,.2,1)}
+.mail .addr i{font-style:normal;color:var(--amber);padding:0 .03em}
+@media (hover:hover){.mail .addr:hover{background-size:100% 2px}}
+.mail .mbtns{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:10px;margin-top:clamp(22px,3vw,34px)}
+.mail .mb{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 20px;border:1px solid var(--ink);border-radius:999px;background:none;color:var(--ink);font:500 15px var(--sans);text-decoration:none;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;transition:background .2s,color .2s}
+.mail .mb svg{width:18px;height:18px;flex:none}
+.mail .mb.pri{background:var(--ink);color:var(--bg)}
+@media (hover:hover){.mail .mb:hover{background:var(--ink);color:var(--bg)}.mail .mb.pri:hover{background:#2a2a27}}
+.mail .mb .t1{display:none}.mail .mb.ok .t0{display:none}.mail .mb.ok .t1{display:inline}
+.mail .mb.ok{border-color:var(--amber-ink);color:var(--amber-ink);background:none}
+.mail .mn{position:relative;z-index:1;margin:22px 0 0;font:400 12px var(--mono);letter-spacing:.06em;color:var(--ink3)}
 
 /* sources */
 ol.sources{columns:2;column-gap:48px;margin:0;padding:0 0 0 22px;font-size:14.5px;color:var(--ink2)}
@@ -506,7 +515,8 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   .ppl tr:first-child{border-top:1px solid var(--ink)}
   .ppl td{border:0!important}.ppl td:first-child,.ppl td:nth-child(2){width:auto}
   .ppl td:last-child{grid-column:1/-1;padding-top:0}
-  .soon{grid-template-columns:minmax(0,1fr)}
+  .mail .mb{flex:1 1 auto;justify-content:center}
+  .mail::after{right:-150px;top:-150px}
   ol.sources{columns:1}
   .band{padding:84px 0 80px}
   .sec{padding-bottom:84px}
@@ -549,6 +559,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     <a href="#archive"><span class="l-ru">Архив</span><span class="l-en">Archive</span><span class="l-hy">Արխիվ</span></a>
     <a href="#people"><span class="l-ru">Люди</span><span class="l-en">People</span><span class="l-hy">Մարդիկ</span></a>
     <a href="#tx"><span class="l-ru">Передатчик</span><span class="l-en">Transmitter</span><span class="l-hy">Հաղորդիչ</span></a>
+    <a href="#contact"><span class="l-ru">Связь</span><span class="l-en">Contact</span><span class="l-hy">Կապ</span></a>
     <a href="#sources"><span class="l-ru">Источники</span><span class="l-en">Sources</span><span class="l-hy">Աղբյուրներ</span></a>
   </nav>
   <div class="hr">
@@ -794,15 +805,18 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     </table></div>
   </section>
 
-  <section class="sec rv" id="soon">
-    <div class="sh"><span class="m">09 · <span class="l-ru">Скоро</span><span class="l-en">Coming soon</span><span class="l-hy">Շուտով</span></span><div>
-      <h2><span class="l-ru">Эфир продолжается</span><span class="l-en">Still on the air</span><span class="l-hy">Մինչ օրս եթերում</span></h2>
-      <p><span class="l-ru">Сайт растёт: скоро здесь будет место, где друзья по эфиру со всего мира смогут оставить слово и держать связь.</span><span class="l-en">The site keeps growing: soon there will be a place where friends from the air all over the world can leave a word and stay in touch.</span><span class="l-hy">Կայքը շարունակում է աճել. շուտով այստեղ կլինի մի անկյուն, որտեղ եթերային ընկերներն ամբողջ աշխարհից կկարողանան թողնել իրենց խոսքը և կապ պահել։</span></p>
+  <section class="sec rv" id="contact">
+    <div class="sh"><span class="m">09 · <span class="l-ru">Связь</span><span class="l-en">Contact</span><span class="l-hy">Կապ</span></span><div>
+      <h2><span class="l-ru">Написать Роберту</span><span class="l-en">Write to Robert</span><span class="l-hy">Գրել Ռոբերտին</span></h2>
+      <p><span class="l-ru">Друзья по эфиру, коллеги, все, с кем он когда-то провёл связь, — письма приходят Роберту лично.</span><span class="l-en">Friends from the air, fellow contesters, anyone who has ever worked him: letters go straight to Robert.</span><span class="l-hy">Եթերային ընկերներ, գործընկերներ, բոլոր նրանք, ովքեր երբևէ կապ են ունեցել նրա հետ․ նամակները հասնում են անմիջապես Ռոբերտին։</span></p>
     </div></div>
-    <div class="soon">
-      <div><b><span><span class="l-ru">Форум</span><span class="l-en">Forum</span><span class="l-hy">Ֆորում</span></span><small>SOON</small></b><p><span class="l-ru">160 метров, соревнования, встречи, воспоминания.</span><span class="l-en">160 meters, contests, meetings, memories.</span><span class="l-hy">160 մետր, մրցումներ, հանդիպումներ, հուշեր։</span></p></div>
-      <div><b><span><span class="l-ru">Гостевая книга</span><span class="l-en">Guestbook</span><span class="l-hy">Հյուրերի գիրք</span></span><small>SOON</small></b><p><span class="l-ru">Слово от тех, кто проводил с ним связи.</span><span class="l-en">A word from those who worked him.</span><span class="l-hy">Խոսք նրանցից, ովքեր եթերում կապ են ունեցել նրա հետ։</span></p></div>
-      <div><b><span>@ug6gaw.com</span><small>SOON</small></b><p><span class="l-ru">Почта для писем и QSL.</span><span class="l-en">Mail for letters and QSLs.</span><span class="l-hy">Փոստ՝ նամակների և QSL-ների համար։</span></p></div>
+    <div class="mail">
+      <span class="mk m">E-mail · EK6GC</span>
+      <a class="addr" id="maddr" href="#contact"><span>robert</span><i>@</i><span>ek6gc.com</span></a>
+      <div class="mbtns">
+        <a class="mb pri" id="mwrite" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg><span class="l-ru">Написать письмо</span><span class="l-en">Write an email</span><span class="l-hy">Գրել նամակ</span></a>
+        <button type="button" class="mb" id="mcopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg><span class="t0"><span class="l-ru">Скопировать адрес</span><span class="l-en">Copy address</span><span class="l-hy">Պատճենել հասցեն</span></span><span class="t1"><span class="l-ru">Скопировано</span><span class="l-en">Copied</span><span class="l-hy">Պատճենված է</span></span></button>
+      </div>
     </div>
   </section>
 
@@ -1060,6 +1074,11 @@ function TR(s){return window.HY[s]||s}
   (function(){var b=$('#totop'),pend=false;function u(){pend=false;b.classList.toggle('on',scrollY>Math.max(innerHeight*1.1,hero.offsetHeight))}
     addEventListener('scroll',function(){if(!pend){pend=true;requestAnimationFrame(u)}},{passive:true});u();
     b.addEventListener('click',function(){scrollTo({top:0,behavior:RM?'auto':'smooth'})})})();
+  (function(){var u='robert',d='ek6gc.com',a=u+'@'+d,w=$('#mwrite'),c=$('#mcopy'),ad=$('#maddr');if(!w)return;
+    w.href=ad.href='mailto:'+a+'?subject='+encodeURIComponent('UG6GAW / EK6GC');
+    c.addEventListener('click',function(){function ok(){c.classList.add('ok');setTimeout(function(){c.classList.remove('ok')},1800)}
+      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(a).then(ok,ok);
+      else{var t=document.createElement('textarea');t.value=a;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}t.remove();ok()}})})();
   function setFull(v){try{if(v)localStorage.setItem('ug6gaw-full','1');else localStorage.removeItem('ug6gaw-full')}catch(e){}location.reload()}
   $('#fullbtn').addEventListener('click',function(){setFull(true)});$('#mobbtn').addEventListener('click',function(){setFull(false)});
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
