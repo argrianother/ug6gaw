@@ -71,16 +71,16 @@ html.full .mobbtn svg{width:calc(15px*var(--k,1));height:calc(15px*var(--k,1))}
 
 .flags button:hover{opacity:.8;filter:none}
 .flags button[aria-pressed="true"]{opacity:1;filter:none}
-.lang{display:flex;align-items:center}
-.globe{position:relative;flex:none;width:34px;height:34px;padding:0;border:0;background:none;color:inherit;opacity:.7;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;transition:opacity .25s}
+.lang{position:relative;flex:none;width:126px;height:34px}
+.globe{position:absolute;right:0;top:0;width:34px;height:34px;padding:0;border:0;background:none;color:inherit;opacity:.7;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;transition:opacity .25s,transform .5s cubic-bezier(.2,.8,.2,1)}
 .globe svg{position:absolute;left:50%;top:50%;width:19px;height:19px;margin:-9.5px 0 0 -9.5px;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 @media (hover:hover){.globe:hover{opacity:1}}
 .globe:focus-visible{outline:1px solid currentColor;outline-offset:2px;border-radius:50%}
-.lang.open .globe{opacity:1}
+.lang.open .globe{opacity:1;transform:translateX(-92px)}
 .lang.open .globe svg{transform:rotate(-30deg)}
-.lang .flags{max-width:0;overflow:hidden;opacity:0;visibility:hidden;padding:0;transition:max-width .45s cubic-bezier(.2,.8,.2,1),padding .45s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility 0s .45s}
-.lang.open .flags{max-width:130px;opacity:1;visibility:visible;padding:0 4px 0 8px;transition:max-width .45s cubic-bezier(.2,.8,.2,1),padding .45s cubic-bezier(.2,.8,.2,1),opacity .3s .12s,visibility 0s}
-@media (prefers-reduced-motion:reduce){.lang .flags,.lang.open .flags,.globe svg{transition:none}}
+.lang .flags{position:absolute;right:0;top:0;height:34px;width:92px;box-sizing:border-box;justify-content:flex-end;padding:0 4px 0 6px;-webkit-clip-path:inset(0 0 0 100%);clip-path:inset(0 0 0 100%);opacity:0;visibility:hidden;transition:clip-path .5s cubic-bezier(.2,.8,.2,1),-webkit-clip-path .5s cubic-bezier(.2,.8,.2,1),opacity .2s,visibility 0s .5s}
+.lang.open .flags{-webkit-clip-path:inset(-6px -6px -6px 0);clip-path:inset(-6px -6px -6px 0);opacity:1;visibility:visible;transition:clip-path .5s cubic-bezier(.2,.8,.2,1),-webkit-clip-path .5s cubic-bezier(.2,.8,.2,1),opacity .3s .08s,visibility 0s}
+@media (prefers-reduced-motion:reduce){.lang .flags,.lang.open .flags,.globe,.globe svg{transition:none}}
 
 .menubtn{display:none;position:relative;flex:none;width:36px;height:36px;padding:0;border:1px solid rgba(140,136,128,.45);border-radius:50%;background:none;color:inherit;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;transition:border-color .25s,background .25s}
 .menubtn span{position:absolute;left:50%;top:50%;height:2px;margin:-1px 0 0 -7px;border-radius:2px;background:currentColor;transition:transform .35s cubic-bezier(.2,.8,.2,1),width .35s cubic-bezier(.2,.8,.2,1)}
