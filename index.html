@@ -47,10 +47,10 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .flags{display:flex;align-items:center;gap:14px;padding:0 4px}
 .flags button{position:relative;display:block;border:0;background:none;cursor:pointer;padding:8px 0;opacity:.42;filter:saturate(.55);transition:opacity .25s,filter .25s,transform .25s}
 .flags button svg{display:block;width:18px;height:12px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.25)}
-.flags button::after{content:"";position:absolute;left:3px;right:3px;bottom:1px;height:1.5px;border-radius:2px;background:var(--amber);transform:scaleX(0);transition:transform .25s}
+
 .flags button:hover{opacity:.8;filter:none}
 .flags button[aria-pressed="true"]{opacity:1;filter:none}
-.flags button[aria-pressed="true"]::after{transform:scaleX(1)}
+
 .menubtn{display:none;width:40px;height:40px;border:0;background:none;cursor:pointer;padding:10px;flex-direction:column;justify-content:space-between}
 .menubtn span{display:block;height:1.5px;background:currentColor;border-radius:2px;transition:transform .25s,opacity .25s}
 .menubtn[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
@@ -648,8 +648,8 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <span class="m">1986 · <span class="l-ru">Чернобыль</span><span class="l-en">Chernobyl</span><span class="l-hy">Չեռնոբիլ</span></span>
       <h3><span class="l-ru">Чернобыльская АЭС</span><span class="l-en">Chernobyl nuclear plant</span><span class="l-hy">Չեռնոբիլի ատոմակայան</span></h3>
       <p><span class="l-ru">26 апреля 1986 года — авария на Чернобыльской АЭС, крупнейшая в истории атомной энергетики. Роберт Григорян — в Чернобыле, среди тех, кто ликвидирует её последствия.</span><span class="l-en">26 April 1986: the Chernobyl nuclear accident, the worst in the history of nuclear power. Robert Grigoryan is in Chernobyl, among those who deal with its aftermath.</span><span class="l-hy">1986 թ. ապրիլի 26. Չեռնոբիլի ատոմակայանի վթարը՝ ատոմային էներգետիկայի պատմության ամենածանրը։ Ռոբերտ Գրիգորյանը Չեռնոբիլում է՝ նրանց թվում, ովքեր վերացնում են վթարի հետևանքները։</span></p>
-      <p><span class="l-ru">Среди первых, кто приходит на помощь на ЧАЭС, — радиолюбители: они чинят телевизионную и радиоуправляемую технику, которая работает у разрушенного блока.</span><span class="l-en">Among the first to come and help at the plant are radio amateurs: they repair the TV and remote-controlled equipment working next to the ruined unit.</span><span class="l-hy">Ատոմակայան օգնության հասնողների առաջին շարքերում ռադիոսիրողներն են. նրանք նորոգում են ավերված էներգաբլոկի մոտ աշխատող հեռուստատեսային և հեռակառավարվող սարքավորումները։</span></p>
-      <p class="src m"><a href="https://en.wikipedia.org/wiki/Chernobyl_disaster">Wikipedia</a> · <a href="https://archive.org/details/1988-09">«Радио» №4, 1988</a></p>
+      <p><span class="l-ru">Среди первых на помощь на ЧАЭС приходят радиолюбители-добровольцы ДОСААФ. Они ремонтируют и обслуживают роботов, телеуправляемую технику и телекамеры, которые работают у разрушенного блока вместо людей. Сами к этой технике выходят парами и на считаные секунды: замена камеры на кровле, как пишет один из них, занимает 18 секунд.</span><span class="l-en">Among the first to help at the plant are volunteer radio amateurs from DOSAAF. They repair and maintain the robots, remote-controlled machines and TV cameras that work by the ruined unit in place of people. They go out to that equipment in pairs and only for seconds: replacing a camera on the roof, one of them writes, takes 18 seconds.</span><span class="l-hy">Ատոմակայան օգնության հասնողների առաջին շարքերում ԴՕՍԱԱՖ-ի կամավոր ռադիոսիրողներն են։ Նրանք նորոգում և սպասարկում են ռոբոտները, հեռակառավարվող տեխնիկան և տեսախցիկները, որոնք մարդկանց փոխարեն աշխատում են ավերված էներգաբլոկի մոտ։ Իրենք այդ տեխնիկային մոտենում են զույգերով և ընդամենը վայրկյաններով. նրանցից մեկի խոսքով՝ տանիքում տեսախցիկը փոխելը տևում է 18 վայրկյան։</span></p>
+      <p class="src m"><a href="https://en.wikipedia.org/wiki/Chernobyl_disaster">Wikipedia</a> · <a href="https://archive.org/details/1988-09">«Радио» №4, 1988 — Г. Шульгин, «Помним Чернобыль-86…»</a></p>
     </div>
     <div>
       <span class="m">7.12.1988 · <span class="l-ru">Спитак · Ленинакан</span><span class="l-en">Spitak · Leninakan</span><span class="l-hy">Սպիտակ · Լենինական</span></span>
