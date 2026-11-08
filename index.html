@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<script>try{if(localStorage.getItem('ug6gaw-full')==='1'&&Math.min(screen.width,screen.height)<900){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');var R=document.documentElement;R.classList.add('full');R.style.setProperty('--k',(1280/Math.min(screen.width,screen.height)).toFixed(3))}}catch(e){}</script>
+<script>try{if(localStorage.getItem('ug6gaw-full')==='1'&&Math.min(screen.width,screen.height)<900){document.querySelector('meta[name=viewport]').setAttribute('content','width=1600');var R=document.documentElement;R.classList.add('full');R.style.setProperty('--k',(1600/Math.min(screen.width,screen.height)).toFixed(3))}}catch(e){}</script>
 <title>UG6GAW / EK6GC · Роберт Григорян</title>
 <meta name="description" content="Robert Grigoryan, UG6GAW / EK6GC: world champion on 160 meters, CQ WW DX 1990. Armenia.">
 <meta name="theme-color" content="#0b0b0a">
@@ -48,6 +48,15 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .fullbtn{display:none;align-items:center;gap:7px;height:36px;padding:0 14px;border:1px solid rgba(140,136,128,.45);border-radius:999px;background:none;color:inherit;font:500 12.5px/1 var(--sans);white-space:nowrap;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
 .fullbtn svg{width:14px;height:14px;flex:none}
 .mobbtn{display:none}
+html.full .grain{display:none}
+html.full .hero .photo{animation:none;transform:scale(1.04)}
+html.full .hero .in{will-change:auto}
+.totop{position:fixed;z-index:35;right:calc(18px*var(--k,1));bottom:calc(18px*var(--k,1));width:calc(42px*var(--k,1));height:calc(42px*var(--k,1));padding:0;border:1px solid rgba(255,255,255,.16);border-radius:50%;background:rgba(18,17,16,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--light);cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent;box-shadow:0 6px 24px rgba(0,0,0,.22);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .3s,transform .3s,visibility .3s,background .2s}
+.totop.on{opacity:1;visibility:visible;transform:none}
+.totop svg{position:absolute;left:50%;top:50%;width:calc(18px*var(--k,1));height:calc(18px*var(--k,1));transform:translate(-50%,-50%);display:block}
+@media (hover:hover){.totop:hover{background:rgba(11,11,10,.95)}}
+body.locked .totop{opacity:0;visibility:hidden}
+@media (max-width:640px){.totop{right:14px;bottom:14px;width:40px;height:40px}}
 html.full .mobbtn{display:flex;align-items:center;gap:calc(8px*var(--k,1));position:fixed;z-index:40;left:50%;bottom:calc(16px*var(--k,1));transform:translateX(-50%);height:calc(40px*var(--k,1));padding:0 calc(18px*var(--k,1));border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(11,11,10,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--light);font:500 calc(14px*var(--k,1))/1 var(--sans);white-space:nowrap;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.3)}
 html.full .mobbtn svg{width:calc(15px*var(--k,1));height:calc(15px*var(--k,1))}
 .sheet .langs{margin-top:30px}
@@ -543,6 +552,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   </div>
 </div></header>
 <div class="sheet" id="sheet" aria-hidden="true"></div>
+<button type="button" class="totop" id="totop" aria-label="Back to top" title="↑"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15.5l7-7 7 7"/></svg></button>
 <button type="button" class="mobbtn" id="mobbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg><span class="l-ru">Мобильная версия</span><span class="l-en">Mobile site</span><span class="l-hy">Բջջային տարբերակ</span></button>
 
 <section class="hero" id="top">
@@ -1029,6 +1039,9 @@ function TR(s){return window.HY[s]||s}
     var row=d.querySelector('.sl');$$('.hr .flags button').forEach(function(f){var b=document.createElement('button');b.type='button';b.dataset.lang=f.dataset.lang;
       var sv=f.querySelector('svg');b.innerHTML=(sv?sv.outerHTML:'')+'<span>'+(NM[f.dataset.lang]||f.dataset.lang)+'</span>';b.setAttribute('aria-pressed',f.getAttribute('aria-pressed')||'false');
       b.addEventListener('click',function(){setLang(b.dataset.lang)});row.appendChild(b)});sh.appendChild(d)})();
+  (function(){var b=$('#totop'),pend=false;function u(){pend=false;b.classList.toggle('on',scrollY>Math.max(innerHeight*1.1,hero.offsetHeight))}
+    addEventListener('scroll',function(){if(!pend){pend=true;requestAnimationFrame(u)}},{passive:true});u();
+    b.addEventListener('click',function(){scrollTo({top:0,behavior:RM?'auto':'smooth'})})})();
   function setFull(v){try{if(v)localStorage.setItem('ug6gaw-full','1');else localStorage.removeItem('ug6gaw-full')}catch(e){}location.reload()}
   $('#fullbtn').addEventListener('click',function(){setFull(true)});$('#mobbtn').addEventListener('click',function(){setFull(false)});
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
