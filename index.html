@@ -6,7 +6,11 @@
 <script>try{if(localStorage.getItem('ug6gaw-full')==='1'&&Math.min(screen.width,screen.height)<900){document.querySelector('meta[name=viewport]').setAttribute('content','width=1600');var R=document.documentElement;R.classList.add('full');R.style.setProperty('--k',(1600/Math.min(screen.width,screen.height)).toFixed(3))}}catch(e){}</script>
 <title>Роберт Григорян · UG6GAW / EK6GC — радиолюбитель, Армения</title>
 <meta name="description" content="Роберт Григорян (UG6GAW, ныне EK6GC) — радиолюбитель из Чаренцавана, Армения: чемпион мира CQ WW DX 1990 на 160 метрах, DXCC 160 №144. Robert Grigoryan, radio amateur.">
-<link rel="canonical" href="https://ug6gaw.com/">
+<link rel="alternate" hreflang="ru" href="https://ug6gaw.com/?lang=ru">
+<link rel="alternate" hreflang="en" href="https://ug6gaw.com/?lang=en">
+<link rel="alternate" hreflang="hy" href="https://ug6gaw.com/?lang=hy">
+<link rel="alternate" hreflang="x-default" href="https://ug6gaw.com/">
+<script>(function(){try{var m=/[?&]lang=(ru|en|hy)(?:&|$)/.exec(location.search),l=document.createElement('link');l.rel='canonical';l.id='canon';l.href='https://ug6gaw.com/'+(m?'?lang='+m[1]:'');document.head.appendChild(l);if(m){var r=document.documentElement;r.lang=m[1];r.dataset.lang=m[1]}}catch(e){}})()</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Person","@id":"https://ug6gaw.com/#robert","name":"Robert Grigoryan","alternateName":["Роберт Григорян","Ռոբերտ Գրիգորյան","Robert Grigorian","Karlen","UG6GAW","EK6GC"],"description":"Radio amateur from Charentsavan, Armenia. Callsigns UG6GAW, now EK6GC. World champion on 160 meters in the CQ WW DX Contest 1990, ARRL DXCC 160 #144.","nationality":{"@type":"Country","name":"Armenia"},"knowsAbout":["Amateur radio","160-meter band","CW","Radiosport"],"image":"https://ug6gaw.com/img/hero/fizk-1988.jpg","url":"https://ug6gaw.com/","sameAs":["https://www.qrz.ru/EK6GC","https://ek6gc.com/"]},
@@ -17,6 +21,12 @@
 <meta property="og:title" content="UG6GAW / EK6GC · Robert Grigoryan">
 <meta property="og:description" content="Robert Grigoryan, UG6GAW / EK6GC. Radio amateur from Armenia, 160 meters. CQ World Wide DX Contest 1990.">
 <meta property="og:image" content="https://ug6gaw.com/img/hero/fizk-1988.jpg">
+<meta property="og:url" content="https://ug6gaw.com/">
+<meta property="og:type" content="profile">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="hy_AM">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0a'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ff8a1f'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="fonts/v2.css">
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -1048,11 +1058,14 @@ function TR(s){return window.HY[s]||s}
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 
   /* ---------- language ---------- */
-  function setLang(l){root.dataset.lang=l;root.lang=l;$$('.flags button,.sl button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});try{localStorage.setItem('ug6gaw-lang',l)}catch(e){}document.dispatchEvent(new Event('langchange'))}
+  var META={ru:[document.title,(document.querySelector('meta[name=description]')||{}).content||''],en:['Robert Grigoryan · UG6GAW / EK6GC — radio amateur, Armenia','Robert Grigoryan (UG6GAW, now EK6GC) is a radio amateur from Charentsavan, Armenia: world champion of the CQ WW DX Contest 1990 on 160 meters, DXCC 160 #144.'],hy:['Ռոբերտ Գրիգորյան · UG6GAW / EK6GC — ռադիոսիրող, Հայաստան','Ռոբերտ Գրիգորյանը (UG6GAW, այժմ՝ EK6GC) ռադիոսիրող է Չարենցավանից, Հայաստան․ CQ WW DX 1990 մրցույթի աշխարհի չեմպիոն 160 մետրում, DXCC 160 №144։']};
+  function langUrl(l){try{var u=new URL(location.href);u.searchParams.set('lang',l);if(/^#(ru|en|hy)$/.test(u.hash))u.hash='';history.replaceState(history.state,'',u.pathname+u.search+u.hash);var c=document.getElementById('canon');if(c)c.href='https://ug6gaw.com/?lang='+l}catch(e){}}
+  function setLang(l,init){root.dataset.lang=l;root.lang=l;var M=META[l]||META.ru;document.title=M[0];var md=document.querySelector('meta[name=description]');if(md)md.content=M[1];if(!init)langUrl(l);$$('.flags button,.sl button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});try{localStorage.setItem('ug6gaw-lang',l)}catch(e){}document.dispatchEvent(new Event('langchange'))}
   var nl=(navigator.language||'ru').slice(0,2),start=nl==='hy'?'hy':(nl==='ru'||nl==='uk'||nl==='be'||nl==='kk')?'ru':'en';
   try{start=localStorage.getItem('ug6gaw-lang')||start}catch(e){}
   if(/^#(ru|en|hy)$/.test(location.hash))start=location.hash.slice(1);
-  setLang(start);
+  var qm=/[?&]lang=(ru|en|hy)(?:&|$)/.exec(location.search);if(qm)start=qm[1];
+  setLang(start,true);
   $$('.flags button').forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.lang);setTimeout(function(){langOpen(false)},260)})});
   var lg=$('#lang'),gb=$('#globe');
   function langOpen(v){lg.classList.toggle('open',v);gb.setAttribute('aria-expanded',v)}
