@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>try{if(localStorage.getItem('ug6gaw-full')==='1'&&Math.min(screen.width,screen.height)<900){document.querySelector('meta[name=viewport]').setAttribute('content','width=1280');var R=document.documentElement;R.classList.add('full');R.style.setProperty('--k',(1280/Math.min(screen.width,screen.height)).toFixed(3))}}catch(e){}</script>
 <title>UG6GAW / EK6GC · Роберт Григорян</title>
 <meta name="description" content="Robert Grigoryan, UG6GAW / EK6GC: world champion on 160 meters, CQ WW DX 1990. Armenia.">
 <meta name="theme-color" content="#0b0b0a">
@@ -44,6 +45,17 @@ header .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center
 .nav a{text-decoration:none;opacity:.78;transition:opacity .2s}
 .nav a:hover{opacity:1}
 .hr{display:flex;align-items:center;gap:10px}
+.fullbtn{display:none;align-items:center;gap:7px;height:30px;padding:0 12px;border:1px solid rgba(140,136,128,.45);border-radius:999px;background:none;color:inherit;font:500 12.5px/1 var(--sans);white-space:nowrap;cursor:pointer;-webkit-appearance:none;appearance:none;-webkit-tap-highlight-color:transparent}
+.fullbtn svg{width:14px;height:14px;flex:none}
+.mobbtn{display:none}
+html.full .mobbtn{display:flex;align-items:center;gap:calc(8px*var(--k,1));position:fixed;z-index:40;left:50%;bottom:calc(16px*var(--k,1));transform:translateX(-50%);height:calc(40px*var(--k,1));padding:0 calc(18px*var(--k,1));border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(11,11,10,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--light);font:500 calc(14px*var(--k,1))/1 var(--sans);white-space:nowrap;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+html.full .mobbtn svg{width:calc(15px*var(--k,1));height:calc(15px*var(--k,1))}
+.sheet .langs{margin-top:30px}
+.sheet .langs p{font:400 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--light3);margin:0 0 12px}
+.sheet .langs .sl{display:flex;flex-wrap:wrap;gap:8px}
+.sheet .langs button{display:flex;align-items:center;gap:10px;height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:none;color:var(--light2);font:500 15px var(--sans);cursor:pointer;-webkit-appearance:none;appearance:none}
+.sheet .langs button svg{display:block;width:20px;height:14px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.35)}
+.sheet .langs button[aria-pressed="true"]{border-color:rgba(243,239,232,.75);color:var(--light);background:rgba(255,255,255,.05)}
 .flags{display:flex;align-items:center;gap:14px;padding:0 4px}
 .flags button{position:relative;display:block;border:0;background:none;cursor:pointer;padding:8px 0;opacity:.42;filter:saturate(.55);transition:opacity .25s,filter .25s,transform .25s}
 .flags button svg{display:block;width:18px;height:12px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.35),0 1px 3px rgba(0,0,0,.25)}
@@ -120,7 +132,7 @@ footer{position:relative;z-index:1}
 /* Morse ticker */
 .mrow{display:flex;align-items:center;gap:14px;margin-top:30px;max-width:min(810px,calc(100% - 340px))}
 .snd{flex:none;width:34px;height:34px;margin-left:-6px;border:0;background:none;padding:0;color:rgba(243,239,232,.55);display:grid;place-items:center;cursor:pointer;transition:color .2s}
-.snd svg{width:24px;height:24px;overflow:visible}
+.snd svg{display:block;width:24px;height:24px;overflow:visible}
 .snd .bd{fill:currentColor;fill-opacity:.14}
 .snd .w{opacity:0;transition:opacity .12s}
 .snd:hover{color:var(--light)}
@@ -217,10 +229,10 @@ footer{position:relative;z-index:1}
 .cnav{display:flex;align-items:center;gap:8px}
 .cnav .m{margin-right:8px;white-space:nowrap}
 .chead>.m{min-width:0}
-.cbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--bg);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s}
+.cbtn{position:relative;flex:none;padding:0;-webkit-appearance:none;appearance:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--bg);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s}
 .cbtn:hover{border-color:var(--ink)}
 .cbtn:disabled{opacity:.3;cursor:default}
-.cbtn svg{width:20px;height:20px}
+.cbtn svg{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;display:block}
 .ctrack{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:6px 2px 10px;outline:0;cursor:grab}
 .ctrack.drag{cursor:grabbing;scroll-snap-type:none;scroll-behavior:auto}
 .ctrack::-webkit-scrollbar{display:none}
@@ -424,15 +436,15 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 .lb #lb-img{max-width:calc(100vw - 168px);max-height:calc(100dvh - 140px);width:auto;height:auto;cursor:pointer}
 #lb-tags{position:absolute;inset:0;pointer-events:none;transition:opacity .25s}
 #lb-tags.off{opacity:0}
-.lb .ic{position:absolute;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(20,20,18,.6);color:var(--light);cursor:pointer;display:grid;place-items:center}
-.lb .ic svg{width:22px;height:22px}
+.lb .ic{position:absolute;padding:0;-webkit-appearance:none;appearance:none;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(20,20,18,.6);color:var(--light);cursor:pointer;display:grid;place-items:center}
+.lb .ic svg{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;display:block}
 .lb .prev{left:18px;top:50%;transform:translateY(-50%)}
 .lb .next{right:18px;top:50%;transform:translateY(-50%)}
 .lb .bar{position:absolute;left:0;right:0;bottom:0;min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px 32px;border-top:1px solid rgba(255,255,255,.08)}
 .lb #lb-cap{font-size:14.5px;color:var(--light2);max-width:80ch}
 .lb .acts{display:flex;align-items:center;gap:14px;flex:none}
 .lb #lb-pdf{font:500 13px var(--mono);color:var(--light);text-decoration:none;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 14px}
-.lb .close{position:static}
+.lb .close{position:relative}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
@@ -500,6 +512,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
   .clip .pl{aspect-ratio:4/3}
   .flags{gap:12px}
 }
+@media (max-width:900px){.hr .flags{display:none}.fullbtn{display:inline-flex}}
 </style>
 </head>
 <body>
@@ -521,10 +534,12 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
         <button type="button" data-lang="ru" aria-pressed="true" title="Русский" aria-label="Русский"><svg viewBox="0 0 30 20"><rect width="30" height="20" fill="#D52B1E"/><rect width="30" height="13.33" fill="#0039A6"/><rect width="30" height="6.67" fill="#fff"/></svg></button>
         <button type="button" data-lang="en" aria-pressed="false" title="English" aria-label="English"><svg viewBox="0 0 38 20"><rect width="38" height="20" fill="#fff"/><g fill="#B22234"><rect y="0.000" width="38" height="1.538"/><rect y="3.077" width="38" height="1.538"/><rect y="6.154" width="38" height="1.538"/><rect y="9.231" width="38" height="1.538"/><rect y="12.308" width="38" height="1.538"/><rect y="15.385" width="38" height="1.538"/><rect y="18.462" width="38" height="1.538"/></g><rect width="15.2" height="10.77" fill="#3C3B6E"/><g fill="#fff"><circle cx="1.30" cy="1.20" r=".55"/><circle cx="3.80" cy="1.20" r=".55"/><circle cx="6.30" cy="1.20" r=".55"/><circle cx="8.80" cy="1.20" r=".55"/><circle cx="11.30" cy="1.20" r=".55"/><circle cx="13.80" cy="1.20" r=".55"/><circle cx="2.55" cy="3.30" r=".55"/><circle cx="5.05" cy="3.30" r=".55"/><circle cx="7.55" cy="3.30" r=".55"/><circle cx="10.05" cy="3.30" r=".55"/><circle cx="12.55" cy="3.30" r=".55"/><circle cx="1.30" cy="5.40" r=".55"/><circle cx="3.80" cy="5.40" r=".55"/><circle cx="6.30" cy="5.40" r=".55"/><circle cx="8.80" cy="5.40" r=".55"/><circle cx="11.30" cy="5.40" r=".55"/><circle cx="13.80" cy="5.40" r=".55"/><circle cx="2.55" cy="7.50" r=".55"/><circle cx="5.05" cy="7.50" r=".55"/><circle cx="7.55" cy="7.50" r=".55"/><circle cx="10.05" cy="7.50" r=".55"/><circle cx="12.55" cy="7.50" r=".55"/><circle cx="1.30" cy="9.60" r=".55"/><circle cx="3.80" cy="9.60" r=".55"/><circle cx="6.30" cy="9.60" r=".55"/><circle cx="8.80" cy="9.60" r=".55"/><circle cx="11.30" cy="9.60" r=".55"/><circle cx="13.80" cy="9.60" r=".55"/></g></svg></button>
       </div>
+    <button type="button" class="fullbtn" id="fullbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="1.8"/><path d="M9 20h6M12 16.5V20"/></svg><span class="l-ru">Полная версия</span><span class="l-en">Full site</span><span class="l-hy">Լրիվ տարբերակ</span></button>
     <button type="button" class="menubtn" id="menubtn" aria-label="Menu" aria-expanded="false" aria-controls="sheet"><span></span><span></span><span></span></button>
   </div>
 </div></header>
 <div class="sheet" id="sheet" aria-hidden="true"></div>
+<button type="button" class="mobbtn" id="mobbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/></svg><span class="l-ru">Мобильная версия</span><span class="l-en">Mobile site</span><span class="l-hy">Բջջային տարբերակ</span></button>
 
 <section class="hero" id="top">
   <div class="photos" aria-hidden="true"><div class="photo"></div></div>
@@ -571,7 +586,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 
   <section class="press rv" id="press">
     <div class="chead"><span class="m"><span class="l-ru">Пресса о нём · США, Великобритания, СССР, Чехословакия, Франция, Нидерланды, Германия</span><span class="l-en">In the press · USA, UK, USSR, Czechoslovakia, France, Netherlands, Germany</span><span class="l-hy">Մամուլը նրա մասին · ԱՄՆ, Մեծ Բրիտանիա, ԽՍՀՄ, Չեխոսլովակիա, Ֆրանսիա, Նիդեռլանդներ, Գերմանիա</span></span>
-      <div class="cnav"><span class="m" id="pcount">01</span><button type="button" class="cbtn" id="pprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="pnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+      <div class="cnav"><span class="m" id="pcount">01</span><button type="button" class="cbtn" id="pprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="pnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></button></div></div>
     <div class="ctrack ptrack" id="ptrack" tabindex="0" aria-label="Press"></div>
     <div class="cbar"><i id="pfill"></i></div>
   </section>
@@ -588,7 +603,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
     </div>
     <div class="certs" id="certs">
       <div class="chead"><span class="m"><span class="l-ru">Сертификаты CQ WW DX · листайте</span><span class="l-en">CQ WW DX certificates · swipe through</span><span class="l-hy">CQ WW DX վկայագրեր · թերթեք</span></span>
-        <div class="cnav"><span class="m" id="ccount">01 / 10</span><button type="button" class="cbtn" id="cprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="cnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button></div></div>
+        <div class="cnav"><span class="m" id="ccount">01 / 10</span><button type="button" class="cbtn" id="cprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5l-7 7 7 7"/></svg></button><button type="button" class="cbtn" id="cnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></button></div></div>
       <div class="ctrack" id="ctrack" tabindex="0" aria-label="Certificates"></div>
       <div class="cbar"><i id="cfill"></i></div>
     </div>
@@ -868,8 +883,8 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
 <dialog class="lb" id="lb">
   <div class="lbimg">
     <span class="lbfig"><img decoding="async" id="lb-img" alt=""><span id="lb-tags"></span></span>
-    <button type="button" class="ic prev" id="lb-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
-    <button type="button" class="ic next" id="lb-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button type="button" class="ic prev" id="lb-prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="ic next" id="lb-next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 5l7 7-7 7"/></svg></button>
   </div>
   <div class="bar"><span id="lb-cap"></span><span class="acts"><a id="lb-pdf" href="#" download>PDF ↓</a><button type="button" class="ic close" id="lb-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></div>
 </dialog>
@@ -985,7 +1000,7 @@ function TR(s){return window.HY[s]||s}
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
 
   /* ---------- language ---------- */
-  function setLang(l){root.dataset.lang=l;root.lang=l;$$('.flags button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});try{localStorage.setItem('ug6gaw-lang',l)}catch(e){}document.dispatchEvent(new Event('langchange'))}
+  function setLang(l){root.dataset.lang=l;root.lang=l;$$('.flags button,.sl button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.lang===l)});try{localStorage.setItem('ug6gaw-lang',l)}catch(e){}document.dispatchEvent(new Event('langchange'))}
   var nl=(navigator.language||'ru').slice(0,2),start=nl==='hy'?'hy':(nl==='ru'||nl==='uk'||nl==='be'||nl==='kk')?'ru':'en';
   try{start=localStorage.getItem('ug6gaw-lang')||start}catch(e){}
   if(/^#(ru|en|hy)$/.test(location.hash))start=location.hash.slice(1);
@@ -1005,6 +1020,13 @@ function TR(s){return window.HY[s]||s}
     addEventListener('scroll',function(){if(!pending){pending=true;requestAnimationFrame(upd)}},{passive:true});
     addEventListener('resize',fit);fit();if(document.fonts)document.fonts.ready.then(fit)})();
   sh.innerHTML=$$('#nav a').map(function(a,i){return '<a href="'+a.getAttribute('href')+'"><small>'+(i<9?'0':'')+(i+1)+'</small>'+a.innerHTML+'</a>'}).join('');
+  (function(){var NM={hy:'Հայերեն',ru:'Русский',en:'English'},d=document.createElement('div');d.className='langs';
+    d.innerHTML='<p><span class="l-ru">Язык</span><span class="l-en">Language</span><span class="l-hy">Լեզու</span></p><div class="sl"></div>';
+    var row=d.querySelector('.sl');$$('.hr .flags button').forEach(function(f){var b=document.createElement('button');b.type='button';b.dataset.lang=f.dataset.lang;
+      var sv=f.querySelector('svg');b.innerHTML=(sv?sv.outerHTML:'')+'<span>'+(NM[f.dataset.lang]||f.dataset.lang)+'</span>';b.setAttribute('aria-pressed',f.getAttribute('aria-pressed')||'false');
+      b.addEventListener('click',function(){setLang(b.dataset.lang)});row.appendChild(b)});sh.appendChild(d)})();
+  function setFull(v){try{if(v)localStorage.setItem('ug6gaw-full','1');else localStorage.removeItem('ug6gaw-full')}catch(e){}location.reload()}
+  $('#fullbtn').addEventListener('click',function(){setFull(true)});$('#mobbtn').addEventListener('click',function(){setFull(false)});
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
   mb.addEventListener('click',function(){menu(!sh.classList.contains('open'))});
   sh.addEventListener('click',function(e){if(e.target.closest('a'))menu(false)});
