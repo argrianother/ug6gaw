@@ -68,7 +68,7 @@ html.full .mobbtn svg{width:calc(15px*var(--k,1));height:calc(15px*var(--k,1))}
 .menubtn span:nth-child(1){width:14px;transform:translateY(-3px)}
 .menubtn span:nth-child(2){display:none}
 .menubtn span:nth-child(3){width:8px;transform:translateY(3px)}
-.menubtn:hover span:nth-child(3){width:14px}
+@media (hover:hover){.menubtn:hover span:nth-child(3){width:14px}}
 .menubtn[aria-expanded="true"]{border-color:rgba(243,239,232,.6);background:rgba(255,255,255,.06)}
 .menubtn[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg)}
 .menubtn[aria-expanded="true"] span:nth-child(3){width:14px;transform:rotate(-45deg)}
