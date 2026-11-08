@@ -223,15 +223,6 @@ footer{position:relative;z-index:1}
 .mag{margin:0;align-self:start}
 .magp{padding:48px clamp(20px,4vw,56px) clamp(20px,3vw,40px)}
 .magp img{max-height:640px;width:auto;margin:0 auto}
-.magp .live{position:relative;display:block;width:fit-content;margin:0 auto}
-.magp .live img{display:block}
-.magp .lv{position:absolute;left:10.972%;top:12.48%;width:73.611%;height:56.16%;overflow:hidden;opacity:0;transition:opacity .7s ease;pointer-events:none}
-.magp .lv video{display:block;width:100%;height:100%;object-fit:cover;transform:none;transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
-.magp.alive .lv video{transform:scale(1.04) translate3d(var(--px,0px),var(--py,0px),0)}
-.magp .lv::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 18px rgba(0,0,0,.22);opacity:0;transition:opacity .9s}
-.magp.alive .lv{opacity:1}
-.magp.alive .lv::after{opacity:1}
-@media (prefers-reduced-motion:reduce){.magp .lv{display:none}}
 .magbar{display:flex;gap:16px;align-items:center;margin-top:14px}
 .magbar .cov{flex:none;width:64px;border:0;padding:0;background:none;cursor:zoom-in;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
 .magbar .cov img{width:100%;height:auto;display:block}
@@ -608,7 +599,7 @@ dialog.lb::backdrop{background:rgba(8,8,7,.9)}
       <p><span class="l-ru">На QSL 1984 года он пишет: «Ant. Delta up 35 m» — треугольная рамка с вершиной на высоте 35 метров.</span><span class="l-en">On his 1984 QSL he writes «Ant. Delta up 35 m», a triangular loop with its apex 35 meters up.</span><span class="l-hy">1984 թ. իր QSL-ին նա գրում է «Ant. Delta up 35 m»՝ եռանկյունաձև օղակ, որի գագաթը 35 մետր բարձրության վրա է։</span></p>
     </div>
     <figure class="mag">
-      <button type="button" class="obj magp" data-lb="img/press/radiosporting-1986-05-karlen.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, No. 18, p. 13 — «Karlen Grigorian, UG6GAW» · archive.org"><span class="m t1">Radiosporting · 05/1986 · p. 13</span><span class="live"><img src="img/press/radiosporting-1986-05-karlen.jpg" width="720" height="1250" alt="Radiosporting, May 1986: Karlen Grigorian, UG6GAW, with photo" loading="lazy" decoding="async"><span class="lv" aria-hidden="true"><video muted loop playsinline preload="none"><source src="img/press/karlen-1986-live.mp4?v=2" type="video/mp4"></video></span></span></button>
+      <button type="button" class="obj magp" data-lb="img/press/radiosporting-1986-05-karlen.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, No. 18, p. 13 — «Karlen Grigorian, UG6GAW» · archive.org"><span class="m t1">Radiosporting · 05/1986 · p. 13</span><img src="img/press/radiosporting-1986-05-karlen.jpg" width="720" height="1250" alt="Radiosporting, May 1986: Karlen Grigorian, UG6GAW, with photo" loading="lazy" decoding="async"></button>
       <figcaption class="magbar">
         <button type="button" class="cov" data-lb="img/press/radiosporting-1986-05-cover.jpg" data-group="rs86" data-cap="Radiosporting, May 1986, No. 18 — cover · archive.org"><img src="img/press/radiosporting-1986-05-cover.jpg" width="1100" height="1439" alt="Radiosporting, May 1986, cover" loading="lazy" decoding="async"></button>
         <div><b>Radiosporting</b><span class="m"><span class="l-ru">май 1986 · №18 · США</span><span class="l-en">May 1986 · No. 18 · USA</span><span class="l-hy">մայիս 1986 · №18 · ԱՄՆ</span></span>
@@ -1068,14 +1059,6 @@ function TR(s){return window.HY[s]||s}
   (function(){var b=$('#totop'),pend=false;function u(){pend=false;b.classList.toggle('on',scrollY>Math.max(innerHeight*1.1,hero.offsetHeight))}
     addEventListener('scroll',function(){if(!pend){pend=true;requestAnimationFrame(u)}},{passive:true});u();
     b.addEventListener('click',function(){scrollTo({top:0,behavior:RM?'auto':'smooth'})})})();
-  (function(){var b=$('.magp'),lv=b&&b.querySelector('.lv'),v=lv&&lv.querySelector('video');if(!v||RM)return;
-    var on=false,t;function play(){if(on)return;on=true;clearTimeout(t);if(v.preload!=='auto'){v.preload='auto';v.load()}var p=v.play();p&&p.catch(function(){});
-      if(v.readyState>=2)b.classList.add('alive');else v.addEventListener('playing',function f(){v.removeEventListener('playing',f);on&&b.classList.add('alive')})}
-    function stop(){on=false;b.classList.remove('alive');lv.style.removeProperty('--px');lv.style.removeProperty('--py');t=setTimeout(function(){on||v.pause()},700)}
-    if(matchMedia('(hover:hover)').matches){b.addEventListener('mouseenter',play);b.addEventListener('mouseleave',stop);
-      b.addEventListener('mousemove',function(e){var r=lv.getBoundingClientRect();if(!r.width)return;var x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-        lv.style.setProperty('--px',(-x*9).toFixed(1)+'px');lv.style.setProperty('--py',(-y*9).toFixed(1)+'px')})}
-    else if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){e.isIntersecting?play():stop()})},{threshold:.6}).observe(lv)}})();
   function setFull(v){try{if(v)localStorage.setItem('ug6gaw-full','1');else localStorage.removeItem('ug6gaw-full')}catch(e){}location.reload()}
   $('#fullbtn').addEventListener('click',function(){setFull(true)});$('#mobbtn').addEventListener('click',function(){setFull(false)});
   function menu(o){sh.classList.toggle('open',o);sh.setAttribute('aria-hidden',!o);mb.setAttribute('aria-expanded',o);document.body.classList.toggle('locked',o);onScroll()}
